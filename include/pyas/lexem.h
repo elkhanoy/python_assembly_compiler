@@ -15,11 +15,18 @@
 extern "C" {
 #endif
 
+struct lexem {
+  char *type;
+  char *value;
+  int   line;
+  int   column;
+};
+
   typedef struct lexem *lexem_t;
 
-  lexem_t lexem_new( char *type, char *value, int line, int column ); 
+  lexem_t lexem_new( char *type, char *value, int line, int column );
   int     lexem_print( void *_lex );
-  int     lexem_delete( void *_lex ); 
+  int     lexem_delete( void *_lex );
 
 #ifdef __cplusplus
 }

@@ -1,22 +1,21 @@
+#include <pyas/all.h>
 
-#include "../include/pyas/lecture_fichier.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <assert.h>
-
-int lire_fichier_conf(link_t * dictionnaire){
+int lire_fichier_conf(queue_t * dictionnaire){
   FILE* fichier = NULL;
-  if(NULL==(fichier = fopen("assembleur.conf", "rt"))){
+  fichier = fopen("assembleur.conf", "r+");
+  if(NULL==fichier){
     printf("Erreur à l'ouverture du fichier assembleur.conf");
     return 0;
   }
-  if(fichier!="\0"){
+  /*if(fichier!="\0"){
     fscanf(fichier,"%s %s",dictionnaire->content->nom,dictionnaire->content->exp_str);
-    dictionnaire->content->exp_file=NULL;
-  }
-  while(fichier!="\0"){
-    fscanf(fichier,"%s %s",dicto->nom,dicto->exp_str);
+    dictionnaire->content->exp_file=NULL;*/
+  struct dico_t * element;
+  element->exp_file=NULL;
+  while(getc(fichier)!=EOF){
+    fscanf(fichier,"%s %s",element->nom,element->exp_str);
+    *dictionnaire=enqueue(*dictionnaire,element);
   }
   fclose(fichier);
+  return 1;
 }

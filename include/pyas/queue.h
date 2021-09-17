@@ -15,15 +15,16 @@
 extern "C" {
 #endif
 
-#include <pyas/list.h> /* list_t */
 
-  typedef struct link_t *queue_t; 
-
+typedef struct link_t *queue_t;
+  queue_t queue_delete(queue_t q);
+  void queue_print(queue_t q);
+  queue_t queue_del_head(queue_t q);
   queue_t queue_new( void );
   int     queue_empty( queue_t q );
   queue_t enqueue( queue_t q, void* object );
-  list_t  queue_to_list( queue_t q ); 
-  
+  list_t  queue_to_list( queue_t q );
+
 #ifdef __cplusplus
 }
 #endif

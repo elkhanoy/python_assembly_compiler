@@ -1,7 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <assert.h>
+#include "../include/pyas/all.h"
 
 int re_match(char *regexp, char *source, char **end){
   if('*'==regexp[1]){

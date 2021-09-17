@@ -15,10 +15,18 @@
 extern "C" {
 #endif
 
+#include <assert.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stddef.h>
+#include <pyas/callbacks.h>
 #include <pyas/list.h>
 #include <pyas/queue.h>
-
 #include <pyas/lexem.h>
+#include <pyas/exp_reg.h>
+#include <pyas/lecture_fichier.h>
+#include <pyas/outils.h>
 
 #ifdef __cplusplus
 }

@@ -15,7 +15,7 @@
 extern "C" {
 #endif
 
-  typedef int (*action_t)( void * );
+typedef int (*action_t)( void * );
 
 #ifdef __cplusplus
 }
