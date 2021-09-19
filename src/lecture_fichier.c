@@ -2,7 +2,7 @@
 
 queue_t lire_fichier_conf(queue_t dictionnaire){
   FILE* fichier = NULL;
-  fichier = fopen("/home/yassine/Documents/projetinfo/proj1/elamrans_elkhanoy_jouidij/tests/assembleur.conf", "rt");
+  fichier = fopen("config/assembleur.conf", "rt");
   if(NULL==fichier){
     perror("fopen");
     return NULL;

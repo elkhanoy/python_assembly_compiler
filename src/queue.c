@@ -38,7 +38,6 @@ queue_t enqueue( queue_t q, void* object ) {
 
 queue_t queue_del_head(queue_t q) {
   if(!q){
-    printf("Liste vide\n");
     exit(1);
   }
   if(q==q->next){
@@ -77,7 +76,6 @@ int queue_print(queue_t q){
   printf(" ");
   while(p!=q) {
     printf("\n%s %s\n",(p->content)->nom, (p->content)->exp_str);
-    printf( "\t%p\t",p->next );
     p=p->next;
   }
   printf("%s %s\n",(p->content)->nom, (p->content)->exp_str);
