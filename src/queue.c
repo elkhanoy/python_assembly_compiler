@@ -29,7 +29,6 @@ queue_t enqueue( queue_t q, void* object ) {
   //printf("\n lol on peut imprimer? %s\n",new->content->exp_str);
   if(!q){
     new->next=new;
-    printf("On rentre dans la zone sombre");
     return new;
   }
   new->next=q->next;
@@ -43,11 +42,15 @@ queue_t queue_del_head(queue_t q) {
     exit(1);
   }
   if(q==q->next){
+    //free(q->content->exp_file);
+    free(q->content);
     free(q);
     return NULL;
   }
   queue_t p=q->next;
   q->next=p->next;
+  //free(p->content->exp_file);
+  free(p->content);
   free(p);
   return q;
 }
@@ -59,14 +62,13 @@ queue_t queue_delete(queue_t q) {
   }
   queue_t p=q->next;
   while(p!=q){
-    free(p->content);
     p=queue_del_head(p);
   }
   p=queue_del_head(p);
   return NULL;
 }
 
-void queue_print(queue_t q){
+int queue_print(queue_t q){
   if(!q){
     printf("Liste vide\n");
     return 0;
@@ -74,12 +76,13 @@ void queue_print(queue_t q){
   queue_t p=q->next;
   printf(" ");
   while(p!=q) {
-    printf("%s %s\n",(p->content)->nom, (p->content)->exp_str);
-    printf( " " );
+    printf("\n%s %s\n",(p->content)->nom, (p->content)->exp_str);
+    printf( "\t%p\t",p->next );
     p=p->next;
   }
   printf("%s %s\n",(p->content)->nom, (p->content)->exp_str);
   printf("\n");
+  return 1;
 }
 
 list_t  queue_to_list( queue_t q ) {

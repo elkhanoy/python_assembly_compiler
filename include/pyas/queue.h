@@ -18,7 +18,7 @@ extern "C" {
 
 typedef struct link_t *queue_t;
   queue_t queue_delete(queue_t q);
-  void queue_print(queue_t q);
+  int queue_print(queue_t q);
   queue_t queue_del_head(queue_t q);
   queue_t queue_new( void );
   int     queue_empty( queue_t q );
