@@ -75,10 +75,10 @@ int queue_print(queue_t q){
   queue_t p=q->next;
   printf(" ");
   while(p!=q) {
-    printf("\n%s %s\n",(p->content)->nom, (p->content)->exp_str);
+    printf("\n%s %s\n",((struct dico_t*)(p->content))->nom, ((struct dico_t*)(p->content))->exp_str);
     p=p->next;
   }
-  printf("%s %s\n",(p->content)->nom, (p->content)->exp_str);
+  printf("%s %s\n",((struct dico_t*)(p->content))->nom, ((struct dico_t*)(p->content))->exp_str);
   printf("\n");
   return 1;
 }

@@ -16,7 +16,7 @@ extern "C" {
 #endif
 
 struct link_t {
-  struct dico_t *content;
+  void * content;
   struct link_t *next;
 };
 
