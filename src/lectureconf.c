@@ -24,26 +24,24 @@ queue_t split_regexp(char* regexp, queue_t *list_char){
       return list_char ;
     }
 
-    else if (code_backslash != 8){ //Cas '\n'
+    else if (code_backslash != 8){
       char_group_t * mini_regexp = NULL ;
       mini_regexp=calloc(1,sizeof(*mini_regexp));
       mini_regexp=new_queue_char_group(mini_regexp,"0");
-      // for(int j=0, j<256,j++) mini_regexp->group[j]='0' ;// mise à jour du tableau
       mini_regexp->group[*(regexp+1)]='1';
       mini_regexp->occurence=set_occurence(regexp,mini_regexp);
       list_char=enqueue(list_char,(char_group_t*)mini_regexp); //enfilage du char_group
-      regexp++; //Là on arrive donc sur le '-'
+      regexp++;
       list_char=split_regexp(regexp,list_char);
     }
-    else { //Cas '\n'
+    else {
       char_group_t * mini_regexp = NULL ;
       mini_regexp=calloc(1,sizeof(*mini_regexp));
       mini_regexp=new_queue_char_group(mini_regexp,"0");
-      // for(int j=0, j<256,j++) mini_regexp->group[j]='0' ;// mise à jour du tableau
       mini_regexp->group[*(regexp)]='1';
       mini_regexp->occurence=set_occurence(regexp,mini_regexp);
       list_char=enqueue(list_char,(char_group_t*)mini_regexp); //enfilage du char_group
-      regexp++; //Là on arrive donc sur le '-'
+      regexp++;
       list_char=split_regexp(regexp,list_char);
     }
     if(*(regexp)=='.'){
@@ -52,14 +50,64 @@ queue_t split_regexp(char* regexp, queue_t *list_char){
       mini_regexp=new_queue_char_group(mini_regexp,"1");
       mini_regexp->occurence=set_occurence(regexp,mini_regexp);
       list_char=enqueue(list_char,(char_group_t*)mini_regexp); //enfilage du char_group
-      regexp++; //Là on arrive donc sur le '-'
+      regexp++;
       list_char=split_regexp(regexp,list_char);
     }
   } //fin du cas '\\'
 
 //Si à l'intérieur de '[]'
   //Cas du '['
-  if(regexp=="["){
+  if(*(regexp)="^"){
+    regexp++;
+    if(*(regexp)=="["){
+
+      regexp++; //on passe au caractère suivant le '['
+      char_group_t *mini_regexp = NULL ;
+      mini_regexp=calloc(1,sizeof(*mini_regexp));
+      mini_regexp=new_queue_char_group(mini_regexp,"1");
+      while(regexp!="]"){ //Tant qu'on atteint pas le ']'
+
+        if (*regexp=='\\'){
+
+          mini_regexp->group[*(regexp+1)]='0'; //enfilage du char_group
+          regexp++;
+         //////////////////////////////////////////////////////////////////////////
+       }
+       else if(*(regexp)=='^'){ //si le caractère lu est un '^'
+          mini_regexp->group[*(regexp+1)]='1';
+          regexp++;
+       }
+
+       else if(*(regexp)=="-"){ //Si le caractère suivant n'est pas un '-'
+          int i;
+          for(i=*(regexp-1);i<=*(regexp+1);i++){
+            mini_regexp->group[i]='0';
+          }
+         regexp+2; //On passe au caractère suivant
+       }
+
+      else{ //si le caractère suivant est un '-'
+        mini_regexp->group[*(regexp)]='0';
+        regexp++;
+      }
+    }
+    mini_regexp->occurence=set_occurence(regexp,mini_regexp);
+    list_char=enqueue(list_char,(char_group_t*)mini_regexp);
+    list_char=split_regexp(list_char,list_char);
+    }
+    else{
+      char_group_t * mini_regexp = NULL ;
+      mini_regexp=calloc(1,sizeof(*mini_regexp));
+      mini_regexp=new_queue_char_group(mini_regexp,"1");
+      mini_regexp->group[*(regexp)]='0';
+      mini_regexp->occurence=set_occurence(regexp,mini_regexp);
+      list_char=enqueue(list_char,(char_group_t*)mini_regexp); //enfilage du char_group
+      regexp++;
+      list_char=split_regexp(regexp,list_char);
+    }
+  }
+
+  if(*(regexp)=="["){
 
     regexp++; //on passe au caractère suivant le '['
     char_group_t *mini_regexp = NULL ;
