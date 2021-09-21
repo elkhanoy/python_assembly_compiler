@@ -4,4 +4,4 @@ struct dico_t {
   struct link_t * exp_file; // Ici l'expression regulière est en forme de list de char group
 };
 
-queue_t lire_fichier_conf(queue_t dictionnaire);
+queue_t lire_fichier_conf(queue_t dictionnaire, char * config);

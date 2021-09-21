@@ -27,6 +27,7 @@ extern "C" {
 #include <pyas/exp_reg.h>
 #include <pyas/lecture_fichier.h>
 #include <pyas/outils.h>
+#include <pyas/lectureconf.h>
 
 #ifdef __cplusplus
 }

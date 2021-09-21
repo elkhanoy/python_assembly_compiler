@@ -1,9 +1,9 @@
 #include <pyas/all.h>
 
-queue_t lire_fichier_conf(queue_t dictionnaire){
+queue_t lire_fichier_conf(queue_t dictionnaire, char * config){
   char buffer[256];
   FILE* fichier = NULL;
-  fichier = fopen("config/assembleur.conf", "rt");
+  fichier = fopen(config, "rt");
   if(NULL==fichier){
     perror("fopen");
     return NULL;
@@ -14,6 +14,7 @@ queue_t lire_fichier_conf(queue_t dictionnaire){
     fscanf(fichier,"%s",element->nom);
     if((element->nom)[0]!='#'){
       fscanf(fichier,"%s",element->exp_str);
+      element->exp_file=split_regexp(element->exp_str,element->exp_file);
       dictionnaire=enqueue(dictionnaire,element);
     }
     else{

@@ -1,22 +1,26 @@
 #include <pyas/all.h>
 
 int main(){
-  char ** end=NULL;
+  char * end=NULL;
   queue_t dictionnaire=NULL;
   queue_t list_lexem=NULL;
+  char config[80];
+  char source_0[80];
   //dictionnaire=calloc(1,sizeof(*dictionnaire));
   //dictionnaire->next=dictionnaire;
-  dictionnaire=lire_fichier_conf(dictionnaire);
+  printf( "Veuillez saisir le nom du fichier config (exemple: 'config.conf') : " );
+  fflush( stdout );
+  scanf( "%s", config );
+  printf( "Veuillez saisir le nom du fichier source (exemple: 'source.txt') : " );
+  fflush( stdout );
+  scanf( "%s", source_0 );
+  dictionnaire=lire_fichier_conf(dictionnaire, config);
   if(!dictionnaire){
     printf("Erreur");
     exit(1);
   }
-  /*
-  ICI CONVERTIR LES EXPRESSIONS RÉGULIÈRES QUI SONT EN TYPE CHAR EN TYPE LIST
-  CAD REMPLIR EXP_FILE À PARTIR DE EXP_STR
-  */
   FILE* source = NULL;
-  source = fopen("source.txt", "rt");
+  source = fopen(source_0, "rt");
   if(NULL==source){
     perror("fopen");
     return NULL;
