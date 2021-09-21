@@ -1,55 +1,57 @@
-#include "../include/pyas/all.h"
+#include <pyas/all.h>
 
-static int re_match_zero_or_more ( char c, char * regexp , char *source , char ** end ) {
+
+static int re_match_zero_or_more ( list_t exp_file,list_t exp_file2, char source , char * end ) {
   char *t = source ;
-  while ( '\0' != *t && ( *t == c || '.'== c ) ) {
+  while ( '\0' != *t && ( (()(exp_file->content))-> group[*t] || (exp_file->content)->group[.] )) {
     t ++;
   }
   do {
-    if ( re_match ( regexp , t, end ) ) {
+    if ( re_match ( exp_file2 , t, end ) ) {
       return 1;
     }
   } while ( t-- > source ) ;
   return 0;
 }
 
-static int re_match_one_or_more ( char c, char *regexp, char *source, char **end){
-  if (*source==c){
-    return re_match_zero_or_more(c,regexp,source,end);
+static int re_match_one_or_more ( list_t exp_file,list_t exp_file2, char source , char * end ){
+  if ((exp_file->content)-> group[*source]){
+    return re_match_zero_or_more(exp_file,exp_file2,source,end);
   }
   return 0;
 }
 
-static int re_match_zero_one_or_one ( char c, char *regexp, char *source, char **end){
-  if (*source==c){
-    if (re_match_one_or_more(c,regexp,source+1,end)!=0){
+static int re_match_zero_one_or_one ( list_t exp_file,list_t exp_file2, char source , char * end ){
+  if ((exp_file->content)-> group[*source]){
+    if (re_match_one_or_more(exp_file,exp_file2,source+1,end)!=0){
       return 0;
     }
-    else {return re_match_zero_or_more(c,regexp,source+1,end);
+    else {return re_match_zero_or_more(exp_file,exp_file2,source+1,end);
     }
   }
 }
 
-int re_match ( char * regexp , char * source , char ** end ) {
-  if ( '\0' == regexp [ 0 ] ) {
+int re_match (list_t exp_file , char * source , char * end ) {
+  if ( !(exp_file->next) ) {
     * end = source ;
     return 1;
   }
 
-  if ( '*' == regexp [ 1 ] ) {
-    return re_match_zero_or_more ( regexp [ 0 ] , regexp +2 , source ,end );
+  if (((exp_file->next)->content->)group[*]) {
+    return re_match_zero_or_more ( exp_file ,(exp_file->next)->next, source ,end );
   }
 
-  if('+'==regexp[1]){
-    return re_match_one_or_more(regexp[0], regexp+2, source, end);
+  if (((exp_file->next)->content->)group[+]) {
+    return re_match_zero_or_more ( exp_file ,(exp_file->next)->next, source ,end );
   }
 
-  if('?'==regexp[1]){
-    return re_match_zero_one_or_one(regexp[0], regexp+2, source, end);
+  if (((exp_file->next)->content->)group[?]) {
+    return re_match_zero_or_more ( exp_file ,(exp_file->next)->next, source ,end );
   }
 
-  if ( '\0' != * source && ( '.' == regexp [ 0 ] || * source == regexp [ 0 ] ) ) {
-    return re_match ( regexp +1 , source +1 , end );
+  if ( '\0' != * source && ( (exp_file->content)->group[.] || (exp_file->content)->group[*source] ) ) {
+    exp_file=exp_file->next;
+    return re_match ( exp_file, source +1 , end );
   }
   return 0;
 }
