@@ -24,10 +24,9 @@ extern "C" {
 #include <pyas/list.h>
 #include <pyas/queue.h>
 #include <pyas/lexem.h>
-#include <pyas/exp_reg.h>
 #include <pyas/lecture_fichier.h>
 #include <pyas/outils.h>
-#include <pyas/lectureconf.h>
+#include <pyas/re_read.h>
 
 #ifdef __cplusplus
 }

@@ -1,13 +1,11 @@
 #include <pyas/all.h>
 
-int main(){
+int main(int argc,char*argv[]){
   char * end=NULL;
   queue_t dictionnaire=NULL;
   queue_t list_lexem=NULL;
   char config[80];
   char source_0[80];
-  //dictionnaire=calloc(1,sizeof(*dictionnaire));
-  //dictionnaire->next=dictionnaire;
   printf( "Veuillez saisir le nom du fichier config (exemple: 'config.conf') : " );
   fflush( stdout );
   scanf( "%s", config );
