@@ -31,7 +31,7 @@ int re_match_zero_one_or_one ( list_t exp_file,list_t exp_file2, char source , c
   }
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-int re_match (list_t exp_file , char * source , char * end ) {
+int re_match (queue_t exp_file , char * source , char ** end ) {
   if ( !(exp_file->next) ) {
     * end = source ;
     return 1;
@@ -52,6 +52,32 @@ int re_match (list_t exp_file , char * source , char * end ) {
   if ( '\0' != * source && ( ((char_group_t *)(exp_file->content))->group[46] || ((char_group_t *)(exp_file->content))->group[*source] ) ) {
     exp_file=exp_file->next;
     return re_match ( exp_file, source +1 , end );
+  }
+  return 0;
+}
+
+int re_match(queue_t regexp, char*source, char **end)
+{
+  if(NULL==regexp->next)
+  {
+    *end=source;
+    return 1;
+  }
+  if('*'==(regexp->content)
+  {
+    return re_match_one_or_more(regexp[0],regexp+2,source,end);
+  }
+  if('?'==regexp[1])
+  {
+    return re_match_zero_or_more(regexp[0],regexp+2,source,end);
+  }
+  if('+'==regexp[1])
+  {
+    return re_match_zero_one_or_one(regexp[0],regexp+2,source,end);
+  }
+  if('\0'!=*source && ('.'==regexp||*source==regexp[]))
+  {
+    return re_match(regexp->next,source+1,end);
   }
   return 0;
 }

@@ -1,5 +1,5 @@
 #include <pyas/all.h>
-
+//modifier l'opératuer ^par une constante dans la structure indiquant si peut apparaitre ou non
 queue_t re_read(char* regexp) //Fonction traduisant une expression régulière en chaîne de caractère sous forme de liste
 {
   char*pregexp=regexp; //Pointeur sur les caractères successifs formant l'expression régulière

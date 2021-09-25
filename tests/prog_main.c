@@ -53,13 +53,13 @@ int main(int argc,char*argv[]) //Les noms des fichiers source et configuration s
     }
     int i=0;
     char c;
-    while(fscanf(Fichier,"%c",&c) != EOF)
+    while(fscanf(source_f,"%c",&c) != EOF)
     {
       tableau_source[i]=c;
       i++;
     }
-    // 6 - Comparaison entre le contenu dy fichier source et les lexemes possibles
-    while(( !re_match(((struct lexeme*)(lexeme->content))->regexp_name, word_source, end) ) && ( lexeme->next != lexeme_first ) )
+    // 6 - Comparaison entre le contenu du fichier source et les lexemes possibles
+    while(( !re_match((queue_lexemes, tableau_source, end) ) && ( lexeme->next != lexeme_first ) )
     {
         lexeme=lexeme->next;
     }
@@ -69,6 +69,7 @@ int main(int argc,char*argv[]) //Les noms des fichiers source et configuration s
       list_lexem=enqueue(list_lexem,lexem_new(((struct lexeme*)(lexeme->content))->regexp_name,word_source,0,0)); // Pour l'instant on sait pas donner la ligne et colonne, donc on donne 0 0
     }
   }
+
   list_lexem=queue_to_list(list_lexem);
   list_print(list_lexem,lexem_print);
   list_delete(list_lexem,lexem_delete);
