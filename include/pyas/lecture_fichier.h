@@ -1,7 +1,7 @@
 struct lexeme {
-  char nom[64]; // On stock le nom du lexem
-  char exp_str[256]; // Ici l'expression regulière en forme de chaine de caractères
-  struct link_t * exp_file; // Ici l'expression regulière est en forme de list de char group
+  char name[64]; //Nom du lexeme
+  char regexp_str[256]; //Expression regulière sous forme de chaine de caractères
+  struct link_t * queue_regexp; //Expression regulière est en forme de queue de char_group
 };
 
-queue_t lire_fichier_conf(queue_t lexeme, char * config);
+queue_t lecture_fichier_conf(queue_t lexemes_q, char * config);
