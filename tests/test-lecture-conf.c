@@ -1,14 +1,14 @@
 #include <pyas/all.h>
 
 int main(){
-  queue_t dictionnaire=NULL;
+  queue_t lexeme=NULL;
   //dictionnaire=calloc(1,sizeof(*dictionnaire));
   //dictionnaire->next=dictionnaire;
-  dictionnaire=lire_fichier_conf(dictionnaire, "assembleur.conf");
-  if(!dictionnaire){
+  lexeme=lecture_fichier_conf(lexeme, "assembleur.conf");
+  if(!lexeme){
     printf("Erreur");
     exit(1);
   }
-  queue_print(dictionnaire);
-  queue_delete(dictionnaire);
+  queue_print(lexeme);
+  queue_delete(lexeme);
 }

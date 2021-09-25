@@ -16,7 +16,7 @@ queue_t re_read(char* regexp) //Fonction traduisant une expression régulière e
       {
         char_group_t * subregexp=calloc(1,sizeof(*subregexp)); //Création d'un espace mémoire pour un sous-groupe pour la regexp étudiée
         ini_char_group(subregexp,1); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
-        subregexp->group[*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
+        subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
         set_occurence(pregexp,subregexp);
         regexp_q=enqueue(regexp_q,subregexp); //On enfile un nouveau maillon pointant sur la structure créée à la fin de la queue créée précédemmet
         pregexp=pregexp+2; //Le caractère à l'adresse pregexp+1 ayant déjà été traité
@@ -25,7 +25,7 @@ queue_t re_read(char* regexp) //Fonction traduisant une expression régulière e
       {
         char_group_t * subregexp=calloc(1,sizeof(*subregexp)); //Création d'un espace mémoire pour un sous-groupe pour la regexp étudiée
         ini_char_group(subregexp,1); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
-        subregexp->group[*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
+        subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
         set_occurence(pregexp,subregexp);
         regexp_q=enqueue(regexp_q,subregexp); //On enfile un nouveau maillon pointant sur la structure créée à la fin de la queue créée précédemmet
         pregexp=pregexp+2; //Le caractère à l'adresse pregexp+1 ayant déjà été traité
@@ -34,7 +34,7 @@ queue_t re_read(char* regexp) //Fonction traduisant une expression régulière e
       {
         char_group_t * subregexp=calloc(1,sizeof(*subregexp)); //Création d'un espace mémoire pour un sous-groupe pour la regexp étudiée
         ini_char_group(subregexp,1); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
-        subregexp->group[*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
+        subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
         set_occurence(pregexp,subregexp);
         regexp_q=enqueue(regexp_q,subregexp); //On enfile un nouveau maillon pointant sur la structure créée à la fin de la queue créée précédemmet
         pregexp=pregexp+2; //Le caractère à l'adresse pregexp+1 ayant déjà été traité
@@ -43,7 +43,7 @@ queue_t re_read(char* regexp) //Fonction traduisant une expression régulière e
       {
         char_group_t * subregexp=calloc(1,sizeof(*subregexp)); //Création d'un espace mémoire pour un sous-groupe pour la regexp étudiée
         ini_char_group(subregexp,1); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
-        subregexp->group[*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
+        subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
         set_occurence(pregexp,subregexp);
         regexp_q=enqueue(regexp_q,subregexp); //On enfile un nouveau maillon pointant sur la structure créée à la fin de la queue créée précédemmet
         pregexp=pregexp+2; //Le caractère à l'adresse pregexp+1 ayant déjà été traité
@@ -52,7 +52,7 @@ queue_t re_read(char* regexp) //Fonction traduisant une expression régulière e
       {
         char_group_t * subregexp=calloc(1,sizeof(*subregexp)); //Création d'un espace mémoire pour un sous-groupe pour la regexp étudiée
         ini_char_group(subregexp,1); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
-        subregexp->group[*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
+        subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
         set_occurence(pregexp,subregexp);
         regexp_q=enqueue(regexp_q,subregexp); //On enfile un nouveau maillon pointant sur la structure créée à la fin de la queue créée précédemmet
         pregexp=pregexp+2; //Le caractère à l'adresse pregexp+1 ayant déjà été traité
@@ -61,7 +61,7 @@ queue_t re_read(char* regexp) //Fonction traduisant une expression régulière e
       {
         char_group_t * subregexp=calloc(1,sizeof(*subregexp)); //Création d'un espace mémoire pour un sous-groupe pour la regexp étudiée
         ini_char_group(subregexp,1); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
-        subregexp->group[*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
+        subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
         set_occurence(pregexp,subregexp);
         regexp_q=enqueue(regexp_q,subregexp); //On enfile un nouveau maillon pointant sur la structure créée à la fin de la queue créée précédemmet
         pregexp=pregexp+2; //Le caractère à l'adresse pregexp+1 ayant déjà été traité
@@ -70,7 +70,7 @@ queue_t re_read(char* regexp) //Fonction traduisant une expression régulière e
       {
         char_group_t * subregexp=calloc(1,sizeof(*subregexp)); //Création d'un espace mémoire pour un sous-groupe pour la regexp étudiée
         ini_char_group(subregexp,1); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
-        subregexp->group[*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
+        subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
         set_occurence(pregexp,subregexp);
         regexp_q=enqueue(regexp_q,subregexp); //On enfile un nouveau maillon pointant sur la structure créée à la fin de la queue créée précédemmet
         pregexp=pregexp+2; //Le caractère à l'adresse pregexp+1 ayant déjà été traité
@@ -79,7 +79,7 @@ queue_t re_read(char* regexp) //Fonction traduisant une expression régulière e
       {
         char_group_t * subregexp=calloc(1,sizeof(*subregexp)); //Création d'un espace mémoire pour un sous-groupe pour la regexp étudiée
         ini_char_group(subregexp,0); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
-        subregexp->group[*pregexp]=1; //Booléen 1 mis dans la case dont l'indice correxpond au caractère backslash
+        subregexp->group[(int)*pregexp]=1; //Booléen 1 mis dans la case dont l'indice correxpond au caractère backslash
         set_occurence(pregexp,subregexp);
         regexp_q=enqueue(regexp_q,subregexp);
         pregexp=pregexp+1; //Le pointeur sur les caractères formant la regexp avance d'un cran
@@ -99,56 +99,57 @@ queue_t re_read(char* regexp) //Fonction traduisant une expression régulière e
   {
     char_group_t * subregexp=calloc(1,sizeof(*subregexp));
     ini_char_group(subregexp,1);
-    subregexp->group[*(pregexp+1)]=0; //Le caractère suivant le '^' ne peut apparaitre donc on place un 0 à son indice dans le tableau de bool
+    subregexp->group[(int)*(pregexp+1)]=0; //Le caractère suivant le '^' ne peut apparaitre donc on place un 0 à son indice dans le tableau de bool
     pregexp=pregexp+1;
     set_occurence(pregexp,subregexp);
     regexp_q=enqueue(regexp_q,subregexp);
     pregexp=pregexp+1; //Le caractère à l'adresse pregexp+1 ayant déjà été traité
   }
   // 2 - Cas des caractères de la regexp situés à l'intérieur d'un groupe de caractères placé entre crochets:
-  if((*pregexp=='^')&&((*pregexp+1)=='[') //Le groupe qui suit le '^' ne doit pas apparaître
+  if((*pregexp=='^')&&((*pregexp+1)=='[')) //Le groupe qui suit le '^' ne doit pas apparaître
   {
     char_group_t * subregexp=calloc(1,sizeof(*subregexp));
     ini_char_group(subregexp,1);
-    pregexp=pregexp++;
+    pregexp=pregexp+1;
     while(*pregexp!=']')
     {
       if(*pregexp=='\\')
       {
-          if((*pregexp+1)=='.'))
+          if((*pregexp+1)=='.')
           {
-            subregexp->(group[*(pregexp+1)])=0;
+            subregexp->group[(int)*(pregexp+1)]=0;
             pregexp=pregexp+2;
           }
           else if ((*pregexp+1)=='\\')
           {
-            subregexp->(group[*(pregexp+1)])=0;
+            subregexp->group[(int)*(pregexp+1)]=0;
             pregexp=pregexp+2;
           }
           else if((*pregexp+1)==']')
           {
-            subregexp->(group[*(pregexp+1)])=0;
+            subregexp->group[(int)*(pregexp+1)]=0;
             pregexp=pregexp+2;
           }
           else if((*pregexp+1)=='^')
           {
-            subregexp->(group[*(pregexp+1)])=0;
+            subregexp->group[(int)*(pregexp+1)]=0;
             pregexp=pregexp+2;
           }
           else
           {
-            subregexp->(group[*pregexp])=1;
+            subregexp->group[(int)*pregexp]=1;
             pregexp=pregexp+1;
           }
       }
       else if(*pregexp=='^')
       {
-        subregexp->(group[*(pregexp+1)])=0;
+        subregexp->group[(int)*(pregexp+1)]=0;
         pregexp=pregexp+2;
       }
       else if(*pregexp=='-')
       {
-        for(int i=*(pregexp-1)+1;i<*(pregexp+1);i++) //Tableau rempli sur l'intervalle des caractères entourant le '-', non compris
+        int i;
+        for(i=*(pregexp-1)+1;i<*(pregexp+1);i++) //Tableau rempli sur l'intervalle des caractères entourant le '-', non compris
         {
           subregexp->group[i]=0;
         }
@@ -156,12 +157,12 @@ queue_t re_read(char* regexp) //Fonction traduisant une expression régulière e
       }
       else
       {
-        subregexp->(group[*pregexp])=0;
+        subregexp->group[(int)*pregexp]=0;
         pregexp=pregexp+1;
       }
     }
     set_occurence(pregexp,subregexp);
-    regexp_q=enqueue(regexp_q,subgregexp);
+    regexp_q=enqueue(regexp_q,subregexp);
     pregexp=pregexp+1;
 
   }
@@ -176,38 +177,39 @@ queue_t re_read(char* regexp) //Fonction traduisant une expression régulière e
       {
         if((*pregexp+1)=='.')
         {
-          subregexp->group[*(pregexp+1)]=0;
+          subregexp->group[(int)*(pregexp+1)]=0;
           pregexp=pregexp+2;
         }
         else if ((*pregexp+1)=='\\')
         {
-          subregexp->group[*(pregexp+1)]=0;
+          subregexp->group[(int)*(pregexp+1)]=0;
           pregexp=pregexp+2;
         }
         else if((*pregexp+1)==']')
         {
-          subregexp->group[*(pregexp+1)]=0;
+          subregexp->group[(int)*(pregexp+1)]=0;
           pregexp=pregexp+2;
         }
         else if((*pregexp+1)=='^')
         {
-          subregexp->group[*(pregexp+1)]=0;
+          subregexp->group[(int)*(pregexp+1)]=0;
           pregexp=pregexp+2;
         }
         else
         {
-          subregexp->group[*pregexp]=1;
+          subregexp->group[(int)*pregexp]=1;
           pregexp=pregexp+1;
         }
       }
       else if(*regexp=='^')
       {
-        subregexp->group[*(pregexp+1)]=1;
+        subregexp->group[(int)*(pregexp+1)]=1;
         pregexp=pregexp+2;
       }
       else if(*pregexp=='-')
       {
-        for(int i=*(pregexp-1)+1;i<*(pregexp+1);i++) //Tableau rempli sur l'intervalle des caractères entourant le '-', non compris
+        int i;
+        for( i=*(pregexp-1)+1;i<*(pregexp+1);i++) //Tableau rempli sur l'intervalle des caractères entourant le '-', non compris
         {
           subregexp->group[i]=1;
         }
@@ -215,7 +217,7 @@ queue_t re_read(char* regexp) //Fonction traduisant une expression régulière e
       }
       else
       {
-        subregexp->group[*pregexp]=1;
+        subregexp->group[(int)*pregexp]=1;
         pregexp=pregexp+1;
       }
     }
