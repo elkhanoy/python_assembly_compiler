@@ -1,7 +1,10 @@
 #include <pyas/all.h>
 
-queue_t lecture_fichier_conf(queue_t lexemes_q, char * config){
+queue_t lecture_fichier_conf(queue_t lexemes_q, char * config)
+{
   char buffer[256];
+
+  // 1 - Ouverture du fichier de configuration
   FILE* fichier = NULL;
   fichier = fopen(config, "rt");
   if(NULL==fichier)
@@ -10,6 +13,7 @@ queue_t lecture_fichier_conf(queue_t lexemes_q, char * config){
     return NULL;
   }
 
+// 2 - Lecture du fichier de configuration et complétion des champs décrivant les lexemes (le nom, l'expression régulière en caractères, l'expression régulière en queue)
   while(!feof(fichier))
   {
     struct lexeme * lexeme;
