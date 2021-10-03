@@ -25,7 +25,7 @@ extern "C" {
 #include <pyas/queue.h>
 #include <pyas/lexem.h>
 #include <pyas/lecture_fichier.h>
-#include <pyas/outils.h>
+#include <pyas/re_match.h>
 #include <pyas/re_read.h>
 
 #ifdef __cplusplus

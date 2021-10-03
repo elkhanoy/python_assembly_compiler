@@ -1,5 +1,25 @@
 #include <pyas/all.h>
 
+int print_lexeme_conf(void * _lexeme_config){
+  struct lexeme_config * lex_conf = _lexeme_config;
+  return printf( "%s %s",
+		 lex_conf->regexp_name,
+		 lex_conf->regexp_str );
+}
+
+int lexeme_conf_delete(void * _lexeme_config){
+  struct lexeme_config * lex_conf = _lexeme_config;
+  list_delete(lex_conf->queue_regexp,char_group_delete);
+  free(lex_conf);
+  return 1;
+}
+
+int char_group_delete(void * _char_group){
+  char_group_t * chargrp = _char_group;
+  free(chargrp);
+  return 1;
+}
+
 queue_t lecture_fichier_conf(queue_t lexemes_q, char * config)
 {
   char buffer[256];
@@ -20,12 +40,12 @@ queue_t lecture_fichier_conf(queue_t lexemes_q, char * config)
     fscanf(fichier,"%s",comment_test);
     if(comment_test[0]!='#') // Si la ligne n'est pas un commentaire...
     {
-      struct lexeme * lexeme; // On crée un type lexeme
-      lexeme=calloc(1,sizeof(*lexeme)); // On lui alloue de la mémoire
-      lexeme->regexp_name=comment_test;// Et on stock son nom
-      fscanf(fichier,"%s",lexeme->regexp_str); // ainsi que son expression régulière
-      lexeme->queue_regexp=re_read(lexeme->regexp_str); // On "transforme" l'expression reg. (qui est en type char*) en type char group.
-      lexemes_q=enqueue(lexemes_q,lexeme); // On insère ce lexème dans la file.
+      struct lexeme_config * lexeme_config; // On crée un type lexeme_config
+      lexeme_config=calloc(1,sizeof(*lexeme_config)); // On lui alloue de la mémoire
+      strcpy(lexeme_config->regexp_name,comment_test); // Et on stock son nom
+      fscanf(fichier,"%s",lexeme_config->regexp_str); // ainsi que son expression régulière
+      lexeme_config->queue_regexp=re_read(lexeme_config->regexp_str); // On "transforme" l'expression reg. (qui est en type char*) en type char group.
+      lexemes_q=enqueue(lexemes_q,lexeme_config); // On insère ce lexème dans la file.
     }
     else // Sinon on stock cette ligne dans une variable tampon qu'on n'utilisera pas.
     {
