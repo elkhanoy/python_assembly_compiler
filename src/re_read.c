@@ -5,8 +5,9 @@ queue_t re_read(char* regexp) //Fonction traduisant une expression régulière e
   char*pregexp=regexp; //Pointeur sur les caractères successifs formant l'expression régulière
   queue_t regexp_q=queue_new(); //Queue représentant les groupes formant la regexp prise en paramètre
 
-  while((*regexp)!='\0') //Tant que l'on n'est pas à la fin de l'expression régulière prise en paramètre
+  while((*pregexp)!='\0') //Tant que l'on n'est pas à la fin de l'expression régulière prise en paramètre
   {
+    printf("\n%s\n",pregexp);
     // 1 - Cas des caractères de la regexp situés à l'extérieur d'un groupe de caractères placé entre crochets:
     // 1.1 - Sous-cas de l'échappement par un backslash de caractères ayant une signification particulière
     if(*pregexp=='\\')
@@ -224,6 +225,9 @@ queue_t re_read(char* regexp) //Fonction traduisant une expression régulière e
     set_occurence(pregexp,subregexp);
     regexp_q=enqueue(regexp_q,subregexp);
     pregexp=pregexp+1;
+  }
+  else{ // Si aucun des cas précedents n'est vérifé, alors il s'agit d'un seul caractère n'ayant pas de signification particulière
+    
   }
   }
   return regexp_q;
