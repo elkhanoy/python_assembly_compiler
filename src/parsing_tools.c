@@ -16,7 +16,7 @@ lexem_t lexem_advance(list_t *lexems)
 // Déterminer si le prochain lexème utile est bien du type demandé
 int next_lexem_is(list_t *lexems, char *type)
 {
-  if(((*lexems)->content)->type == (*type))
+  if(strcmp(((*lexems)->content)->type, (*type)))
   {
     return 0;
   }
