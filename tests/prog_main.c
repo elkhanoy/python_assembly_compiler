@@ -57,7 +57,6 @@ int main(int argc,char*argv[]) //Les noms des fichiers source et configuration s
         while(list_lexemes && !re_match(((struct lexeme_config*)(list_lexemes->content))->queue_regexp,ligne_source,end)){
             list_lexemes=list_lexemes->next;
         }
-        colonne+=(*end-ligne_source);
         // Si on est arrivé à la fin de la liste des lexemes c'est qu'on a pas trouvé de lexème et on informe l'utilisateur.
         if(!list_lexemes){
           printf("Erreur, lexeme non identifié ligne %d colonne %d",ligne,colonne);
@@ -69,6 +68,7 @@ int main(int argc,char*argv[]) //Les noms des fichiers source et configuration s
         // Sinon, on stock ce lexeme dans la liste des lexemes identifiés.
         strncpy(lexem_value,ligne_source,(*end-ligne_source));
         queue_lexemes_identifies=enqueue(queue_lexemes_identifies,lexem_new(((struct lexeme_config*)(list_lexemes->content))->regexp_name,lexem_value,ligne,colonne));
+        colonne+=(*end-ligne_source);
         ligne_source = (*end);
       }
   }
