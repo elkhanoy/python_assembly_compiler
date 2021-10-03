@@ -27,6 +27,7 @@ extern "C" {
 #include <pyas/lecture_fichier.h>
 #include <pyas/re_match.h>
 #include <pyas/re_read.h>
+#include <pyas/lex.h>
 
 #ifdef __cplusplus
 }
