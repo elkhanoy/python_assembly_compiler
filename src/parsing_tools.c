@@ -8,7 +8,6 @@ lexem_t lexem_peek(list_t *lexems)
 lexem_t lexem_advance(list_t *lexems)
 {
   lexem_t first_prev_list_p=(*lexem); // Pointeur retenant l'ancien premier élément de la liste
-  first_prev_list_p->next=NULL;
   (*lexems)=(*lexems)->next; //Nouvelle tête de liste
   return first_prev_list_p;
 }
