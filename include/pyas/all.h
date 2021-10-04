@@ -28,6 +28,7 @@ extern "C" {
 #include <pyas/re_match.h>
 #include <pyas/re_read.h>
 #include <pyas/lex.h>
+#include <pyas/parsing_tools.h>
 
 #ifdef __cplusplus
 }

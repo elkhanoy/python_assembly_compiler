@@ -79,6 +79,9 @@ queue_t queue_delete(queue_t q) {
 
 
 list_t  queue_to_list( queue_t q ) {
+  if(!q){
+    return q;
+  }
   list_t l = list_new();
   l=q->next;
   q->next=NULL;

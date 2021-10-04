@@ -60,6 +60,7 @@
           }
       }
       fclose(source_f);
+      free(ligne_source);
       list_delete(list_lexemes,lexeme_conf_delete);
       return queue_lexemes_identifies;
     }

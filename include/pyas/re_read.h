@@ -16,4 +16,4 @@ typedef struct char_group{
 
 void set_occurence(char*regexp,char_group_t * subgroup);
 void ini_char_group(char_group_t * mini_regexp, bool booleen);
-queue_t re_read(char* regexp);
+queue_t re_read(char* regexp, queue_t regexp_q);

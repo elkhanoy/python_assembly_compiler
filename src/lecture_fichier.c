@@ -14,6 +14,11 @@ int lexeme_conf_delete(void * _lexeme_config){
   return 1;
 }
 
+int regexp_print (void * _regexp_q){
+  char_group_t * regexp = _regexp_q;
+  return printf("\t %d",((regexp->group)[(int)'#']));
+}
+
 int char_group_delete(void * _char_group){
   char_group_t * chargrp = _char_group;
   free(chargrp);
@@ -44,7 +49,11 @@ queue_t lecture_fichier_conf(queue_t lexemes_q, char * config)
       lexeme_config=calloc(1,sizeof(*lexeme_config)); // On lui alloue de la mémoire
       strcpy(lexeme_config->regexp_name,comment_test); // Et on stock son nom
       fscanf(fichier,"%s",lexeme_config->regexp_str); // ainsi que son expression régulière
-      lexeme_config->queue_regexp=re_read(lexeme_config->regexp_str); // On "transforme" l'expression reg. (qui est en type char*) en type char group.
+      lexeme_config->queue_regexp=re_read(lexeme_config->regexp_str,lexeme_config->queue_regexp); // On "transforme" l'expression reg. (qui est en type char*) en type char group.
+      printf("\n %s",lexeme_config->regexp_str);
+      printf("\n %p \t",lexeme_config->queue_regexp);
+      lexeme_config->queue_regexp=queue_to_list(lexeme_config->queue_regexp);
+      list_print(lexeme_config->queue_regexp,regexp_print);
       lexemes_q=enqueue(lexemes_q,lexeme_config); // On insère ce lexème dans la file.
     }
     else // Sinon on stock cette ligne dans une variable tampon qu'on n'utilisera pas.
