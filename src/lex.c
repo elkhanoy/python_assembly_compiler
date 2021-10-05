@@ -15,6 +15,7 @@
       queue_lexemes=lecture_fichier_conf(queue_lexemes, config_name); //Appel de la fonction re_read dans la fonction lecture_fichier_conf
       list_t list_lexemes=NULL;
       list_lexemes=queue_to_list(queue_lexemes); // On converti la queue en liste.
+      list_t debut_list_lexemes=list_lexemes;
       if(!list_lexemes)
       {
         printf("Erreur");
@@ -30,7 +31,7 @@
       }
 
       // 5 - Copie du fichier source dans un tableau alloué de char
-      // 5.1 - Détermination de la longueur du fichier source
+      // 5.1 - Détermination de la longueur du fichier source*
 
       //################## DEBUT VERSION YASSINE ###############################
       // Initialisation de variables servant a extraire le Nº de ligne et colonne.
@@ -40,16 +41,15 @@
         ligne++; // On incrémente le compteur ligne au fur et à mesure qu'on lit une nouvelle ligne.
         colonne=0; // On remet le compteur colonne à zéro.
         fgets(ligne_source,254,source_f); // On lit une ligne de source_f et on la stock dans la variable ligne_source
-          while(*ligne_source!='\0'){ // Tant qu'on est pas a la fin de la ligne...
+          while(*ligne_source!='\n'){ // Tant qu'on est pas a la fin de la ligne...
             //On test ensuite si on est pas arrivé à la fin des lexemes ou si on a trouvé un lexeme correspondant.
             while(list_lexemes && !re_match(((struct lexeme_config*)(list_lexemes->content))->queue_regexp,ligne_source,end)){
-                list_lexemes=list_lexemes->next;            }
+                list_lexemes=list_lexemes->next;
+            }
             // Si on est arrivé à la fin de la liste des lexemes c'est qu'on a pas trouvé de lexème et on informe l'utilisateur.
             if(!list_lexemes){
-              printf("Erreur, lexeme non identifié ligne %d colonne %d",ligne,colonne);
-              list_delete(queue_lexemes_identifies,lexem_delete);
+              printf("\nErreur, lexeme non identifié ligne %d colonne %d\n",ligne,colonne);
               fclose(source_f);
-              list_delete(list_lexemes,lexeme_conf_delete);
               return NULL;
             }
             // Sinon, on stock ce lexeme dans la liste des lexemes identifiés.
@@ -57,8 +57,14 @@
             queue_lexemes_identifies=enqueue(queue_lexemes_identifies,lexem_new(((struct lexeme_config*)(list_lexemes->content))->regexp_name,lexem_value,ligne,colonne));
             colonne+=(*end-ligne_source);
             ligne_source = (*end);
-            *end=NULL;
+            list_lexemes=debut_list_lexemes;
+            while(*ligne_source==' '){
+              queue_lexemes_identifies=enqueue(queue_lexemes_identifies,lexem_new("blank"," ",ligne,colonne));
+              colonne++;
+              ligne_source++;
+            }
           }
+        queue_lexemes_identifies=enqueue(queue_lexemes_identifies,lexem_new("newline","\n",ligne,colonne));
       }
       fclose(source_f);
       free(ligne_source);

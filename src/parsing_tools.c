@@ -1,4 +1,6 @@
-/*// Renvoyer le prochain lexeme sans l'enlever de la liste
+#include <pyas/all.h>
+/*
+// Renvoyer le prochain lexeme sans l'enlever de la liste
 lexem_t lexem_peek(list_t *lexems)
 {
   return (*lexems)->next;

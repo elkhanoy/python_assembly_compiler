@@ -1,4 +1,6 @@
-/*//〈pys〉: :=〈eol〉〈prologue〉〈code〉
+#include <pyas/all.h>
+/*
+//〈pys〉: :=〈eol〉〈prologue〉〈code〉
 int parse_pys(list_t * lexems)
 {
   printf("Parsing pys expression \n");
@@ -159,7 +161,6 @@ int parse_set_version_pyvm(list_t * lexems)
     return -1;
   }
   return 0;
-  }
 
 }
 //〈set-flags〉: :=  {‘dir::set’} {‘blank’} {‘flags’} {‘blank’} {‘integer::hex’}〈eol〉
@@ -630,7 +631,7 @@ int parse_constant(list_t*lexems)
   return -1;
 }
 //〈list〉: :=  {‘brack::left’}〈constant〉* {‘brack::right’}
-int parse_list(list_t*list)
+int parse_list(list_t*lexems)
 {
   printf("Parsing List\n");
   if(0==next_lexem_is(lexems, "brack::left"))
@@ -885,6 +886,6 @@ return 0;
 int parse_eol(list_t*lexems)
 {
   printf("Parsing eol\n");
-  while()
+  //while()
 }
 */
