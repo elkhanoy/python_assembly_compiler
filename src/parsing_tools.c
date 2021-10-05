@@ -1,4 +1,4 @@
-// Renvoyer le prochain lexeme sans l'enlever de la liste
+/*// Renvoyer le prochain lexeme sans l'enlever de la liste
 lexem_t lexem_peek(list_t *lexems)
 {
   return (*lexems)->next;
@@ -29,3 +29,4 @@ void print_parse_error(char *msg, list_t *lexems)
   printf("%s \n",(*msg));
   printf("Les coordonnées du lexème en tête de liste sont: ligne: %d et colonne: %d \n", ((*lexems)->content)->line,((*lexems)->content)->column);
 }
+*/

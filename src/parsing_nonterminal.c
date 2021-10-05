@@ -1,4 +1,4 @@
-//〈pys〉: :=〈eol〉〈prologue〉〈code〉
+/*//〈pys〉: :=〈eol〉〈prologue〉〈code〉
 int parse_pys(list_t * lexems)
 {
   printf("Parsing pys expression \n");
@@ -887,3 +887,4 @@ int parse_eol(list_t*lexems)
   printf("Parsing eol\n");
   while()
 }
+*/

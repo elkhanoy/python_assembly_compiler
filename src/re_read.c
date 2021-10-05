@@ -13,12 +13,10 @@ queue_t re_read(char* regexp, queue_t regexp_q) //Fonction traduisant une expres
     {
       //Cas des sept caractères pouvant être échappés après le backslash
       char_group_t * subregexp=calloc(1,sizeof(*subregexp)); //Création d'un espace mémoire pour un sous-groupe pour la regexp étudiée
-      printf("\n '%c' est le caractère après backslash\n",*(pregexp+1));
-      switch((*pregexp+1))
+      switch(*(pregexp+1))
       {
             case '*':
 
-              printf("\tOn est rentré dans etoileeee\t");
               ini_char_group(subregexp,0); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
               subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
               set_occurence(pregexp,subregexp);
@@ -28,7 +26,6 @@ queue_t re_read(char* regexp, queue_t regexp_q) //Fonction traduisant une expres
 
             case '.':
 
-              printf("\tOn est rentré dans point\t");
               ini_char_group(subregexp,0); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
               subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
               set_occurence(pregexp,subregexp);
@@ -83,7 +80,6 @@ queue_t re_read(char* regexp, queue_t regexp_q) //Fonction traduisant une expres
 
             default: //Si le backslah n'a pas vocation à echapper le caractère qui le suit
 
-              printf("\nOn est rentré dans DEFAULT\n");
               ini_char_group(subregexp,0); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
               subregexp->group[(int)*pregexp]=1; //Booléen 1 mis dans la case dont l'indice correxpond au caractère backslash
               set_occurence(pregexp,subregexp);

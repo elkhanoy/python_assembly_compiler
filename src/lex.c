@@ -3,6 +3,8 @@
   queue_t lex(char * config_name, char * source_name, queue_t queue_lexemes_identifies){
     // 1 - Déclaration des variables utilisées pour les fonctions définies dans les fichiers .c
       char ** end=NULL;
+      end=calloc(1,sizeof(*end));
+      *end=NULL;
       char * ligne_source;
       ligne_source=calloc(256,sizeof(*ligne_source));
       char lexem_value[256];
@@ -34,16 +36,14 @@
       // Initialisation de variables servant a extraire le Nº de ligne et colonne.
       int ligne=0;
       int colonne=0;
-      while(feof(source_f)){
+      while(!feof(source_f)){
         ligne++; // On incrémente le compteur ligne au fur et à mesure qu'on lit une nouvelle ligne.
         colonne=0; // On remet le compteur colonne à zéro.
-        fgets(ligne_source,256,source_f); // On lit une ligne de source_f et on la stock dans la variable ligne_source
-
+        fgets(ligne_source,254,source_f); // On lit une ligne de source_f et on la stock dans la variable ligne_source
           while(*ligne_source!='\0'){ // Tant qu'on est pas a la fin de la ligne...
             //On test ensuite si on est pas arrivé à la fin des lexemes ou si on a trouvé un lexeme correspondant.
             while(list_lexemes && !re_match(((struct lexeme_config*)(list_lexemes->content))->queue_regexp,ligne_source,end)){
-                list_lexemes=list_lexemes->next;
-            }
+                list_lexemes=list_lexemes->next;            }
             // Si on est arrivé à la fin de la liste des lexemes c'est qu'on a pas trouvé de lexème et on informe l'utilisateur.
             if(!list_lexemes){
               printf("Erreur, lexeme non identifié ligne %d colonne %d",ligne,colonne);
@@ -57,10 +57,12 @@
             queue_lexemes_identifies=enqueue(queue_lexemes_identifies,lexem_new(((struct lexeme_config*)(list_lexemes->content))->regexp_name,lexem_value,ligne,colonne));
             colonne+=(*end-ligne_source);
             ligne_source = (*end);
+            *end=NULL;
           }
       }
       fclose(source_f);
       free(ligne_source);
+      free(end);
       list_delete(list_lexemes,lexeme_conf_delete);
       return queue_lexemes_identifies;
     }

@@ -2,16 +2,20 @@
 
 int re_match_zero_or_more ( queue_t queue_regexp, char*source , char ** end )
 {
-    *end=source;
-    while(('\0' != **end) && (((char_group_t*)queue_regexp->content)->group[(int)**end]==1))
+  *end=source;
+  if(((char_group_t*)queue_regexp->content)->group[(int)**end]==1)
+  {
+      while(('\0' != **end) && (((char_group_t*)queue_regexp->content)->group[(int)**end]==1))
     {
       (*end)++;
     }
-    do
+    return re_match(queue_regexp->next,*end,end);
+  }
+    /*do
     {
       if(re_match(queue_regexp,*end,end))
       return 1;
-    } while(*end-- > source);
+    } while(*end-- > source); */
     return 0;
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,6 +53,9 @@ int re_match(queue_t queue_regexp, char*source, char **end)
  {
    *end=source;
    return 1;
+ }
+ if(*source=='\0'){
+   return 0;
  }
  if(((char_group_t*)(queue_regexp->content))->occurence==ONE_OR_MORE)
  {

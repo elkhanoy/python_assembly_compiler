@@ -50,10 +50,10 @@ queue_t lecture_fichier_conf(queue_t lexemes_q, char * config)
       strcpy(lexeme_config->regexp_name,comment_test); // Et on stock son nom
       fscanf(fichier,"%s",lexeme_config->regexp_str); // ainsi que son expression régulière
       lexeme_config->queue_regexp=re_read(lexeme_config->regexp_str,lexeme_config->queue_regexp); // On "transforme" l'expression reg. (qui est en type char*) en type char group.
-      printf("\n %s",lexeme_config->regexp_str);
-      printf("\n %p \t",lexeme_config->queue_regexp);
+      //printf("\n %s",lexeme_config->regexp_str);
+      //printf("\n %p \t",lexeme_config->queue_regexp);
       lexeme_config->queue_regexp=queue_to_list(lexeme_config->queue_regexp);
-      list_print(lexeme_config->queue_regexp,regexp_print);
+      //list_print(lexeme_config->queue_regexp,regexp_print);
       lexemes_q=enqueue(lexemes_q,lexeme_config); // On insère ce lexème dans la file.
     }
     else // Sinon on stock cette ligne dans une variable tampon qu'on n'utilisera pas.
