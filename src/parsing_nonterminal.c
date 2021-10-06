@@ -1,5 +1,5 @@
 #include <pyas/all.h>
-/*
+
 //〈pys〉: :=〈eol〉〈prologue〉〈code〉
 int parse_pys(list_t * lexems)
 {
@@ -63,7 +63,7 @@ int parse_prologue(list_t * lexems)
     return -1;
   }
   lexem_advance(lexems);
-  if(-1==parse_cellevars(lexems))
+  if(-1==parse_cellvars(lexems))
   {
     return -1;
   }
@@ -161,7 +161,6 @@ int parse_set_version_pyvm(list_t * lexems)
     return -1;
   }
   return 0;
-
 }
 //〈set-flags〉: :=  {‘dir::set’} {‘blank’} {‘flags’} {‘blank’} {‘integer::hex’}〈eol〉
 int parse_set_flags(list_t * lexems)
@@ -262,7 +261,7 @@ int parse_set_filename(list_t * lexems)
   return 0;
 }
 //〈set-name〉: :=  {‘dir::set’} {‘blank’} {‘name’} {‘blank’} {‘string’}〈eol〉
-int parse_set_names(list_t * lexems)
+int parse_set_name(list_t * lexems)
 {
   if(0==next_lexem_is(lexems, "dir::set"))
   {
@@ -620,7 +619,7 @@ int parse_constant(list_t*lexems)
   {
     return 0;
   }
-  if(parse_liste(lexems)==0)
+  if(parse_list(lexems)==0)
   {
     return 0;
   }
@@ -675,7 +674,7 @@ int parse_tuple(list_t*lexems)
   return 0;
 }
 //〈names〉: :=  {‘dir::names’}〈eol〉( {‘string’}〈eol〉)*
-int parse_name(list_t*lexems)
+int parse_names(list_t*lexems)
 {
   printf("Parsing names\n");
   if(next_lexem_is(lexems,"dir::names")==0)
@@ -877,15 +876,20 @@ int parse_insn(list_t*lexems)
   }
   lexem_advance(lexems);
   if((-1==next_lexem_is(lexems,"integer::dec"))||(-1==next_lexem_is(lexems,"symbol")))
-{
-  return -1;
-}
-return 0;
+  {
+    return -1;
+  }
+  return 0;
 }
 //〈eol〉: :=  ([{‘blank’}] [{‘comment’}] {‘newline’})* [{‘blank’}]
 int parse_eol(list_t*lexems)
 {
   printf("Parsing eol\n");
-  //while()
+
+  if(0==next_lexem_is(lexems,"blank"))
+  {
+    return 0;
+  }
+  return -1;
+
 }
-*/

@@ -6,7 +6,9 @@
       end=calloc(1,sizeof(*end));
       *end=NULL;
       char * ligne_source;
+      char * ligne_source_ori;
       ligne_source=calloc(256,sizeof(*ligne_source));
+      ligne_source_ori=ligne_source;
       char lexem_value[256];
       queue_t queue_lexemes=NULL; //Queue de lexemes créée par la lecture du fichier de configuration
 
@@ -50,6 +52,9 @@
             if(!list_lexemes){
               printf("\nErreur, lexeme non identifié ligne %d colonne %d\n",ligne,colonne);
               fclose(source_f);
+              free(end);
+              free(ligne_source_ori);
+              list_delete(list_lexemes,lexeme_conf_delete);
               return NULL;
             }
             // Sinon, on stock ce lexeme dans la liste des lexemes identifiés.
@@ -67,7 +72,7 @@
         queue_lexemes_identifies=enqueue(queue_lexemes_identifies,lexem_new("newline","\n",ligne,colonne));
       }
       fclose(source_f);
-      free(ligne_source);
+      free(ligne_source_ori);
       free(end);
       list_delete(list_lexemes,lexeme_conf_delete);
       return queue_lexemes_identifies;
