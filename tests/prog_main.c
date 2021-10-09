@@ -14,7 +14,7 @@ int main(int argc,char*argv[]) //Les noms des fichiers source et configuration s
   strcpy(config_name,argv[1]); //Copie du nom du fichier de configuration pris en paramètre lors de la compilation, dans le tableau
   strcpy(source_name,argv[2]); //Copie du nom du fichier source pris en paramètre lors de la compilation, dans le tableau
   if((queue_lexemes_identifies=lex(config_name,source_name,queue_lexemes_identifies))){
-    queue_to_list(queue_lexemes_identifies);
+    queue_lexemes_identifies=queue_to_list(queue_lexemes_identifies);
     list_print(queue_lexemes_identifies,lexem_print);
     list_delete(queue_lexemes_identifies,lexem_delete);
     return 1;
