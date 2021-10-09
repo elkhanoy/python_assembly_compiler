@@ -1,12 +1,11 @@
 .set version_pyvm 62211
 .set flags 0x00000040
 .set filename "totor.py"
-.set name "<module >"
+.set name "<module>"
 .set stack_size 2
 .interned
 "a"
 "b"
-
 .consts
   2
   4
