@@ -124,23 +124,7 @@ int parse_set_version_pyvm(list_t * lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(0==next_lexem_is(lexems, "blank"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
   if(0==next_lexem_is(lexems, "version_pyvm"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
-  if(0==next_lexem_is(lexems, "blank"))
   {
     lexem_advance(lexems);
   }
@@ -173,23 +157,7 @@ int parse_set_flags(list_t * lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(0==next_lexem_is(lexems, "blank"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
   if(0==next_lexem_is(lexems, "flags"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
-  if(0==next_lexem_is(lexems, "blank"))
   {
     lexem_advance(lexems);
   }
@@ -222,23 +190,7 @@ int parse_set_filename(list_t * lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(0==next_lexem_is(lexems, "blank"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
   if(0==next_lexem_is(lexems, "filename"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
-  if(0==next_lexem_is(lexems, "blank"))
   {
     lexem_advance(lexems);
   }
@@ -271,23 +223,7 @@ int parse_set_name(list_t * lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(0==next_lexem_is(lexems, "blank"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
   if(0==next_lexem_is(lexems, "name"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
-  if(0==next_lexem_is(lexems, "blank"))
   {
     lexem_advance(lexems);
   }
@@ -320,23 +256,7 @@ int parse_set_source_size(list_t * lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(0==next_lexem_is(lexems, "blank"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
   if(0==next_lexem_is(lexems, "source_size"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
-  if(0==next_lexem_is(lexems, "blank"))
   {
     lexem_advance(lexems);
   }
@@ -369,23 +289,7 @@ int parse_set_stack_size(list_t * lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(0==next_lexem_is(lexems, "blank"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
   if(0==next_lexem_is(lexems, "stack_size"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
-  if(0==next_lexem_is(lexems, "blank"))
   {
     lexem_advance(lexems);
   }
@@ -418,23 +322,7 @@ int parse_set_arg_count(list_t*lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(0==next_lexem_is(lexems, "blank"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
   if(0==next_lexem_is(lexems, "arg_count"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
-  if(0==next_lexem_is(lexems, "blank"))
   {
     lexem_advance(lexems);
   }
@@ -467,23 +355,7 @@ int parse_set_kwonly_arg_count(list_t*lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(0==next_lexem_is(lexems, "blank"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
   if(0==next_lexem_is(lexems, "kwonly_arg_count"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
-  if(0==next_lexem_is(lexems, "blank"))
   {
     lexem_advance(lexems);
   }
@@ -516,23 +388,7 @@ int parse_set_posonly_arg_count(list_t*lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(0==next_lexem_is(lexems, "blank"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
   if(0==next_lexem_is(lexems, "posonly_arg_count"))
-  {
-    lexem_advance(lexems);
-  }
-  else
-  {
-    return -1;
-  }
-  if(0==next_lexem_is(lexems, "blank"))
   {
     lexem_advance(lexems);
   }
@@ -876,11 +732,6 @@ int parse_source_lineno(list_t*lexems,pyobj_t obj)
 {
   printf("Parsing Lineno\n");
   if(-1==next_lexem_is(lexems,"dir::line"))
-  {
-    return -1;
-  }
-  lexem_advance(lexems);
-  if(-1==next_lexem_is(lexems,"blank"))
   {
     return -1;
   }
