@@ -554,6 +554,31 @@ int parse_set_posonly_arg_count(list_t*lexems)
   }
   return 0;
 }
+
+int parse_set(list_t * lexems, pyobj_t obj) {
+  if(0==next_lexem_is(lexems, "dir::set"))
+  {
+    lexem_advance(lexems);
+  }
+  else
+  {
+    return -1;
+  }
+  if(0==next_lexem_is(lexems, "posonly_arg_count"))
+  {
+    obj->binary.header.content.posonly_arg_count =
+    lexem_advance(lexems);
+    return 0;
+  }
+  if(0==next_lexem_is(lexems, "arg_count"))
+  {
+    lexem_advance(lexems);
+    return 0;
+  }
+
+}
+
+
 //〈interned-strings〉: :=  {‘dir::interned’}〈eol〉( {‘string’}〈eol〉)*
 int parse_interned_strings(list_t*lexems)
 {
@@ -884,12 +909,10 @@ int parse_insn(list_t*lexems)
 //〈eol〉: :=  ([{‘blank’}] [{‘comment’}] {‘newline’})* [{‘blank’}]
 int parse_eol(list_t*lexems)
 {
-  printf("Parsing eol\n");
-
-  if(0==next_lexem_is(lexems,"blank"))
-  {
-    return 0;
+  while ( next_lexem_is( lexems, "newline" ) ) {
+      *lexems = (*lexems)->next;
   }
-  return -1;
+  printf("Parsing eol\n");
+  while()
 
 }
