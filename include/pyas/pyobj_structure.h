@@ -1,37 +1,8 @@
-typedef unsigned int pyobj_type ;
+typedef unsigned int pyobj_type;
 
 struct pyobj_t ;
 typedef struct pyobj * pyobj_t ;
 
-
-struct pyobj {
-  pyobj_type type ;
-  unsigned int refcount ;
-  union {
-    struct {
-      pyobj_t * value ;
-      int32_t size ;
-    } list ;
-
-    struct {
-      char * buffer ;
-      int length ;
-    } string ;
-    py_codeblock * codeblock ;
-
-    union {
-      int32_t integer ;
-      int64_t integer64 ;
-      double real ;
-      struct {
-        double real ;
-        double imag ;
-      } complex ;
-    } number ;
-  } py;
-};
-
-////////////////////////////////////
 
 typedef struct {
   int version_pyvm ;
@@ -65,5 +36,35 @@ typedef struct {
     } trailer ;
   } binary ;
 } py_codeblock ;
+
+
+struct pyobj {
+  pyobj_type type ;
+  unsigned int refcount ;
+  union {
+    struct {
+      pyobj_t * value ;
+      int32_t size ;
+    } list ;
+
+    struct {
+      char * buffer ;
+      int length ;
+    } string ;
+    py_codeblock * codeblock ;
+
+    union {
+      int32_t integer ;
+      int64_t integer64 ;
+      double real ;
+      struct {
+        double real ;
+        double imag ;
+      } complex ;
+    } number ;
+  } py;
+};
+
+////////////////////////////////////
 
 //////////////////////////////////////////////////////////

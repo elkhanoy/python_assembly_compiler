@@ -16,10 +16,13 @@ extern "C" {
 #endif
 
 #include <assert.h>
+#include <stdint.h>
 #include <string.h>
+#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <pyas/pyobj_structure.h>
 #include <pyas/callbacks.h>
 #include <pyas/list.h>
 #include <pyas/queue.h>

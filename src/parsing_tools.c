@@ -36,9 +36,8 @@ lexem_t lexem_advance(list_t *lexems)
 // }
 int next_lexem_is(list_t *lexems, char *type)
 {
-  list_t lex_l=*lexems;
-  while(!strcmp((((struct lexem*)((lexems)->next->content))->type),"blank") || !strcmp((((struct lexem*)((*lexems)->next->content))->type),"comment")){
-    *lexems=*lexems->next;
+  while(!strcmp((((struct lexem*)((*lexems)->next->content))->type),"blank") || !strcmp((((struct lexem*)((*lexems)->next->content))->type),"comment")){
+    *lexems=(*lexems)->next;
   }
   if(strcmp(( (struct lexem*)((*lexems)->next->content) )->type, type))
   {

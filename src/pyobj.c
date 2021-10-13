@@ -1,22 +1,22 @@
+#include <pyas/all.h>
+
 pyobj_t pyobj_new_string(char *str){
-	pyobj_t obj_string = calloc(1,sizeof(*pyobj_t));
-	obj_string->py.string = calloc(1,sizeof(obj_string->py.string));
+	pyobj_t obj_string = calloc(1,sizeof(pyobj_t));
 	obj_string->py.string.buffer = calloc(strlen(str),sizeof(char));
-	obj_string->py.string.length = calloc(1,sizeof(int));
 	strcpy(obj_string->py.string.buffer, str);
 	obj_string->py.string.length = strlen(str);
 	return obj_string;
 }
 
 
+
 pyobj_t pyobj_new_int(char *str){
-	pyobj_t obj_int = calloc(1,sizeof(*pyobj_t));
-	obj_int->py.number = calloc(1,sizeof(obj_int->py.number));
-	obj_int->py.number.integer = calloc(1,sizeof(obj_int->py.number.integer));
+	pyobj_t obj_int = calloc(1,sizeof(pyobj_t));
+	(int32_t)(obj_int->py.number.integer) = calloc(1,sizeof(int32_t));
 	sscanf(str, "%d", &obj_int->py.number.integer);
 	return obj_int;
 }
-
+/*
 pyobj_t pyobj_new_float(char *str){
 	pyobj_t obj_float = calloc(1,sizeof(*pyobj_t));
 	obj_float->py.number = calloc(1,sizeof(obj_float->py.number));
@@ -90,7 +90,7 @@ pyobj_t pyobj_names(list *lexem_str){ // Une liste de valeurs de lexem reconnu d
 	obj_names->py.list = pyobj_new_list(&objs_pyth);
 	return obj_names;
 }
-
+*/
 
 /*pyobj_t pyobj_codeblock(****){
 	pyobj_t obj_code = calloc(1,sizeof(*pyobj_t));
@@ -118,4 +118,5 @@ pyobj_t pyobj_names(list *lexem_str){ // Une liste de valeurs de lexem reconnu d
 	obj_code->py.py_codeblock.trailer.lnotab = ;
 
 	return obj_code;
-}*/
+}
+*/
