@@ -1,5 +1,5 @@
 #include <pyas/all.h>
-
+/*
 //〈pys〉: :=〈eol〉〈prologue〉〈code〉
 int parse_pys(list_t * lexems,pyobj_t obj)
 {
@@ -770,3 +770,4 @@ int parse_eol(list_t*lexems, pyobj_t obj)
   }
   return 0;
 }
+*/
