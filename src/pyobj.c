@@ -18,23 +18,23 @@ pyobj_t pyobj_new_int(char *str){
 }
 
 pyobj_t pyobj_new_float(char *str){
-	pyobj_t obj_float = calloc(1,sizeof(*pyobj_t));
-	sscanf(str, "%f", &obj_float->py.number.real);
+	pyobj_t obj_float = calloc(1,sizeof(*obj_float));
+	sscanf(str, "%lf", &obj_float->py.number.real);
 	return obj_float;
 }
 
 pyobj_t pyobj_new_complex(char *str){
-	pyobj_t obj_complex = calloc(1,sizeof(*pyobj_t));
-	sscanf(str, "%f", &obj_complex->py.number.complex.real);
-	sscanf(str, "%f", &obj_complex->py.number.complex.imag);
+	pyobj_t obj_complex = calloc(1,sizeof(pyobj_t));
+	sscanf(str, "%lf", &obj_complex->py.number.complex.real);
+	sscanf(str, "%lf", &obj_complex->py.number.complex.imag);
 	return obj_complex;
 }
 
 
 pyobj_t pyobj_new_list(list_t list_obj_pyth){ // Une liste d'object python
-	pyobj_t obj_list = calloc(1,sizeof(*pyobj_t));
+	pyobj_t obj_list = calloc(1,sizeof(pyobj_t));
 	obj_list->py.list.size = list_length(list_obj_pyth);
-	obj_list->py.list.value = calloc(obj_list->py.string.size,sizeof(obj_list->py.list.value));
+	obj_list->py.list.value = calloc(obj_list->py.list.size,sizeof(obj_list->py.list.value));
 	int k = 0;
 	while(!(list_empty(list_obj_pyth))){
 		obj_list->py.list.value[k] = list_first(list_obj_pyth);
@@ -44,12 +44,12 @@ pyobj_t pyobj_new_list(list_t list_obj_pyth){ // Une liste d'object python
 	return obj_list;
 }
 
-pyobj_t pyobj_interned(list_t lexem_str){ // Une liste de valeurs de lexem reconnu dans interned strings
+pyobj_t pyobj_interned(list_t *lexem_str){ // Une liste de valeurs de lexem reconnu dans interned strings
 
 	queue_t objs_pyth = NULL;
-	while(((lexem_t*)(lexem_peek(lexem_str)))->type=="string"){
-		objs_pyth = enqueue(objs_pyth , pyobj_new_string(list_first(lexem_str)));
-		lexem_str = list_next(lexem_str);
+	while(!strcmp(((lexem_t)(lexem_peek(lexem_str)))->type,"string")){
+		objs_pyth = enqueue(objs_pyth , pyobj_new_string(list_first(*lexem_str)));
+		*lexem_str = list_next(*lexem_str);
 	}
 	objs_pyth=queue_to_list(objs_pyth);
 
@@ -57,19 +57,19 @@ pyobj_t pyobj_interned(list_t lexem_str){ // Une liste de valeurs de lexem recon
 	return obj_interned;
 }
 
-pyobj_t pyobj_consts(list *lexem_str){ // Une liste de valeurs de lexem reconnu dans consts
+pyobj_t pyobj_consts(list_t *lexem_str){ // Une liste de valeurs de lexem reconnu dans consts
 
 	queue_t objs_pyth = NULL;
-	while(((lexem_t*)(lexem_peek(lexem_str)))->type=="number::integer" || ((lexem_t*)(lexem_peek(lexem_str)))->type=="number::float"){
-		if(((lexem_t*)(lexem_peek(lexem_str)))->type=="number::integer")
+	while(!strcmp(((lexem_t)(lexem_peek(lexem_str)))->type,"number::integer") || !strcmp(((lexem_t)(lexem_peek(lexem_str)))->type,"number::float")){
+		if(!strcmp(((lexem_t)(lexem_peek(lexem_str)))->type,"number::integer"))
 		{
-			objs_pyth = enqueue(objs_pyth , pyobj_new_int(list_first(lexem_str)));
-			lexem_str = list_next(lexem_str);
+			objs_pyth = enqueue(objs_pyth , pyobj_new_int(list_first(*lexem_str)));
+			*lexem_str = list_next(*lexem_str);
 		}
-		if(((lexem_t*)(lexem_peek(lexem_str)))->type=="number::float")
+		if(!strcmp(((lexem_t)(lexem_peek(lexem_str)))->type,"number::float"))
 		{
-			objs_pyth = enqueue(objs_pyth , pyobj_new_float(list_first(lexem_str)));
-			lexem_str = list_next(lexem_str);
+			objs_pyth = enqueue(objs_pyth , pyobj_new_float(list_first(*lexem_str)));
+			*lexem_str = list_next(*lexem_str);
 		}
 	}
 	objs_pyth=queue_to_list(objs_pyth);
@@ -78,12 +78,12 @@ pyobj_t pyobj_consts(list *lexem_str){ // Une liste de valeurs de lexem reconnu 
 	return obj_const;
 }
 
-pyobj_t pyobj_names(list *lexem_str){ // Une liste de valeurs de lexem reconnu dans interned strings
+pyobj_t pyobj_names(list_t *lexem_str){ // Une liste de valeurs de lexem reconnu dans interned strings
 
 		queue_t objs_pyth = NULL;
-		while(((lexem_t*)(lexem_peek(lexem_str)))->type=="string"){
-			objs_pyth = enqueue(objs_pyth , pyobj_new_string(list_first(lexem_str)));
-			lexem_str = list_next(lexem_str);
+		while(!strcmp(((lexem_t)(lexem_peek(lexem_str)))->type,"string")){
+			objs_pyth = enqueue(objs_pyth , pyobj_new_string(list_first(*lexem_str)));
+			*lexem_str = list_next(*lexem_str);
 		}
 		objs_pyth=queue_to_list(objs_pyth);
 
