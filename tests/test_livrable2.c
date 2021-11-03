@@ -23,10 +23,10 @@ int main(int argc,char*argv[]) //Les noms des fichiers source et configuration s
   }
   list_t *lexems=calloc(1,sizeof(*lexems));
   *lexems=queue_lexemes_identifies;
-/*  if(parse_pys(lexems)){
+ if(parse_pys(lexems)){
     printf("Le parser est ok");
     return 1;
-  } */
+  } 
   printf("Not ok");
   return 0;
 }
