@@ -19,7 +19,7 @@ queue_t re_read(char* regexp, queue_t regexp_q) //Fonction traduisant une expres
 
               ini_char_group(subregexp,0); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
               subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
-              set_occurence(pregexp,subregexp);
+              set_occurence(pregexp+1,subregexp);
               regexp_q=enqueue(regexp_q,subregexp); //On enfile un nouveau maillon pointant sur la structure créée à la fin de la queue créée précédemmet
               pregexp=pregexp+2; //Le caractère à l'adresse pregexp+1 ayant déjà été traité
               break;
@@ -28,7 +28,7 @@ queue_t re_read(char* regexp, queue_t regexp_q) //Fonction traduisant une expres
 
               ini_char_group(subregexp,0); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
               subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
-              set_occurence(pregexp,subregexp);
+              set_occurence(pregexp+1,subregexp);
               regexp_q=enqueue(regexp_q,subregexp); //On enfile un nouveau maillon pointant sur la structure créée à la fin de la queue créée précédemmet
               pregexp=pregexp+2; //Le caractère à l'adresse pregexp+1 ayant déjà été traité
               break;
@@ -37,7 +37,7 @@ queue_t re_read(char* regexp, queue_t regexp_q) //Fonction traduisant une expres
 
               ini_char_group(subregexp,0); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
               subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
-              set_occurence(pregexp,subregexp);
+              set_occurence(pregexp+1,subregexp);
               regexp_q=enqueue(regexp_q,subregexp); //On enfile un nouveau maillon pointant sur la structure créée à la fin de la queue créée précédemmet
               pregexp=pregexp+2; //Le caractère à l'adresse pregexp+1 ayant déjà été traité
               break;
@@ -46,7 +46,7 @@ queue_t re_read(char* regexp, queue_t regexp_q) //Fonction traduisant une expres
 
               ini_char_group(subregexp,0); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
               subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
-              set_occurence(pregexp,subregexp);
+              set_occurence(pregexp+1,subregexp);
               regexp_q=enqueue(regexp_q,subregexp); //On enfile un nouveau maillon pointant sur la structure créée à la fin de la queue créée précédemmet
               pregexp=pregexp+2; //Le caractère à l'adresse pregexp+1 ayant déjà été traité
               break;
@@ -55,7 +55,7 @@ queue_t re_read(char* regexp, queue_t regexp_q) //Fonction traduisant une expres
 
               ini_char_group(subregexp,0); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
               subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
-              set_occurence(pregexp,subregexp);
+              set_occurence(pregexp+1,subregexp);
               regexp_q=enqueue(regexp_q,subregexp); //On enfile un nouveau maillon pointant sur la structure créée à la fin de la queue créée précédemmet
               pregexp=pregexp+2; //Le caractère à l'adresse pregexp+1 ayant déjà été traité
               break;
@@ -64,7 +64,7 @@ queue_t re_read(char* regexp, queue_t regexp_q) //Fonction traduisant une expres
 
               ini_char_group(subregexp,0); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
               subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
-              set_occurence(pregexp,subregexp);
+              set_occurence(pregexp+1,subregexp);
               regexp_q=enqueue(regexp_q,subregexp); //On enfile un nouveau maillon pointant sur la structure créée à la fin de la queue créée précédemmet
               pregexp=pregexp+2; //Le caractère à l'adresse pregexp+1 ayant déjà été traité
               break;
@@ -73,16 +73,16 @@ queue_t re_read(char* regexp, queue_t regexp_q) //Fonction traduisant une expres
 
               ini_char_group(subregexp,0); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
               subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
-              set_occurence(pregexp,subregexp);
+              set_occurence(pregexp+1,subregexp);
               regexp_q=enqueue(regexp_q,subregexp); //On enfile un nouveau maillon pointant sur la structure créée à la fin de la queue créée précédemmet
               pregexp=pregexp+2; //Le caractère à l'adresse pregexp+1 ayant déjà été traité
               break;
 
             case '#':
-            
+
               ini_char_group(subregexp,0); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
               subregexp->group[(int)*(pregexp+1)]=1; //Booléen 1 mis dans la case dont l'indice correspond au caractère placé après le bakslash
-              set_occurence(pregexp,subregexp);
+              set_occurence(pregexp+1,subregexp);
               regexp_q=enqueue(regexp_q,subregexp); //On enfile un nouveau maillon pointant sur la structure créée à la fin de la queue créée précédemmet
               pregexp=pregexp+2; //Le caractère à l'adresse pregexp+1 ayant déjà été traité
               break;
@@ -91,7 +91,7 @@ queue_t re_read(char* regexp, queue_t regexp_q) //Fonction traduisant une expres
 
               ini_char_group(subregexp,0); //Initialisation du tableau de booléens présent dans la structure subregexp afin de pouvoir représenter le sous-groupe
               subregexp->group[(int)*pregexp]=1; //Booléen 1 mis dans la case dont l'indice correxpond au caractère backslash
-              set_occurence(pregexp,subregexp);
+              set_occurence(pregexp+1,subregexp);
               regexp_q=enqueue(regexp_q,subregexp);
               pregexp=pregexp+1; //Le pointeur sur les caractères formant la regexp avance d'un cran
         }
@@ -216,8 +216,11 @@ queue_t re_read(char* regexp, queue_t regexp_q) //Fonction traduisant une expres
             subregexp->group[(int)'\t']=1;
             pregexp=pregexp+2;
           }
-
-
+          else if(*(pregexp+1)=='-')
+          {
+            subregexp->group[(int)*(pregexp+1)]=1;
+            pregexp=pregexp+2;
+          }
           else
           {
             subregexp->group[(int)*pregexp]=1;

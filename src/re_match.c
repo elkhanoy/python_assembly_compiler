@@ -12,11 +12,11 @@ int re_match_zero_or_more ( queue_t queue_regexp, char*source , char ** end )
         /*return re_match(queue_regexp->next,*end,end);
       }
       */
-        do{
+        /*do{
           if(re_match(queue_regexp,t,end)){
             return 1;
           }
-        } while(t-- > source);
+        } while(t-- > source); */
         return re_match(queue_regexp->next,t,end);
       }
       return re_match(queue_regexp->next,t++,end);
@@ -34,7 +34,11 @@ int re_match_zero_one_or_one(queue_t queue_regexp, char*source, char**end)
       if(((char_group_t*)queue_regexp->content)->group[(int)*(*end+1)])
         {return 0;}
       else
-        {return re_match(queue_regexp->next,source+1,end);}
+        {
+          if(!re_match(queue_regexp->next,source+1,end)){
+            return re_match(queue_regexp->next,source,end);
+          }
+        }
     }
 }
 ///////////////////////////////////////////////////////////////////////////////
@@ -56,6 +60,18 @@ int re_match(queue_t queue_regexp, char*source, char **end)
  {
    *end=source;
    return 1;
+ }
+ if(*source=='\0')
+ {
+   while(((char_group_t*)(queue_regexp->content))->occurence==ONE_OR_ZERO || ((char_group_t*)(queue_regexp->content))->occurence==ZERO_OR_MORE){
+     if(!(queue_regexp->next)){
+       *end=source;
+       return 1;
+     }
+     queue_regexp=queue_regexp->next;
+   }
+   *end=source;
+   return 0;
  }
  //if(*source=='\n'){
 //   return 0;

@@ -1,20 +1,20 @@
 #include <pyas/all.h>
-/*
+
 //〈pys〉: :=〈eol〉〈prologue〉〈code〉
 int parse_pys(list_t * lexems,pyobj_t obj)
 {
   printf("Parsing pys expression \n");
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
   lexem_advance(lexems);
-  if(-1==parse_prologue(lexems))
+  if(-1==parse_prologue(lexems, obj))
   {
     return -1;
   }
   lexem_advance(lexems);
-  if(-1==parse_code(lexems))
+  if(-1==parse_code(lexems, obj))
   {
     return -1;
   }
@@ -25,45 +25,45 @@ int parse_pys(list_t * lexems,pyobj_t obj)
 int parse_prologue(list_t * lexems,pyobj_t obj)
 {
   printf("Parsing prologue expression \n");
-  if(-1==parse_set_directives(lexems))
+  if(-1==parse_set_directives(lexems, obj))
   {
     return -1;
   }
   lexem_advance(lexems);
-  if(-1==parse_interned_strings(lexems))
+  if(-1==parse_interned_strings(lexems, obj))
   {
     return -1;
   }
   lexem_advance(lexems);
-  if(-1==parse_constants(lexems))
+  if(-1==parse_constants(lexems, obj))
   {
     return -1;
   }
-  if(-1==parse_names(lexems))
+  if(-1==parse_names(lexems, obj))
   {
     return -1;
   }
-  if(-1==parse_constants(lexems))
-  {
-    return -1;
-  }
-  lexem_advance(lexems);
-  if(-1==parse_names(lexems))
+  if(-1==parse_constants(lexems, obj))
   {
     return -1;
   }
   lexem_advance(lexems);
-  if(-1==parse_varnames(lexems))
+  if(-1==parse_names(lexems, obj))
   {
     return -1;
   }
   lexem_advance(lexems);
-  if(-1==parse_freevars(lexems))
+  if(-1==parse_varnames(lexems, obj))
   {
     return -1;
   }
   lexem_advance(lexems);
-  if(-1==parse_cellvars(lexems))
+  if(-1==parse_freevars(lexems, obj))
+  {
+    return -1;
+  }
+  lexem_advance(lexems);
+  if(-1==parse_cellvars(lexems, obj))
   {
     return -1;
   }
@@ -73,40 +73,40 @@ int parse_prologue(list_t * lexems,pyobj_t obj)
 //〈set-directives〉: :=〈set-version-pyvm〉 〈set-flags〉 〈set-filename〉 〈set-name〉[〈set-source-size〉]〈set-stack-size〉 〈set-arg-count〉[set-kwonly-arg-count][set-posonly-arg-count]
 int parse_set_directives(list_t * lexems,pyobj_t obj)
 {
-  if(-1==parse_set_version_pyvm(lexems))
+  if(-1==parse_set_version_pyvm(lexems, obj))
   {
     return -1;
   }
   lexem_advance(lexems);
-  if(-1==parse_set_flags(lexems))
+  if(-1==parse_set_flags(lexems, obj))
   {
     return -1;
   }
   lexem_advance(lexems);
-  if(-1==parse_set_filename(lexems))
+  if(-1==parse_set_filename(lexems, obj))
   {
     return -1;
   }
   lexem_advance(lexems);
-  if(-1==parse_set_name(lexems))
+  if(-1==parse_set_name(lexems, obj))
   {
     return -1;
   }
   lexem_advance(lexems);
-  if(0==parse_set_source_size(lexems))
+  if(0==parse_set_source_size(lexems, obj))
   {
     lexem_advance(lexems);
   }
-  if(-1==parse_set_stack_size(lexems))
+  if(-1==parse_set_stack_size(lexems, obj))
   {
     return -1;
   }
   lexem_advance(lexems);
-  if(-1==parse_set_arg_count(lexems))
+  if(-1==parse_set_arg_count(lexems, obj))
   {
     return -1;
   }
-  if(0==parse_set_kwonly_arg_count(lexems))
+  if(0==parse_set_kwonly_arg_count(lexems, obj))
   {
     return 0;
   }
@@ -140,7 +140,7 @@ int parse_set_version_pyvm(list_t * lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
@@ -173,7 +173,7 @@ int parse_set_flags(list_t * lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
@@ -206,7 +206,7 @@ int parse_set_filename(list_t * lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
@@ -239,7 +239,7 @@ int parse_set_name(list_t * lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
@@ -272,7 +272,7 @@ int parse_set_source_size(list_t * lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
@@ -305,7 +305,7 @@ int parse_set_stack_size(list_t * lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
@@ -338,7 +338,7 @@ int parse_set_arg_count(list_t*lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
@@ -371,7 +371,7 @@ int parse_set_kwonly_arg_count(list_t*lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
@@ -404,7 +404,7 @@ int parse_set_posonly_arg_count(list_t*lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
@@ -422,7 +422,6 @@ int parse_set(list_t * lexems, pyobj_t obj) {
   }
   if(0==next_lexem_is(lexems, "posonly_arg_count"))
   {
-    obj->binary.header.content.posonly_arg_count =
     lexem_advance(lexems);
     return 0;
   }
@@ -431,7 +430,7 @@ int parse_set(list_t * lexems, pyobj_t obj) {
     lexem_advance(lexems);
     return 0;
   }
-
+  return 0;
 }
 
 
@@ -446,7 +445,7 @@ int parse_interned_strings(list_t*lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
@@ -454,7 +453,7 @@ int parse_interned_strings(list_t*lexems,pyobj_t obj)
   while(0==next_lexem_is(lexems,"string"))
   {
     lexem_advance(lexems);
-    if(-1==parse_eol(lexems))
+    if(-1==parse_eol(lexems, obj))
     {
       return -1;
     }
@@ -473,15 +472,15 @@ int parse_constants(list_t*lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
   lexem_advance(lexems);
-  while(parse_constant(lexems)==0)
+  while(parse_constant(lexems,obj)==0)
   {
     lexem_advance(lexems);
-    if(-1==parse_eol(lexems))
+    if(-1==parse_eol(lexems, obj))
     {
       return -1;
     }
@@ -500,11 +499,11 @@ int parse_constant(list_t*lexems,pyobj_t obj)
   {
     return 0;
   }
-  if(parse_list(lexems)==0)
+  if(parse_list(lexems,obj)==0)
   {
     return 0;
   }
-  if(parse_tuple(lexems)==0)
+  if(parse_tuple(lexems,obj)==0)
   {
     return 0;
   }
@@ -522,7 +521,7 @@ int parse_list(list_t*lexems,pyobj_t obj)
   {
     return -1;
   }
-  while(parse_constant(lexems)==0)
+  while(parse_constant(lexems,obj)==0)
   {
     lexem_advance(lexems);
   }
@@ -544,7 +543,7 @@ int parse_tuple(list_t*lexems,pyobj_t obj)
   {
     return -1;
   }
-  while(parse_constant(lexems)==0)
+  while(parse_constant(lexems,obj)==0)
   {
     lexem_advance(lexems);
   }
@@ -566,7 +565,7 @@ int parse_names(list_t*lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
@@ -574,7 +573,7 @@ int parse_names(list_t*lexems,pyobj_t obj)
   while(next_lexem_is(lexems,"string")==0)
   {
     lexem_advance(lexems);
-    if(parse_eol(lexems)==-1)
+    if(parse_eol(lexems,obj)==-1)
     {
       return -1;
     }
@@ -593,7 +592,7 @@ int parse_varnames(list_t*lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
@@ -601,7 +600,7 @@ int parse_varnames(list_t*lexems,pyobj_t obj)
   while(next_lexem_is(lexems,"string")==0)
   {
     lexem_advance(lexems);
-    if(parse_eol(lexems)==-1)
+    if(parse_eol(lexems,obj)==-1)
     {
       return -1;
     }
@@ -620,7 +619,7 @@ int parse_freevars(list_t*lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
@@ -628,7 +627,7 @@ int parse_freevars(list_t*lexems,pyobj_t obj)
   while(next_lexem_is(lexems,"string")==0)
   {
     lexem_advance(lexems);
-    if(parse_eol(lexems)==-1)
+    if(parse_eol(lexems,obj)==-1)
     {
       return -1;
     }
@@ -647,7 +646,7 @@ int parse_cellvars(list_t*lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
@@ -655,7 +654,7 @@ int parse_cellvars(list_t*lexems,pyobj_t obj)
   while(next_lexem_is(lexems,"string")==0)
   {
     lexem_advance(lexems);
-    if(parse_eol(lexems)==-1)
+    if(parse_eol(lexems,obj)==-1)
     {
       return -1;
     }
@@ -674,15 +673,15 @@ int parse_code(list_t*lexems,pyobj_t obj)
   {
     return -1;
   }
-  if(-1==parse_eol(lexems))
+  if(-1==parse_eol(lexems, obj))
   {
     return -1;
   }
   lexem_advance(lexems);
-  while(parse_assembly_line(lexems)==0)
+  while(parse_assembly_line(lexems,obj)==0)
   {
     lexem_advance(lexems);
-    if(parse_eol(lexems)==-1)
+    if(parse_eol(lexems,obj)==-1)
     {
       return -1;
     }
@@ -693,22 +692,22 @@ int parse_code(list_t*lexems,pyobj_t obj)
 int parse_assembly_line(list_t*lexems,pyobj_t obj)
 {
   printf("Parsing assembly line\n");
-  if(parse_insn(lexems)==0)
+  if(parse_insn(lexems,obj)==0)
   {
     return 0;
   }
-  if(parse_source_lineno(lexems)==0)
+  if(parse_source_lineno(lexems,obj)==0)
   {
     return 0;
   }
-  if(parse_label(lexems)==0)
+  if(parse_label(lexems,obj)==0)
   {
     return 0;
   }
   return -1;
 }
 //〈label〉: :=  {‘symbol’} {‘blank’} {‘colon’}
-int parse_label(list_t*lexems)
+int parse_label(list_t*lexems, pyobj_t obj)
 {
   printf("Parsing Label\n");
   if(-1==next_lexem_is(lexems,"symbol"))
@@ -770,4 +769,3 @@ int parse_eol(list_t*lexems, pyobj_t obj)
   }
   return 0;
 }
-*/

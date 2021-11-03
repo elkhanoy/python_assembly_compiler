@@ -1,5 +1,5 @@
 #include <pyas/all.h>
-
+/*
 char*bytecode(pyobj_t bytecode, FILE*file_read_txt, FILE*file_write_bin) //pyobj_t bytecode contient la liste de lexemes correspondant a la section .text
 {
   file_r_txt=fopen("mnémo_bin_correspondance.txt","r"); //ouverture du fichier avec les opcodes
@@ -28,3 +28,4 @@ char*bytecode(pyobj_t bytecode, FILE*file_read_txt, FILE*file_write_bin) //pyobj
   fclose(file_r_txt);
   fclose(file_w_bin);
 }
+*/

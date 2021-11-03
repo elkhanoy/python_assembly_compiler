@@ -20,7 +20,7 @@ int parse_varnames(list_t*lexems,pyobj_t obj);
 int parse_freevars(list_t*lexems,pyobj_t obj);
 int parse_cellvars(list_t*lexems,pyobj_t obj);
 int parse_code(list_t*lexems,pyobj_t obj);
-int parse_assembly_line(list_t*lexems);
+int parse_assembly_line(list_t*lexems, pyobj_t obj);
 int parse_label(list_t*lexems,pyobj_t obj);
 int parse_source_lineno(list_t*lexems,pyobj_t obj);
 int parse_insn(list_t*lexems,pyobj_t obj);
