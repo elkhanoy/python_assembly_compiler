@@ -33,6 +33,8 @@ extern "C" {
 #include <pyas/lex.h>
 #include <pyas/parsing_tools.h>
 #include <pyas/parsing_nonterminal.h>
+#include <pyas/section_.text_pour_bytecode_lnotab.h>
+#include <bytecode_generator.h>
 #ifdef __cplusplus
 }
 #endif
