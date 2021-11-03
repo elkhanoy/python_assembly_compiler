@@ -1,3 +1,5 @@
+
+
 typedef unsigned int pyobj_type;
 
 struct pyobj_t ;
@@ -66,5 +68,20 @@ struct pyobj {
 };
 
 ////////////////////////////////////
+list_t list_interned(list_t *lexem_list);
+list_t list_consts(list_t *lexem_list);
+list_t list_names(list_t *lexem_list);
 
-//////////////////////////////////////////////////////////
+pyobj_t pyobj_new_string(char *str);
+pyobj_t pyobj_new_int(char *str);
+pyobj_t pyobj_new_float(char *str);
+pyobj_t pyobj_new_list(list_t list_obj_pyth);
+
+pyobj_t pyobj_interned(list_t *lexems);
+pyobj_t pyobj_consts(list_t *list_obj_pyth);
+pyobj_t pyobj_names(list_t *lexem_str);
+
+py_codeblock codeblock(pyobj_t interned,pyobj_t consts,pyobj_t names);
+
+int construction_codeblock(list_t *liste_lexems);
+////////////////////////////////////

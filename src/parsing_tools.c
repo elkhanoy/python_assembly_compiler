@@ -8,6 +8,13 @@ lexem_t lexem_peek(list_t *lexems)
   }
   return (lex_l->next)->content;
 }
+
+// Renvoyer le type du lexem
+int lexem_type ( lexem_t lex , char * type ) {
+ return lex -> type == strstr ( lex ->type , type );
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////
 // Renvoyer le prochain lexeme en l'enlevant de la liste
 lexem_t lexem_advance(list_t *lexems)
@@ -20,20 +27,16 @@ lexem_t lexem_advance(list_t *lexems)
 }
 ////////////////////////////////////////////////////////////////////////////////
 // Déterminer si le prochain lexème utile est bien du type demandé
-// int next_lexem_is(list_t *lexems, char *type)
-// {
-//   list_t lex_l=*lexems;
-//   while(!strcmp((((struct lexem*)(lex_l->next->content))->type),"blank") || !strcmp((((struct lexem*)(lex_l->next->content))->type),"comment")){
-//     lex_l=lex_l->next;
-//   }
-//   if(strcmp(( (struct lexem*)(lex_l->next->content) )->type, type))
-//   {
-//     return 0;
-//   }
-//   else {
-//     return -1;
-//   }
-// }
+ // int next_lexem_is(list_t *lexems, char *type)
+ // {
+ //   lexem_t lex_l=lexem_peek(lexems);
+ //   if (lexem_type(lex_l,type)){
+ //     return 0;
+ //   }
+ //   return -1;
+ // }
+
+
 int next_lexem_is(list_t *lexems, char *type)
 {
   while(!strcmp((((struct lexem*)((*lexems)->next->content))->type),"blank") || !strcmp((((struct lexem*)((*lexems)->next->content))->type),"comment")){
