@@ -22,7 +22,6 @@ extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
-#include <pyas/pyobj_structure.h>
 #include <pyas/callbacks.h>
 #include <pyas/list.h>
 #include <pyas/queue.h>
@@ -32,9 +31,22 @@ extern "C" {
 #include <pyas/re_read.h>
 #include <pyas/lex.h>
 #include <pyas/parsing_tools.h>
+#include <pyas/pyobj_structure.h>
 #include <pyas/parsing_nonterminal.h>
 #include <pyas/section_.text_pour_bytecode_lnotab.h>
 #include <bytecode_generator.h>
+
+#define _STRING_ 0
+#define _LIST_ 1
+#define _INTEGER_ 2
+#define _FLOAT_ 3
+#define _NONE_ 4
+#define _NULL_ 5
+#define _TRUE_ 6
+#define _FALSE_ 7
+
+
+
 #ifdef __cplusplus
 }
 #endif
