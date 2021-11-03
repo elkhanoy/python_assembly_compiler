@@ -33,8 +33,8 @@ extern "C" {
 #include <pyas/parsing_tools.h>
 #include <pyas/pyobj_structure.h>
 #include <pyas/parsing_nonterminal.h>
-#include <pyas/section_.text_pour_bytecode_lnotab.h>
-#include <bytecode_generator.h>
+#include <pyas/list_mnemo_tools.h>
+#include <pyas/bytecode_generator.h>
 
 #define _STRING_ 0
 #define _LIST_ 1
