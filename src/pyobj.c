@@ -4,7 +4,9 @@ list_t list_interned(list_t *lexem_list){
   // vérification qu'on se trouve au bon endroit
   if (!list_empty(*lexem_list) && lexem_type(list_first(*lexem_list), "dir::interned")){
     *lexem_list = list_del_first(*lexem_list, lexem_delete);
-    parse_eol(lexem_list);
+    while(lexem_type(list_first(*lexem_list), "blank")||lexem_type(list_first(*lexem_list), "newline")){
+      *lexem_list=list_del_first(*lexem_list, lexem_delete);
+    }
   }
   else{
     printf(".interned missing");
@@ -16,9 +18,10 @@ list_t list_interned(list_t *lexem_list){
     pyobj_t obj = pyobj_new_string(((lexem_t)list_first(*lexem_list))->value);
     list_interned = list_add_first(list_interned, obj);
     *lexem_list = list_del_first(*lexem_list, lexem_delete);
-    parse_eol(lexem_list);
+    while(lexem_type(list_first(*lexem_list), "blank")||lexem_type(list_first(*lexem_list), "newline")){
+  *lexem_list=list_del_first(*lexem_list, lexem_delete);}
   }
-  return inversion_liste(list_interned);
+  return list_interned;
 }
 
 
@@ -27,46 +30,51 @@ list_t list_consts(list_t *lexem_list){
   // vérification qu'on se trouve au bon endroit
   if (!list_empty(*lexem_list) && lexem_type(list_first(*lexem_list), "dir::consts")){
     *lexem_list = list_del_first(*lexem_list, lexem_delete);
-    parse_eol(lexem_list);
+    while(lexem_type(list_first(*lexem_list), "blank")||lexem_type(list_first(*lexem_list), "newline")){
+  *lexem_list=list_del_first(*lexem_list, lexem_delete);}
   }
   else{
     printf(".consts missing");
     return(NULL);
   }
   // création de la liste de pyobj
-  list_t list_interned = list_new();
+  list_t list_consts = list_new();
   while(!list_empty(*lexem_list) && !lexem_type(list_first(*lexem_list), "dir::names")){
+
 		if(lexem_type(list_first(*lexem_list),"string")){
 
 		pyobj_t obj = pyobj_new_string(((lexem_t)list_first(*lexem_list))->value);
     list_consts = list_add_first(list_consts, obj);
     *lexem_list = list_del_first(*lexem_list, lexem_delete);
-    parse_eol(lexem_list);
+    while(lexem_type(list_first(*lexem_list), "blank")||lexem_type(list_first(*lexem_list), "newline")){
+  *lexem_list=list_del_first(*lexem_list, lexem_delete);}
 	}
-	if(lexem_type(list_first(*lexem_list),"real")){
+	if(lexem_type(list_first(*lexem_list),"number::float")){
 
 	pyobj_t obj = pyobj_new_float(((lexem_t)list_first(*lexem_list))->value);
 	list_consts = list_add_first(list_consts, obj);
 	*lexem_list = list_del_first(*lexem_list, lexem_delete);
-	parse_eol(lexem_list);
+	while(lexem_type(list_first(*lexem_list), "blank")||lexem_type(list_first(*lexem_list), "newline")){
+  *lexem_list=list_del_first(*lexem_list, lexem_delete);}
 }
-if(lexem_type(list_first(*lexem_list),"integer")){
 
+if(lexem_type(list_first(*lexem_list),"number::integer")){
 pyobj_t obj = pyobj_new_int(((lexem_t)list_first(*lexem_list))->value);
 list_consts = list_add_first(list_consts, obj);
 *lexem_list = list_del_first(*lexem_list, lexem_delete);
-parse_eol(lexem_list);
+while(lexem_type(list_first(*lexem_list), "blank")||lexem_type(list_first(*lexem_list), "newline")){
+  *lexem_list=list_del_first(*lexem_list, lexem_delete);}
 }
-if(lexem_type(list_first(*lexem_list),"pycst")){
-
+if(lexem_type(list_first(*lexem_list),"none")||lexem_type(list_first(*lexem_list),"null")||lexem_type(list_first(*lexem_list),"true")||lexem_type(list_first(*lexem_list),"false")){
 pyobj_t obj = pyobj_new_pycst(((lexem_t)list_first(*lexem_list))->value);
 list_consts = list_add_first(list_consts, obj);
 *lexem_list = list_del_first(*lexem_list, lexem_delete);
-parse_eol(lexem_list);
+while(lexem_type(list_first(*lexem_list), "blank")||lexem_type(list_first(*lexem_list), "newline")){
+  *lexem_list=list_del_first(*lexem_list, lexem_delete);}
 }
 
   }
-  return inversion_liste(list_consts);
+  return list_consts;
 }
 
 
@@ -75,7 +83,8 @@ list_t list_names(list_t *lexem_list){
   // vérification qu'on se trouve au bon endroit
   if (!list_empty(*lexem_list) && lexem_type(list_first(*lexem_list), "dir::names")){
     *lexem_list = list_del_first(*lexem_list, lexem_delete);
-    parse_eol(lexem_list);
+    while(lexem_type(list_first(*lexem_list), "blank")||lexem_type(list_first(*lexem_list), "newline")){
+  *lexem_list=list_del_first(*lexem_list, lexem_delete);}
   }
   else{
     printf(".consts missing");
@@ -87,9 +96,10 @@ list_t list_names(list_t *lexem_list){
     pyobj_t obj = pyobj_new_string(((lexem_t)list_first(*lexem_list))->value);
     list_names = list_add_first(list_names, obj);
     *lexem_list = list_del_first(*lexem_list, lexem_delete);
-    parse_eol(lexem_list);
+    while(lexem_type(list_first(*lexem_list), "blank")||lexem_type(list_first(*lexem_list), "newline")){
+  *lexem_list=list_del_first(*lexem_list, lexem_delete);}
   }
-  return inversion_liste(list_names);
+  return list_names;
 }
 
 
@@ -175,9 +185,9 @@ pyobj_t pyobj_interned(list_t *lexems){
 	obj_interned->py.list.value = calloc(obj_interned->py.list.size,sizeof(pyobj_t));
 
 //Ajout dans value de interned le value de l'objet python présent dans la liste
-	obj_interned->py.list.value = pyobj_new_list(lexems)->py.list.value;
+	obj_interned->py.list.value = pyobj_new_list(*lexems)->py.list.value;
 
-	obj_interned->type = LIST;
+	obj_interned->type = _LIST_;
 
 
 	return obj_interned;
@@ -190,9 +200,9 @@ pyobj_t pyobj_consts(list_t *list_obj_pyth){
 		pyobj_consts->py.list.size = list_length(*list_obj_pyth);
 		pyobj_consts->py.list.value = calloc(pyobj_consts->py.list.size,sizeof(pyobj_t));
 
-		pyobj_consts->py.list.value = pyobj_new_list(list_obj_pyth)->py.list.value;
+		pyobj_consts->py.list.value = pyobj_new_list(*list_obj_pyth)->py.list.value;
 
-		pyobj_consts->type = LIST;
+		pyobj_consts->type = _LIST_;
 
 
 		return pyobj_consts;
@@ -202,12 +212,12 @@ pyobj_t pyobj_consts(list_t *list_obj_pyth){
 pyobj_t pyobj_names(list_t *lexem_str){
 
 	pyobj_t pyobj_names = calloc(1,sizeof(pyobj_t));
-	pyobj_names->py.list.size = list_length(*list_obj_pyth);
+	pyobj_names->py.list.size = list_length(*lexem_str);
 	pyobj_names->py.list.value = calloc(pyobj_names->py.list.size,sizeof(pyobj_t));
 
-	pyobj_names->py.list.value = pyobj_new_list(list_obj_pyth)->py.list.value;
+	pyobj_names->py.list.value = pyobj_new_list(*lexem_str)->py.list.value;
 
-	pyobj_names->type = LIST;
+	pyobj_names->type = _LIST_;
 
 
 	return pyobj_names;
@@ -216,8 +226,8 @@ pyobj_t pyobj_names(list_t *lexem_str){
 
 
 //remplissage du codeblock
-py_codeblock codeblock(pyobj_t interned,pyobj_t consts,pyobj_t names){
-	py_codeblock py_code= calloc(1,sizeof(*py_codeblock));
+codeblock fill_codeblock(pyobj_t interned,pyobj_t consts,pyobj_t names){
+	codeblock py_code= calloc(1,sizeof(codeblock));
 
 
 	// //En-tête de l'objet python
@@ -229,8 +239,8 @@ py_codeblock codeblock(pyobj_t interned,pyobj_t consts,pyobj_t names){
 
 	// Corps de l'objet python
 
-	py_code.binary.content.interned = interned;
-	py_code.binary.content.consts = consts;
+	py_code->binary.content.interned = interned;
+	py_code->binary.content.consts = consts;
 	py_code->binary.content.names = names;
 
 	// //Fin de l'objet python
@@ -244,23 +254,26 @@ py_codeblock codeblock(pyobj_t interned,pyobj_t consts,pyobj_t names){
 
 
 
-int construction_codeblock(list_t *liste_lexems){
+codeblock construction_codeblock(list_t *liste_lexems){
 	//remplissage interned
 	while(!lexem_type(list_first(*liste_lexems),"dir::interned")){
 		*liste_lexems=list_del_first(*liste_lexems,lexem_delete);
 	}
-	pyobj_t interned=pyobj_interned(*list_interned(list_t *lexem_list));
+  list_t inter_int=list_interned(liste_lexems);
+	pyobj_t interned=pyobj_interned(&inter_int);
 
 	//remplissage consts
-	pyobj_t consts=pyobj_consts(*list_consts(list_t *lexem_list));
+  list_t inter_consts=list_consts(liste_lexems);
+	pyobj_t consts=pyobj_consts(&inter_consts);
 
 	//remplissage names
-	pyobj_t names=pyobj_names(*list_names(list_t *lexem_list));
+  list_t inter_names=list_names(liste_lexems);
+	pyobj_t names=pyobj_names(&inter_names);
+
 
   //remplissage du codeblock
-  codeblock(interned,consts,names);
+   codeblock py_code=fill_codeblock(interned,consts,names);
 
-
-	return 0
+   return py_code;
 
 }

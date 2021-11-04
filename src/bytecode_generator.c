@@ -1,4 +1,4 @@
-#include <pyas/all.h>
+/*#include <pyas/all.h>
 
 
 char*bytecode(FILE*file_read_txt, FILE*file_write_bin, list_txt_t list_text_section) //pyobj_t bytecode contient la liste de lexemes correspondant a la section .text

@@ -1,4 +1,4 @@
-#include <pyas/all.h>
+/*#include <pyas/all.h>
 
 
 // Fonction pour lire la section text du fichier assembleur et remplir
@@ -63,3 +63,4 @@ fclose(file_conf);
 
 return list_section_text;
 }
+*/

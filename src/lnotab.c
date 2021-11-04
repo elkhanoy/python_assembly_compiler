@@ -1,7 +1,8 @@
-#include <pyas/all.h>
+/*#include <pyas/all.h>
 
 char*lnotab()
 {
-  
+
 
 }
+*/
