@@ -15,18 +15,28 @@ int main(int argc,char*argv[]) //Les noms des fichiers source et configuration s
   strcpy(source_name,argv[2]); //Copie du nom du fichier source pris en paramètre lors de la compilation, dans le tableau
   if((queue_lexemes_identifies=lex(config_name,source_name,queue_lexemes_identifies))){
     queue_lexemes_identifies=queue_to_list(queue_lexemes_identifies);
+
+    codeblock code=construction_codeblock(&queue_lexemes_identifies);
+    int a=(code->binary.content.interned)->py.list.size;
+    printf("%d\n",a );
+
+    return 0;
+
   }
   else{
     queue_lexemes_identifies=queue_to_list(queue_lexemes_identifies);
     list_delete(queue_lexemes_identifies,lexem_delete);
     return 0;
   }
-  list_t *lexems=calloc(1,sizeof(*lexems));
-  *lexems=queue_lexemes_identifies;
- if(parse_pys(lexems)){
-    printf("Le parser est ok");
-    return 1;
-  } 
-  printf("Not ok");
-  return 0;
+  // list_t *lexems=calloc(1,sizeof(*lexems));
+  // *lexems=queue_lexemes_identifies;
+  //
+  //   codeblock code=construction_codeblock(lexems);
+  //   int a=(code->binary.content.consts)->py.list.size;
+  //   printf("la taille est %d\n",a);
+  //   return 0;
+
+  //}
+  // printf("Not ok");
+  // return 0;
 }

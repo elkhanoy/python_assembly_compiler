@@ -88,5 +88,5 @@ pyobj_t pyobj_names(list_t *lexem_str);
 
 codeblock fill_codeblock(pyobj_t interned,pyobj_t consts,pyobj_t names);
 
-int construction_codeblock(list_t *liste_lexems);
+codeblock construction_codeblock(list_t *liste_lexems);
 ////////////////////////////////////
