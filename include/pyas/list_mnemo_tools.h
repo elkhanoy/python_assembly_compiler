@@ -1,6 +1,6 @@
 //Structure utile pour la iste des structure de la section .text du fichier assembleur
 
-struct contenu_point_text
+typedef struct contenu_point_text
 {
   int lineno; //Retiens la ligne de la mnémonique
   char*mnemo; //Nom de la mnémonique

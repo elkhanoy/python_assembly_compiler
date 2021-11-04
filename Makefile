@@ -9,7 +9,7 @@ OBJ = $(SRC:.c=.o)
 
 all : $(OBJ) $(TESTS_BIN)
 
-%.exe : %.o
+%.exe: %.o
 	$(CC) $(OBJ) $< $(LFLAGS) -o $@
 
 clean :

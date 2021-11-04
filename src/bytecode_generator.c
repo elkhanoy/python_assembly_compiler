@@ -31,4 +31,3 @@ char*bytecode(FILE*file_read_txt, FILE*file_write_bin, list_txt_t list_text_sect
   fclose(file_r_txt);
   fclose(file_w_bin);
 }
-*/

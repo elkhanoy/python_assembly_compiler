@@ -9,6 +9,7 @@ int main(int argc,char*argv[]) //La source et la regexp en chaine de caractères
   }
   if(argc==2){
     queue_t regexp_queue=NULL;
+    queue_t debut_rgq=NULL;
     char regexp[80]; //Nom du fichier source
     char *rxp_stock=NULL;
     rxp_stock=calloc(256,sizeof(*rxp_stock));
@@ -17,15 +18,17 @@ int main(int argc,char*argv[]) //La source et la regexp en chaine de caractères
     strcpy(regexp,argv[1]); //Copie du nom du fichier source pris en paramètre lors de la compilation, dans le tableau
     regexp_queue=re_read(regexp,regexp_queue);
     regexp_queue=queue_to_list(regexp_queue);
+    debut_rgq=regexp_queue;
     while(regexp_queue){
+      memset(rxp_stock,0,256);
       int i;
       for(i=0;i<256;i++){
-        if(((char_group_t*)regexp_queue->content)->group[i]){
+        if(((char_group_t*)(regexp_queue)->content)->group[i]){
           sprintf(int_char,"%c",i);
           strcat(rxp_stock,int_char);
         }
       }
-      switch(((char_group_t*)regexp_queue->content)->occurence){
+      switch(((char_group_t*)(regexp_queue)->content)->occurence){
         case ONE_OR_ZERO:
           times=strdup("zero or one time");
           break;
@@ -40,14 +43,12 @@ int main(int argc,char*argv[]) //La source et la regexp en chaine de caractères
           break;
       }
       printf("One in \"%s\", %s.\n",rxp_stock,times);
-      free(rxp_stock);
-      char *rxp_stock=NULL;
-      rxp_stock=calloc(256,sizeof(*rxp_stock));
       free(times);
-      regexp_queue=regexp_queue->next;
+      regexp_queue=(regexp_queue)->next;
     }
     free(rxp_stock);
-    list_delete(regexp_queue,lexeme_conf_delete);
+    regexp_queue=debut_rgq;
+    list_delete(regexp_queue,char_group_delete);
     return 1;
   }
   else{
@@ -59,8 +60,10 @@ int main(int argc,char*argv[]) //La source et la regexp en chaine de caractères
     strcpy(source,argv[2]); //Copie du nom du fichier de configuration pris en paramètre lors de la compilation, dans le tableau
     strcpy(regexp,argv[1]); //Copie du nom du fichier source pris en paramètre lors de la compilation, dans le tableau
     queue_t regexp_queue=NULL;
+    queue_t debut_rgq=NULL;
     regexp_queue=re_read(regexp,regexp_queue);
     regexp_queue=queue_to_list(regexp_queue);
+    debut_rgq=regexp_queue;
     if(re_match(regexp_queue,source,end)){
       if(**end=='\0'){
         printf("The start of '%s' is %s, END: ''.\n",source,regexp);
@@ -73,7 +76,8 @@ int main(int argc,char*argv[]) //La source et la regexp en chaine de caractères
       printf("The start of '%s' is *NOT* %s.\n",source,regexp);
     }
     free(end);
-    list_delete(regexp_queue,lexeme_conf_delete);
+    regexp_queue=debut_rgq;
+    list_delete(regexp_queue,char_group_delete);
     return 1;
   }
 

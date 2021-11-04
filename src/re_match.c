@@ -38,6 +38,7 @@ int re_match_zero_one_or_one(queue_t queue_regexp, char*source, char**end)
           if(!re_match(queue_regexp->next,source+1,end)){
             return re_match(queue_regexp->next,source,end);
           }
+          return 0;
         }
     }
 }
