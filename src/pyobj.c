@@ -1,5 +1,6 @@
 #include <pyas/all.h>
 
+
 list_t list_interned(list_t *lexem_list){
   // vérification qu'on se trouve au bon endroit
   if (!list_empty(*lexem_list) && lexem_type(list_first(*lexem_list), "dir::interned")){
@@ -158,7 +159,7 @@ pyobj_t pyobj_new_pycst(char *str){
 	sscanf(str, "%lf", &obj_complex->py.number.complex.imag);
 	return obj_complex;
 }
-
+*/
 
 pyobj_t pyobj_new_list(list_t list_obj_pyth){
 	pyobj_t obj_list = calloc(1,sizeof(pyobj_t));
