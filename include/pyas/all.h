@@ -22,6 +22,7 @@ extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <endian.h>
 #include <pyas/callbacks.h>
 #include <pyas/list.h>
 #include <pyas/queue.h>
@@ -33,8 +34,8 @@ extern "C" {
 #include <pyas/parsing_tools.h>
 #include <pyas/pyobj_structure.h>
 #include <pyas/parsing_nonterminal.h>
-#include <pyas/list_mnemo_tools.h>
-#include <pyas/bytecode_generator.h>
+#include <pyas/pyasm.h>
+#include <pyas/pyobj_write.h>
 
 #define _STRING_ 0
 #define _LIST_ 1

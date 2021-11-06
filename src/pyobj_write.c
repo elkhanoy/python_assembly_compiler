@@ -1,5 +1,6 @@
 #include <pyas/all.h>
 
+
 /*  sérialiser un objet Python (y compris, donc, de type code –qui devra donc
 pouvoir être exécuté par la machine virtuelle Python) */
 
@@ -7,17 +8,27 @@ pouvoir être exécuté par la machine virtuelle Python) */
 int pyobj_write( FILE *fp, pyobj_t obj)
 {
   fp=fopen("fp","wb"); //ouverture du fichier dans lequel noter le bytecode
-  if(NULL==file_w_bin) {perror("Erreur ouverture ecriture de bytecode.bin\n"); return -1;}
+  if(NULL==fp) {perror("Erreur ouverture ecriture de bytecode.bin\n"); return -1;}
+
+//////////////////////////////////////////////////////////////////////////
+// Header
+  //version_pyvm
+  char v_pyvm[]={'0','3',' ','f','3'};
+  fwrite(v_pyvm,sizeof(char),sizeof(v_pyvm),fp);
+
+  //magic number
+  uint32_t lilend_magic;
+  lilend_magic=htole32(((((obj->py).codeblock)->binary).header.magic));
+  fwrite(&lilend_magic,sizeof(lilend_magic),1,fp);
 
 
 
 
 
 
-
-
-
-
+fclose(fp);
+return 0;
+}
 
 
 
