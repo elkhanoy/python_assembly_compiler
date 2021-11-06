@@ -26,39 +26,31 @@ int pyobj_write( FILE *fp, pyobj_t obj)
   lilend_timefile=htole32((uint32_t)((((obj->py).codeblock)->binary).header.timestamp));
   fwrite(&lilend_timefile,sizeof(lilend_timefile),1,fp);
 
-  //
+  //CODE??? 63?
 
+  //arg_count
+  uint32_t lilend_arg_count;
+  lilend_arg_count=htole32(((((obj->py).codeblock)->header).arg_count));
+  fwrite(&lilend_arg_count,sizeof(lilend_arg_count),1,fp);
+
+  //local_count
+  uint32_t lilend_local_count;
+  lilend_local_count=htole32(((((obj->py).codeblock)->header).local_count));
+  fwrite(&lilend_local_count,sizeof(lilend_local_count),1,fp);
+
+  //stack_size
+  uint32_t lilend_stack_size;
+  lilend_stack_size=htole32(((((obj->py).codeblock)->header).stack_size));
+  fwrite(&lilend_stack_size,sizeof(lilend_stack_size),1,fp);
+
+  //flags
+  uint32_t lilend_flags;
+  lilend_flags=htole32(((((obj->py).codeblock)->header).flags));
+  fwrite(&lilend_flags,sizeof(lilend_flags),1,fp);
+
+  //////////////////////////////////////////////////////////////////////////
+  // Body
 
 fclose(fp);
 return 0;
 }
-
-
-
-
-
-
-
-
-/*  int nb;
-  char str[50];
-
-  while(list_text_section->next!=NULL)
-  {
-    do
-    {
-      fscanf(file_read_txt,"%s,%d",str,&nb);
-    } while(strcmp(list_text_section->mnemo,str)!=0)
-
-    fwrite(nb,sizeof(&nb),1,file_w_bin) // Ecriture de l'opcode correspondant à la bonne mnemo dans le fichier binaire
-
-    if(nb>Ox50) //Présence de paramètres
-    {
-      fwrite(list_text_section->param,sizeof(list_text_section->param),1,file_w_bin);//ecrire les para dans le bytecode en little end cmt le mettre en hexa?
-    }
-    list_text_section=list_text_section->next;
-  }
-
-  fclose(file_r_txt);
-  fclose(file_w_bin);
-}*/
