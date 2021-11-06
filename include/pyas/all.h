@@ -23,6 +23,7 @@ extern "C" {
 #include <stdlib.h>
 #include <stddef.h>
 #include <endian.h>
+#include <time.h>
 #include <pyas/callbacks.h>
 #include <pyas/list.h>
 #include <pyas/queue.h>

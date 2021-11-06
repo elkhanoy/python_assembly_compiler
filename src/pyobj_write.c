@@ -21,9 +21,12 @@ int pyobj_write( FILE *fp, pyobj_t obj)
   lilend_magic=htole32(((((obj->py).codeblock)->binary).header.magic));
   fwrite(&lilend_magic,sizeof(lilend_magic),1,fp);
 
-
-
-
+  //timestamp
+  time_t timefile;
+  timefile=time(&timefile);
+  uint32_t lilend_timefile;
+  lilend_timefile=htole32((uint32_t)timefile);
+  fwrite(&lilend_timefile,sizeof(lilend_timefile),1,fp);
 
 
 fclose(fp);
