@@ -49,7 +49,64 @@ int pyobj_write( FILE *fp, pyobj_t obj)
   fwrite(&lilend_flags,sizeof(lilend_flags),1,fp);
 
   //////////////////////////////////////////////////////////////////////////
-  // Body
+ /// Body
+  //string instructions
+  fwrite("73",sizeof("73"),1,fp); //marqueur de string
+  fwrite((((((obj->py).codeblock)->binary).content.bytecode)->py.string.buffer),sizeof(char),sizeof((((((obj->py).codeblock)->binary).content.bytecode)->py.string.buffer)),fp);
+
+  //tuple constantes
+  fwrite("28",sizeof("28"),1,fp); //marqueur de interned
+  uint32_t lilend_consts;
+  lilend_consts=htole32(((((obj->py).codeblock)->content).consts)->list.size);
+  fwrite(&lilend_consts,sizeof(lilend_consts),1,fp);
+  ////écriture du nombre en lui même
+
+  //tuple noms de symboles
+  fwrite("28",sizeof("28"),1,fp);
+  uint32_t lilend_names;
+  lilend_consts=htole32(((((obj->py).codeblock)->content).names)->list.size);
+  fwrite(&lilend_names,sizeof(lilend_names),1,fp);
+  ////écriture du nombre en lui même
+
+  //tuple noms de variables
+  fwrite("28",sizeof("28"),1,fp);
+  uint32_t lilend_varnames;
+  lilend_consts=htole32(((((obj->py).codeblock)->content).varnames)->list.size);
+  fwrite(&lilend_varnames,sizeof(lilend_varnames),1,fp);
+  ////écriture du nombre en lui même
+
+
+  //tuple noms de variables libres
+  fwrite("28",sizeof("28"),1,fp);
+  uint32_t lilend_freevars;
+  lilend_consts=htole32(((((obj->py).codeblock)->content).lilend_freevars)->list.size);
+  fwrite(&lilend_freevars,sizeof(lilend_freevars),1,fp);
+  ////écriture du nombre en lui même
+
+  //tuple cellules
+  fwrite("28",sizeof("28"),1,fp);
+  uint32_t lilend_cellvars;
+  lilend_consts=htole32(((((obj->py).codeblock)->content).lilend_cellvars)->list.size);
+  fwrite(&lilend_cellvars,sizeof(lilend_cellvars),1,fp);
+  ////écriture du nombre en lui même
+
+  //////////////////////////////////////////////////////////////////////////
+  /// Fin
+
+  //nom du fichier source python
+  fwrite("73",sizeof("73"),1,fp); //marqueur de string
+
+  fwrite()
+
+  //nom du code
+  fwrite("73",sizeof("73"),1,fp);
+
+  //entier donnant le num de la première ligne de code
+  
+
+  //lnotab
+  fwrite("73",sizeof("73"),1,fp);
+
 
 fclose(fp);
 return 0;
