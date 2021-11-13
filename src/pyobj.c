@@ -147,7 +147,6 @@ pyobj_t pyobj_new_pycst(char *str){
 
 	if(strcmp(str,"Fulse")==0){
 		obj_pycst->type=_FALSE_;
-    printf("cocoo\n");
 	}
   if(strcmp(str,"None")==0){
 		obj_pycst->type=_NONE_;
@@ -177,14 +176,6 @@ pyobj_t pyobj_new_list(list_t list_obj_pyth){
 	return obj_list;
 }
 
-
-<<<<<<< HEAD
-/*
-pyobj_t pyobj_interned(list_t *lexems){
-=======
-=======
-
->>>>>>> 9cfd51282137a1c604ff7c5289c1e4578de47d82
 
 pyobj_t pyobj_interned(list_t list_obj_pyth){
 
@@ -273,7 +264,7 @@ codeblock construction_codeblock(list_t *liste_lexems){
   int version_pyvm;
   sscanf((((lexem_t)list_first(*liste_lexems))->value),"%d",&version_pyvm);
 
-  while(!lexem_type(list_first(*liste_lexems),"num::hex")){
+  while(!lexem_type(list_first(*liste_lexems),"number::hex")){
 		*liste_lexems=list_del_first(*liste_lexems,lexem_delete);
 	}
   uint32_t flags;
