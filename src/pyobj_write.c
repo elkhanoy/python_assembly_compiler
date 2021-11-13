@@ -95,6 +95,8 @@ int k;
     // Le type d'une des valeurs TO DO une fonction sur les types...
 
     // La taille d'une des valeurs
+    if((((((obj->py).codeblock)->binary).content.consts)->type)==_STRING_)
+    {
     char hex_consts_length[60];
     sprintf(hex_consts_length,"%x",(((((((((obj->py).codeblock)->binary).content.consts)->py).list.value)[i])->py).string.length));
     for(k=strlen(hex_consts_length);k<=0;k--)
@@ -108,6 +110,33 @@ int k;
       fwrite(&(((((((obj->py).codeblock)->binary).content.consts)->py.list.value)[i])->py.string.buffer)[j],sizeof((((((((obj->py).codeblock)->binary).content.consts)->py.list.value)[i])->py.string.buffer)[j]),1,fp);
     }
   }
+  else if((((((obj->py).codeblock)->binary).content.consts)->type)==_INTEGER_)
+  {
+    char hex_int[60];
+    sprintf(hex_int,"%x",(((((((((obj->py).codeblock)->binary).content.consts)->py).list.value)[i])->py).number.integer));
+    for(k=strlen(hex_int);k<=0;k--)
+    {
+      fwrite(hex_int,sizeof(char),strlen(hex_int),fp);
+    }
+  }
+  else if((((((obj->py).codeblock)->binary).content.consts)->type)==_NULL_)
+  {
+    fwrite("4F",sizeof("4F"),1,fp);
+  }
+  else if((((((obj->py).codeblock)->binary).content.consts)->type)==_TRUE_)
+  {
+    fwrite("54",sizeof("54"),1,fp);
+  }
+  else if((((((obj->py).codeblock)->binary).content.consts)->type)==_FALSE_)
+  {
+    fwrite("46",sizeof("46"),1,fp);
+  }
+  else if((((((obj->py).codeblock)->binary).content.consts)->type)==_NONE_)
+  {
+    fwrite("4E",sizeof("4E"),1,fp);
+  }
+
+}
 
   //tuple noms de symboles
   fwrite("28",sizeof("28"),1,fp);
