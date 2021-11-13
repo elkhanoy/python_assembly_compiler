@@ -28,6 +28,7 @@ struct link_t {
   void*  list_first( list_t l );
   list_t list_next( list_t l );
   list_t list_add_first( list_t l, void *object );
+  list_t list_invers(list_t l);
   list_t list_del_first( list_t l, action_t delete );
   size_t list_length( list_t l );
   int    list_print( list_t l, action_t print );

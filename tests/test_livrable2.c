@@ -16,10 +16,8 @@ int main(int argc,char*argv[]) //Les noms des fichiers source et configuration s
   if((queue_lexemes_identifies=lex(config_name,source_name,queue_lexemes_identifies))){
     queue_lexemes_identifies=queue_to_list(queue_lexemes_identifies);
 
-    codeblock code=construction_codeblock(&queue_lexemes_identifies);
-    int a=(code->binary.content.interned)->py.list.size;
-    printf("%d\n",a );
-
+    pyobj_t code=construction_pyobj(&queue_lexemes_identifies);
+    affichage_pyobj( code);
     return 0;
 
   }

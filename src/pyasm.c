@@ -14,7 +14,6 @@ int pyasm( list_t list_lexems,pyobj_t code )
   FILE*file_r_txt;
   file_r_txt=fopen("mnémo_bin_correspondance.txt","r"); //ouverture du fichier avec les opcodes
   if(NULL==file_r_txt) {perror("Erreur ouverture lecture de mnémo_bin_correspondance.txt/n"); return -1;}
-
   //////////////////////////////////////////////
   list_t lexem_p=NULL;
   lexem_p=list_lexems;
@@ -55,6 +54,7 @@ int pyasm( list_t list_lexems,pyobj_t code )
     if(strcmp(((struct lexem*)(lexem_p->content))->value,".line")==0)
     {
       lexem_p=lexem_p->next;
+      lexem_p=lexem_p->next;
       *num_lines_p=atoi(((struct lexem*)(lexem_p->content))->value);//à transformer en int
       num_lines_p++;
       lexem_p=lexem_p->next;
@@ -85,10 +85,14 @@ int pyasm( list_t list_lexems,pyobj_t code )
       *delta_bytecode_p=nb_bytes_line;
       delta_bytecode_p++;
     }
+    lexem_p=lexem_p->next;
   }
+
   //////////////////////////////////////////////
   // Stock bytecode dans l'objet Python mis en paramètre
-  ((((code->py).codeblock)->binary).content.bytecode)->py.string.buffer=bytecode;
+  char*p_bytecode=NULL;
+  p_bytecode=bytecode;
+  (((code->py).codeblock)->binary).content.bytecode=pyobj_new_string(p_bytecode);
 
   //////////////////////////////////////////////
   // Pour lnotab
@@ -121,7 +125,9 @@ int pyasm( list_t list_lexems,pyobj_t code )
   {
     lnotab[k]=lnotab_int[k]+'0';
   }
-  ((((code->py).codeblock)->binary).trailer.lnotab)->py.string.buffer=lnotab;
+  char* p_lnotab=NULL;
+  p_lnotab=lnotab;
+  (((code->py).codeblock)->binary).trailer.lnotab=pyobj_new_string(p_lnotab);
 
 fclose(file_r_txt);
 return 0;

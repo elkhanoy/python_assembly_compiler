@@ -10,7 +10,7 @@ list_t list_interned(list_t *lexem_list){
     }
   }
   else{
-    printf(".interned missing");
+    printf(".interned is missing");
     return(NULL);
   }
   // création de la liste de pyobj
@@ -22,7 +22,7 @@ list_t list_interned(list_t *lexem_list){
     while(lexem_type(list_first(*lexem_list), "blank")||lexem_type(list_first(*lexem_list), "newline")){
   *lexem_list=list_del_first(*lexem_list, lexem_delete);}
   }
-  return list_interned;
+  return list_invers(list_interned);
 }
 
 
@@ -35,23 +35,22 @@ list_t list_consts(list_t *lexem_list){
   *lexem_list=list_del_first(*lexem_list, lexem_delete);}
   }
   else{
-    printf(".consts missing");
+    printf(".consts is missing");
     return(NULL);
   }
+
   // création de la liste de pyobj
   list_t list_consts = list_new();
   while(!list_empty(*lexem_list) && !lexem_type(list_first(*lexem_list), "dir::names")){
-
 		if(lexem_type(list_first(*lexem_list),"string")){
-
 		pyobj_t obj = pyobj_new_string(((lexem_t)list_first(*lexem_list))->value);
     list_consts = list_add_first(list_consts, obj);
     *lexem_list = list_del_first(*lexem_list, lexem_delete);
     while(lexem_type(list_first(*lexem_list), "blank")||lexem_type(list_first(*lexem_list), "newline")){
-  *lexem_list=list_del_first(*lexem_list, lexem_delete);}
-	}
-	if(lexem_type(list_first(*lexem_list),"number::float")){
+     *lexem_list=list_del_first(*lexem_list, lexem_delete);}
+   }
 
+  if(lexem_type(list_first(*lexem_list),"number::float")){
 	pyobj_t obj = pyobj_new_float(((lexem_t)list_first(*lexem_list))->value);
 	list_consts = list_add_first(list_consts, obj);
 	*lexem_list = list_del_first(*lexem_list, lexem_delete);
@@ -75,7 +74,7 @@ while(lexem_type(list_first(*lexem_list), "blank")||lexem_type(list_first(*lexem
 }
 
   }
-  return list_consts;
+  return list_invers(list_consts);
 }
 
 
@@ -88,7 +87,7 @@ list_t list_names(list_t *lexem_list){
   *lexem_list=list_del_first(*lexem_list, lexem_delete);}
   }
   else{
-    printf(".consts missing");
+    printf(".names is missing");
     return(NULL);
   }
   // création de la liste de pyobj
@@ -98,9 +97,9 @@ list_t list_names(list_t *lexem_list){
     list_names = list_add_first(list_names, obj);
     *lexem_list = list_del_first(*lexem_list, lexem_delete);
     while(lexem_type(list_first(*lexem_list), "blank")||lexem_type(list_first(*lexem_list), "newline")){
-  *lexem_list=list_del_first(*lexem_list, lexem_delete);}
+      *lexem_list=list_del_first(*lexem_list, lexem_delete);}
   }
-  return list_names;
+  return list_invers(list_names);
 }
 
 
@@ -138,17 +137,20 @@ pyobj_t pyobj_new_float(char *str){
 
 pyobj_t pyobj_new_pycst(char *str){
 	pyobj_t obj_pycst=calloc(1,sizeof(pyobj_t));
-	if(strcmp(str,"None")){
-		obj_pycst->type=_NONE_;
-	}
-	if(strcmp(str,"NULL")){
+
+	if(strcmp(str,"null")==0){
 		obj_pycst->type=_NULL_;
 	}
-	if(strcmp(str,"True")){
+	if(strcmp(str,"True")==0){
 		obj_pycst->type=_TRUE_;
 	}
-	if(strcmp(str,"False")){
+
+	if(strcmp(str,"Fulse")==0){
 		obj_pycst->type=_FALSE_;
+    printf("cocoo\n");
+	}
+  if(strcmp(str,"None")==0){
+		obj_pycst->type=_NONE_;
 	}
 	return obj_pycst;
 }
@@ -178,30 +180,30 @@ pyobj_t pyobj_new_list(list_t list_obj_pyth){
 
 
 
-pyobj_t pyobj_interned(list_t *lexems){
+pyobj_t pyobj_interned(list_t list_obj_pyth){
 
 //Allocation dynamique
-	pyobj_t obj_interned = calloc(1,sizeof(pyobj_t));
-	obj_interned->py.list.size = list_length(*lexems);
-	obj_interned->py.list.value = calloc(obj_interned->py.list.size,sizeof(pyobj_t));
+	pyobj_t pyobj_interned = calloc(1,sizeof(pyobj_t));
+	pyobj_interned->py.list.size = list_length(list_obj_pyth);
+	pyobj_interned->py.list.value = calloc(pyobj_interned->py.list.size,sizeof(pyobj_t));
 
 //Ajout dans value de interned le value de l'objet python présent dans la liste
-	obj_interned->py.list.value = pyobj_new_list(*lexems)->py.list.value;
+	pyobj_interned->py.list.value = pyobj_new_list(list_obj_pyth)->py.list.value;
 
-	obj_interned->type = _LIST_;
+	pyobj_interned->type = _LIST_;
 
 
-	return obj_interned;
+	return pyobj_interned;
 }
 
 
-pyobj_t pyobj_consts(list_t *list_obj_pyth){
+pyobj_t pyobj_consts(list_t list_obj_pyth){
 
 		pyobj_t pyobj_consts = calloc(1,sizeof(pyobj_t));
-		pyobj_consts->py.list.size = list_length(*list_obj_pyth);
+		pyobj_consts->py.list.size = list_length(list_obj_pyth);
 		pyobj_consts->py.list.value = calloc(pyobj_consts->py.list.size,sizeof(pyobj_t));
 
-		pyobj_consts->py.list.value = pyobj_new_list(*list_obj_pyth)->py.list.value;
+		pyobj_consts->py.list.value = pyobj_new_list(list_obj_pyth)->py.list.value;
 
 		pyobj_consts->type = _LIST_;
 
@@ -210,13 +212,13 @@ pyobj_t pyobj_consts(list_t *list_obj_pyth){
 	}
 
 
-pyobj_t pyobj_names(list_t *lexem_str){
+pyobj_t pyobj_names(list_t list_obj_pyth){
 
 	pyobj_t pyobj_names = calloc(1,sizeof(pyobj_t));
-	pyobj_names->py.list.size = list_length(*lexem_str);
+	pyobj_names->py.list.size = list_length(list_obj_pyth);
 	pyobj_names->py.list.value = calloc(pyobj_names->py.list.size,sizeof(pyobj_t));
 
-	pyobj_names->py.list.value = pyobj_new_list(*lexem_str)->py.list.value;
+	pyobj_names->py.list.value = pyobj_new_list(list_obj_pyth)->py.list.value;
 
 	pyobj_names->type = _LIST_;
 
@@ -227,28 +229,30 @@ pyobj_t pyobj_names(list_t *lexem_str){
 
 
 //remplissage du codeblock
-codeblock fill_codeblock(pyobj_t interned,pyobj_t consts,pyobj_t names){
+codeblock fill_codeblock(pyobj_t interned,pyobj_t consts,pyobj_t names,int version_pyvm,uint32_t flags,pyobj_t filename,pyobj_t name,uint32_t stack_size,uint32_t arg_count){
 	codeblock py_code= calloc(1,sizeof(codeblock));
 
 
 	// //En-tête de l'objet python
-
-	// py_code.header.arg_count = ;
-	// py_code.header.local_count = ;
-	// py_code.header.stack_size = ;
-	// py_code.header.flags = ;
+  py_code->version_pyvm=version_pyvm;
+	py_code->header.arg_count = arg_count;
+	py_code->header.local_count = 0;
+	py_code->header.stack_size = stack_size;
+	py_code->header.flags = flags;
 
 	// Corps de l'objet python
+  py_code->binary.header.magic=2573;
+  py_code->binary.header.timestamp=time(NULL);
+  py_code->binary.header.source_size=0;
 
 	py_code->binary.content.interned = interned;
 	py_code->binary.content.consts = consts;
 	py_code->binary.content.names = names;
 
-	// //Fin de l'objet python
-	// py_code.trailer.filename = ;
-	// py_code.trailer.name = ;
-	// py_code.trailer.firstlineno = ;
-	// py_code.trailer.lnotab = ;
+	py_code->binary.trailer.filename =filename ;
+	py_code->binary.trailer.name = name;
+	py_code->binary.trailer.firstlineno = 1;
+
 
 	return py_code;
 }
@@ -256,25 +260,134 @@ codeblock fill_codeblock(pyobj_t interned,pyobj_t consts,pyobj_t names){
 
 
 codeblock construction_codeblock(list_t *liste_lexems){
+  //remplissage En-tête
+  while(!lexem_type(list_first(*liste_lexems),"number::integer")){
+		*liste_lexems=list_del_first(*liste_lexems,lexem_delete);
+	}
+  int version_pyvm;
+  sscanf((((lexem_t)list_first(*liste_lexems))->value),"%d",&version_pyvm);
+
+  while(!lexem_type(list_first(*liste_lexems),"num::hex")){
+		*liste_lexems=list_del_first(*liste_lexems,lexem_delete);
+	}
+  uint32_t flags;
+  sscanf((((lexem_t)list_first(*liste_lexems))->value),"%x",&flags);
+
+  while(!lexem_type(list_first(*liste_lexems),"string")){
+		*liste_lexems=list_del_first(*liste_lexems,lexem_delete);
+	}
+  pyobj_t filename;
+  filename=pyobj_new_string(((lexem_t)list_first(*liste_lexems))->value);
+
+  while(!lexem_type(list_first(*liste_lexems),"string")){
+		*liste_lexems=list_del_first(*liste_lexems,lexem_delete);
+	}
+  pyobj_t name;
+  name=pyobj_new_string(((lexem_t)list_first(*liste_lexems))->value);
+
+  while(!lexem_type(list_first(*liste_lexems),"number::integer")){
+		*liste_lexems=list_del_first(*liste_lexems,lexem_delete);
+	}
+  uint32_t stack_size;
+  sscanf((((lexem_t)list_first(*liste_lexems))->value),"%d",&stack_size);
+  *liste_lexems=list_del_first(*liste_lexems,lexem_delete);
+
+  while((!lexem_type(list_first(*liste_lexems),"number::integer") && !lexem_type(list_first(*liste_lexems),"dir::interned"))){
+		*liste_lexems=list_del_first(*liste_lexems,lexem_delete);
+  }
+
+  uint32_t arg_count=0;
+  if(lexem_type(list_first(*liste_lexems),"number::integer")){
+    sscanf((((lexem_t)list_first(*liste_lexems))->value),"%d",&arg_count);
+  }
+
+
 	//remplissage interned
 	while(!lexem_type(list_first(*liste_lexems),"dir::interned")){
 		*liste_lexems=list_del_first(*liste_lexems,lexem_delete);
 	}
   list_t inter_int=list_interned(liste_lexems);
-	pyobj_t interned=pyobj_interned(&inter_int);
+  pyobj_t interned=pyobj_interned(inter_int);
 
 	//remplissage consts
   list_t inter_consts=list_consts(liste_lexems);
-	pyobj_t consts=pyobj_consts(&inter_consts);
+  pyobj_t consts=pyobj_consts(inter_consts);
 
 	//remplissage names
   list_t inter_names=list_names(liste_lexems);
-	pyobj_t names=pyobj_names(&inter_names);
-
-
+	pyobj_t names=pyobj_names(inter_names);
+  
   //remplissage du codeblock
-   codeblock py_code=fill_codeblock(interned,consts,names);
+   codeblock py_code=fill_codeblock(interned, consts,names, version_pyvm,flags, filename, name, stack_size, arg_count);
 
    return py_code;
 
+}
+
+pyobj_t construction_pyobj(list_t *liste_lexems){
+  pyobj_t pyobj = calloc(1,sizeof(pyobj_t));
+  codeblock py_code;
+  py_code=construction_codeblock(liste_lexems);
+  pyobj->py.codeblock=py_code;
+  return pyobj;
+}
+
+int affichage_pyobj(pyobj_t code){
+  printf("version_pyvm %d\n",((code->py).codeblock)->version_pyvm);
+  printf("flags %08x\n", ((code->py).codeblock)->header.flags);
+  printf("filename %s\n", (((code->py).codeblock)->binary.trailer.filename)->py.string.buffer);
+  printf("name %s\n", (((code->py).codeblock)->binary.trailer.name)->py.string.buffer);
+  printf("stack_size %d\n",((code->py).codeblock)->header.stack_size);
+  printf("arg_count %d\n",((code->py).codeblock)->header.arg_count);
+  printf("timestamp %ld\n",((code->py).codeblock)->binary.header.timestamp);
+  printf("magic %d\n",((code->py).codeblock)->binary.header.magic);
+  printf("firstlineno %d\n", (((code->py).codeblock)->binary.trailer.firstlineno));
+  int in;
+  in=(((code->py).codeblock)->binary.content.interned)->py.list.size;
+  printf("interned contient %d elements\n", in);
+  int i;
+  for (i=0;i<in;i++){
+    printf("%s\n",((((code->py).codeblock)->binary.content.interned)->py.list.value[i])->py.string.buffer );
+    printf("de langeur %d\n",((((code->py).codeblock)->binary.content.interned)->py.list.value[i])->py.string.length );
+  }
+
+  int co;
+  co=(((code->py).codeblock)->binary.content.consts)->py.list.size;
+  printf("consts contient %d elements\n", co);
+  for (i=0;i<co;i++){
+    if(((((code->py).codeblock)->binary.content.consts)->py.list.value[i])->type==_STRING_){
+    printf("%s\n",((((code->py).codeblock)->binary.content.consts)->py.list.value[i])->py.string.buffer );
+    printf("de langeur %d\n",((((code->py).codeblock)->binary.content.consts)->py.list.value[i])->py.string.length );
+    }
+
+    if(((((code->py).codeblock)->binary.content.consts)->py.list.value[i])->type==_INTEGER_){
+    printf("%d\n",((((code->py).codeblock)->binary.content.consts)->py.list.value[i])->py.number.integer );
+     }
+    if(((((code->py).codeblock)->binary.content.consts)->py.list.value[i])->type==_FLOAT_){
+     printf("%f\n",((((code->py).codeblock)->binary.content.consts)->py.list.value[i])->py.number.real );
+   }
+
+
+    if(((((code->py).codeblock)->binary.content.consts)->py.list.value[i])->type==_NULL_){
+      printf("Null\n");
+    }
+    if(((((code->py).codeblock)->binary.content.consts)->py.list.value[i])->type==_TRUE_){
+      printf("True\n");
+    }
+    if(((((code->py).codeblock)->binary.content.consts)->py.list.value[i])->type==_FALSE_){
+      printf("False\n");
+    }
+    if(((((code->py).codeblock)->binary.content.consts)->py.list.value[i])->type==_NONE_){
+      printf("None\n");
+    }
+  }
+
+  int na;
+  na=(((code->py).codeblock)->binary.content.names)->py.list.size;
+  printf("names contient %d elements\n", na);
+  for (i=0;i<na;i++){
+    printf("%s\n",((((code->py).codeblock)->binary.content.names)->py.list.value[i])->py.string.buffer );
+    printf("de langeur %d\n",((((code->py).codeblock)->binary.content.names)->py.list.value[i])->py.string.length );
+  }
+  return 0;
 }

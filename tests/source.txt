@@ -6,13 +6,21 @@
 .interned
 "a"
 "b"
+"hh"
+"kk"
+"<module>"
 .consts
   2
   4
+2.554
+"344"
 None
+True
+34.3
 .names
 "a"
-"b"
+"bc"
+
 .text
 .line 1
 LOAD_CONST 0 # 2
