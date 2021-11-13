@@ -7,9 +7,6 @@ pouvoir être exécuté par la machine virtuelle Python) */
 
 int pyobj_write( FILE *fp, pyobj_t obj)
 {
-  fp=fopen("fp","wb"); //ouverture du fichier dans lequel noter le bytecode
-  if(NULL==fp) {perror("Erreur ouverture ecriture de bytecode.bin\n"); return -1;}
-
 //////////////////////////////////////////////////////////////////////////
 int k;
 // Header
@@ -135,7 +132,6 @@ int k;
   {
     fwrite("4E",sizeof("4E"),1,fp);
   }
-
 }
 
   //tuple noms de symboles
