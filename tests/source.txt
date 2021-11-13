@@ -7,6 +7,7 @@
 .interned
 "a"
 "b"
+"<module>"
 .consts
   2
   4
@@ -14,6 +15,8 @@ None
 .names
 "a"
 "b"
+"c"
+"d"
 .text
 .line 1
 LOAD_CONST 0 # 2

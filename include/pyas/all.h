@@ -24,6 +24,7 @@ extern "C" {
 #include <stddef.h>
 #include <endian.h>
 #include <time.h>
+#include <string.h>
 #include <pyas/callbacks.h>
 #include <pyas/list.h>
 #include <pyas/queue.h>

@@ -46,6 +46,16 @@ list_t list_next( list_t l ) {
   return l->next;
 }
 
+list_t list_invers(list_t l){
+  list_t inv = list_new();
+  while(!list_empty( l )){
+    inv=list_add_first(inv,(void*)list_first(l));
+    l=list_del_first(l,0);
+  }
+  return inv;
+}
+
+
 list_t list_add_first( list_t l, void* object ) {
   struct link_t *new = malloc( sizeof( *new ) );
 
