@@ -10,6 +10,20 @@
 
 #include "../include/pyas/all.h"
 
+int pyobj_string_delete(void * _pyobj){
+  pyobj_t pyobj_p = _pyobj;
+  free(pyobj_p->py.string.buffer);
+  free(pyobj_p);
+  return 1;
+}
+
+int pyobj_others_delete(void * _pyobj){
+  pyobj_t pyobj_p = _pyobj;
+  free(pyobj_p);
+  return 1;
+}
+
+
 list_t list_new( void ) {
   return NULL;
 }

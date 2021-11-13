@@ -23,6 +23,7 @@ lexem_t lexem_advance(list_t *lexems)
   while(!strcmp(((struct lexem*)((*lexems)->next->content))->type,"blank") || !strcmp(((struct lexem*)((*lexems)->next->content))->type,"comment")){
     *lexems=(*lexems)->next; //Nouvelle tête de liste
   }
+  *lexems=(*lexems)->next;
   return first_prev_list_p;
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -37,12 +38,26 @@ lexem_t lexem_advance(list_t *lexems)
  // }
 
 
-int next_lexem_is(list_t *lexems, char *type)
+int next_lexem_type_is(list_t *lexems, char *type)
 {
   while(!strcmp((((struct lexem*)((*lexems)->next->content))->type),"blank") || !strcmp((((struct lexem*)((*lexems)->next->content))->type),"comment")){
     *lexems=(*lexems)->next;
   }
-  if(strcmp(( (struct lexem*)((*lexems)->next->content) )->type, type))
+  if(!strcmp(( (struct lexem*)((*lexems)->next->content) )->type, type))
+  {
+    return 0;
+  }
+  else {
+    return -1;
+  }
+}
+
+int next_lexem_value_is(list_t *lexems, char *value)
+{
+  while(!strcmp((((struct lexem*)((*lexems)->next->content))->type),"blank") || !strcmp((((struct lexem*)((*lexems)->next->content))->type),"comment")){
+    *lexems=(*lexems)->next;
+  }
+  if(!strcmp(( (struct lexem*)((*lexems)->next->content) )->value, value))
   {
     return 0;
   }

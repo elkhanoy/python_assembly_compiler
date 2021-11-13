@@ -32,6 +32,8 @@ struct link_t {
   size_t list_length( list_t l );
   int    list_print( list_t l, action_t print );
   void   list_delete( list_t l, action_t delete );
+  int pyobj_others_delete(void * _pyobj);
+  int pyobj_string_delete(void * _pyobj);
 
 #ifdef __cplusplus
 }

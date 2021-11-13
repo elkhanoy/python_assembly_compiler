@@ -110,10 +110,13 @@ pyobj_t pyobj_new_string(char *str){
 
 //Allocation dynamique
 	pyobj_t obj_string = calloc(1,sizeof(pyobj_t));
-	obj_string->py.string.buffer = calloc(strlen(str),sizeof(char));
+  /*
+  obj_string->py.string.buffer = calloc((strlen(str)+1),sizeof(char));
 
 //Ajout de la chaîne de caractères
 	strcpy(obj_string->py.string.buffer , str);
+  */
+  obj_string->py.string.buffer= strdup(str);
 	obj_string->py.string.length = strlen(str);
 	obj_string->type = _STRING_;
 
@@ -177,7 +180,7 @@ pyobj_t pyobj_new_list(list_t list_obj_pyth){
 
 
 
-
+/*
 pyobj_t pyobj_interned(list_t *lexems){
 
 //Allocation dynamique
@@ -223,7 +226,7 @@ pyobj_t pyobj_names(list_t *lexem_str){
 
 	return pyobj_names;
 	}
-
+*/
 
 
 //remplissage du codeblock
@@ -261,15 +264,18 @@ codeblock construction_codeblock(list_t *liste_lexems){
 		*liste_lexems=list_del_first(*liste_lexems,lexem_delete);
 	}
   list_t inter_int=list_interned(liste_lexems);
-	pyobj_t interned=pyobj_interned(&inter_int);
+	pyobj_t interned=pyobj_new_list(inter_int);
+  list_delete(inter_int,pyobj_string_delete);
 
 	//remplissage consts
   list_t inter_consts=list_consts(liste_lexems);
-	pyobj_t consts=pyobj_consts(&inter_consts);
+	pyobj_t consts=pyobj_new_list(inter_consts);
+  list_delete(inter_consts,pyobj_others_delete);
 
 	//remplissage names
   list_t inter_names=list_names(liste_lexems);
-	pyobj_t names=pyobj_names(&inter_names);
+	pyobj_t names=pyobj_new_list(inter_names);
+  list_delete(inter_names,pyobj_others_delete);
 
 
   //remplissage du codeblock

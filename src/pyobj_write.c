@@ -4,6 +4,7 @@
 /*  sérialiser un objet Python (y compris, donc, de type code –qui devra donc
 pouvoir être exécuté par la machine virtuelle Python) */
 
+/*
 
 int pyobj_write( FILE *fp, pyobj_t obj)
 {
@@ -102,7 +103,7 @@ int pyobj_write( FILE *fp, pyobj_t obj)
   fwrite("73",sizeof("73"),1,fp);
 
   //entier donnant le num de la première ligne de code
-  
+
 
   //lnotab
   fwrite("73",sizeof("73"),1,fp);
@@ -111,3 +112,4 @@ int pyobj_write( FILE *fp, pyobj_t obj)
 fclose(fp);
 return 0;
 }
+*/
