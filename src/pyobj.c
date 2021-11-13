@@ -181,8 +181,6 @@ pyobj_t pyobj_new_list(list_t list_obj_pyth){
 }
 
 
-
-<<<<<<< HEAD
 /*
 pyobj_t pyobj_interned(list_t *lexems){
 =======
@@ -315,7 +313,6 @@ codeblock construction_codeblock(list_t *liste_lexems){
 		*liste_lexems=list_del_first(*liste_lexems,lexem_delete);
 	}
   list_t inter_int=list_interned(liste_lexems);
-<<<<<<< HEAD
 	pyobj_t interned=pyobj_new_list(inter_int);
   list_delete(inter_int,pyobj_string_delete);
 
@@ -330,18 +327,6 @@ codeblock construction_codeblock(list_t *liste_lexems){
   list_delete(inter_names,pyobj_others_delete);
 
 
-=======
-  pyobj_t interned=pyobj_interned(inter_int);
-
-	//remplissage consts
-  list_t inter_consts=list_consts(liste_lexems);
-  pyobj_t consts=pyobj_consts(inter_consts);
-
-	//remplissage names
-  list_t inter_names=list_names(liste_lexems);
-	pyobj_t names=pyobj_names(inter_names);
-  
->>>>>>> 8c6e9b257ff561bb2b4698548d224eb40949a478
   //remplissage du codeblock
    codeblock py_code=fill_codeblock(interned, consts,names, version_pyvm,flags, filename, name, stack_size, arg_count);
 

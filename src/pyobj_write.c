@@ -4,7 +4,6 @@
 /*  sérialiser un objet Python (y compris, donc, de type code –qui devra donc
 pouvoir être exécuté par la machine virtuelle Python) */
 
-/*
 
 int pyobj_write( FILE *fp, pyobj_t obj)
 {
@@ -258,16 +257,12 @@ int k;
   }
 
   //entier donnant le num de la première ligne de code
-<<<<<<< HEAD
-
-=======
   char hex_lineno[60];
   sprintf(hex_lineno,"%x",((((obj->py).codeblock)->binary).trailer.firstlineno));
   for(k=strlen(hex_lineno);k<=0;k--)
   {
     fwrite(hex_lineno,sizeof(char),strlen(hex_lineno),fp);
   }
->>>>>>> 8c6e9b257ff561bb2b4698548d224eb40949a478
 
   //lnotab
   fwrite("73",sizeof("73"),1,fp);
@@ -281,4 +276,3 @@ int k;
   fclose(fp);
   return 0;
 }
-*/
