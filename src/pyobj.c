@@ -276,7 +276,7 @@ codeblock construction_codeblock(list_t *liste_lexems){
   pyobj_t filename;
   filename=pyobj_new_string(((lexem_t)list_first(*liste_lexems))->value);
 
-  while(!lexem_type(list_first(*liste_lexems),"string")){
+  while(!lexem_type(list_first(*liste_lexems),"name")){
 		*liste_lexems=list_del_first(*liste_lexems,lexem_delete);
 	}
   pyobj_t name;

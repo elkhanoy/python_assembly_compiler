@@ -15,7 +15,7 @@ int main(int argc,char*argv[]) //Les noms des fichiers source et configuration s
   strcpy(source_name,argv[2]); //Copie du nom du fichier source pris en paramètre lors de la compilation, dans le tableau
   if((queue_lexemes_identifies=lex(config_name,source_name,queue_lexemes_identifies))){
     queue_lexemes_identifies=queue_to_list(queue_lexemes_identifies);
-    list_t * plist_lex_id=calloc(1,sizeof(*plist_lex_id));
+    /*list_t * plist_lex_id=calloc(1,sizeof(*plist_lex_id));
     *plist_lex_id=queue_lexemes_identifies;
     if(-1==parse_pys(plist_lex_id)){
       printf("Le parse n'est pas bon");
@@ -32,7 +32,7 @@ int main(int argc,char*argv[]) //Les noms des fichiers source et configuration s
     free((code->binary.content.names)->py.list.value);
     free(code);
     list_delete(queue_lexemes_identifies,lexem_delete);
-    return 1;
+    return 1;*/
 
     pyobj_t code_a=construction_pyobj(&queue_lexemes_identifies);
     affichage_pyobj( code_a);
