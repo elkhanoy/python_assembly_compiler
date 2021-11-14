@@ -310,14 +310,13 @@ int parse_set_stack_size(list_t * lexems )
 //〈set-arg-count〉: :=  {‘dir::set’}{‘blank’}{‘arg_count’}{‘blank’}{‘integer::dec’}〈eol〉
 int parse_set_arg_count(list_t*lexems )
 {
-  list_t initial_lex=*lexems;
   if(0==next_lexem_type_is(lexems, "dir::set"))
   {
     lexem_advance(lexems);
   }
   else
   {
-    return -1;
+    return 0;
   }
   if(0==next_lexem_value_is(lexems, "arg_count"))
   {
@@ -325,7 +324,6 @@ int parse_set_arg_count(list_t*lexems )
   }
   else
   {
-    *lexems=initial_lex;
     return 0;
   }
   if(0==next_lexem_type_is(lexems, "number::integer"))
