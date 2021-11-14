@@ -86,7 +86,7 @@ pyobj_t pyobj_interned(list_t lexems);
 pyobj_t pyobj_consts(list_t list_obj_pyth);
 pyobj_t pyobj_names(list_t lexem_str);
 
-codeblock fill_codeblock(pyobj_t interned,pyobj_t consts,pyobj_t names,int version_pyvm,uint32_t flags,pyobj_t filename,pyobj_t name,uint32_t stack_size,uint32_t arg_count);
+codeblock fill_codeblock(pyobj_t interned,pyobj_t consts,pyobj_t names,int version_pyvm,uint32_t flags,pyobj_t filename,pyobj_t name,uint32_t stack_size,uint32_t arg_count, pyobj_t bytecode,pyobj_t lnotab);
 
 codeblock construction_codeblock(list_t *liste_lexems);
 

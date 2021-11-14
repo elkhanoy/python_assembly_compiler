@@ -6,11 +6,15 @@
 /* Produira le bytecode (et la stockera dans un objet de code Python) et
 lnotab à partir des informations extraites au livrable 2.
 Elle retournera -1 en cas d’erreur et 0 sinon */
-
 int pyasm( list_t list_lexems,pyobj_t code )
 {
   //////////////////////////////////////////////
   // Fichier avec les Mnémoniques et Opcodes
+  //printf("%s\n",((((code->py).codeblock)->binary.content.interned)->py.list.value[0])->py.string.buffer );
+  //((((code->py).codeblock)->binary.content.interned)->py.list.value[0])=(pyobj_t)realloc(((((code->py).codeblock)->binary.content.interned)->py.list.value[0]),sizeof(pyobj_t));
+//((((code->py).codeblock)->binary.content.interned)->py.list.value[0])->py.string.buffer="TABON";
+  //printf("%s\n",((((code->py).codeblock)->binary.content.interned)->py.list.value[0])->py.string.buffer );
+  //printf("YEEES\n" );
   FILE*file_r_txt;
   file_r_txt=fopen("mnémo_bin_correspondance.txt","r"); //ouverture du fichier avec les opcodes
   if(NULL==file_r_txt) {perror("Erreur ouverture lecture de mnémo_bin_correspondance.txt/n"); return -1;}
@@ -22,12 +26,14 @@ int pyasm( list_t list_lexems,pyobj_t code )
   nb_lines=0;
   while(lexem_p->next!=NULL)
   {
-    if(strcmp(((struct lexem*)(lexem_p->content))->value,".line")==0)
+    if(strcmp("dir::line",((struct lexem*)(lexem_p->content))->type)==0)
     {
+
       nb_lines++;
     }
     lexem_p=lexem_p->next;
   }
+
 
   lexem_p=list_lexems;
   //////////////////////////////////////////////
@@ -49,51 +55,97 @@ int pyasm( list_t list_lexems,pyobj_t code )
   char*bytecode_p=NULL;
   bytecode_p=bytecode;
 
-  while(lexem_p->next!=NULL)
+  while(!list_empty(list_next(lexem_p)))
   {
     if(strcmp(((struct lexem*)(lexem_p->content))->value,".line")==0)
     {
-      lexem_p=lexem_p->next;
-      lexem_p=lexem_p->next;
+    while(strcmp("number::integer",((struct lexem*)(lexem_p->content))->type)!=0 && !list_empty(list_next(lexem_p)))
+    {
+        lexem_p=lexem_p->next;
+      }
       *num_lines_p=atoi(((struct lexem*)(lexem_p->content))->value);//à transformer en int
+
       num_lines_p++;
-      lexem_p=lexem_p->next;
 
       int nb_bytes_line;
       nb_bytes_line=0;
 
       char str1[30];
       char str2[30];
-
-      while(strcmp(((struct lexem*)(lexem_p->content))->value,".line")!=0)
+      while(strcmp("identifier",((struct lexem*)(lexem_p->content))->type)!=0 && !list_empty(list_next(lexem_p)))
       {
-        do
-        {fscanf(file_r_txt,"%s,%s",str1,str2);
-      } while(strcmp(((struct lexem*)(lexem_p->content))->value,str1)!=0);
+          lexem_p=lexem_p->next;
+          if(strcmp("dir::line",((struct lexem*)(lexem_p->content))->type)==0){
+                  break;
+                }
+        }
+      while(strcmp("dir::line",((struct lexem*)(lexem_p->content))->type)!=0 && !list_empty(list_next(lexem_p)))
+      {
+      file_r_txt=fopen("mnémo_bin_correspondance.txt","r");
+      int i;
+      for (i = 0; i < 120; i++) {
+        fscanf(file_r_txt,"%s",str1);
+        fscanf(file_r_txt,"%s",str2);
+        if(strcmp(((struct lexem*)(lexem_p->content))->value,str1)==0){
+          break;
+        }
+      }
+      fclose(file_r_txt);
+
         strcpy(bytecode_p,str2);
         bytecode_p=bytecode_p+strlen(str2);
         nb_bytes_line=nb_bytes_line+1;
-
-        lexem_p=lexem_p->next;
-        if(strcmp(((struct lexem*)(lexem_p->content))->type,"int")==0)
+        while(strcmp("number::integer",((struct lexem*)(lexem_p->content))->type)!=0  && !list_empty(list_next(lexem_p)))
         {
-          *bytecode_p=*(((struct lexem*)(lexem_p->content))->value);
-          bytecode_p=bytecode_p+strlen(((struct lexem*)(lexem_p->content))->value);
+            lexem_p=lexem_p->next;
+            if(strcmp("identifier",((struct lexem*)(lexem_p->content))->type)==0){
+              break;
+            }
+            if(strcmp("dir::line",((struct lexem*)(lexem_p->content))->type)==0){
+                    break;
+                  }
+          }
+        if(strcmp("number::integer",((struct lexem*)(lexem_p->content))->type)==0)
+        {  char str[9];
+           strcpy (str,"0x0");
+           strcat (str,(((struct lexem*)(lexem_p->content))->value));
+           strcat (str,"0x00");
+          strcpy(bytecode_p,str);
+          bytecode_p=bytecode_p+strlen(str);
           nb_bytes_line=nb_bytes_line+3;
         }
+        if(strcmp("dir::line",((struct lexem*)(lexem_p->content))->type)!=0){
+        while(strcmp("identifier",((struct lexem*)(lexem_p->content))->type)!=0 && !list_empty(list_next(lexem_p)))
+        {
+            lexem_p=lexem_p->next;
+            if(strcmp("dir::line",((struct lexem*)(lexem_p->content))->type)==0){
+                    break;
+                  }
+
+          }
+        }
       }
+
       *delta_bytecode_p=nb_bytes_line;
       delta_bytecode_p++;
     }
-    lexem_p=lexem_p->next;
+
+
+    if(strcmp("dir::line",((struct lexem*)(lexem_p->content))->type)!=0 && !list_empty(list_next(lexem_p))){
+      lexem_p=lexem_p->next;
+    }
   }
 
   //////////////////////////////////////////////
   // Stock bytecode dans l'objet Python mis en paramètre
-  char*p_bytecode=NULL;
-  p_bytecode=bytecode;
-  (((code->py).codeblock)->binary).content.bytecode=pyobj_new_string(p_bytecode);
+  //char*p_bytecode=NULL;
+  //p_bytecode=bytecode;
 
+
+
+  (((code->py).codeblock)->binary.content.bytecode)=(pyobj_t)realloc((((code->py).codeblock)->binary.content.bytecode),sizeof(pyobj_t));
+  (((code->py).codeblock)->binary.content.bytecode)->py.string.buffer=bytecode;
+  (((code->py).codeblock)->binary.content.bytecode)->py.string.length=strlen(bytecode);
   //////////////////////////////////////////////
   // Pour lnotab
   /// Construire delta lignes
@@ -125,10 +177,12 @@ int pyasm( list_t list_lexems,pyobj_t code )
   {
     lnotab[k]=lnotab_int[k]+'0';
   }
-  char* p_lnotab=NULL;
-  p_lnotab=lnotab;
-  (((code->py).codeblock)->binary).trailer.lnotab=pyobj_new_string(p_lnotab);
+  //char* p_lnotab=NULL;
+  //p_lnotab=lnotab;
 
-fclose(file_r_txt);
+  (((code->py).codeblock)->binary.trailer.lnotab)=(pyobj_t)realloc((((code->py).codeblock)->binary.trailer.lnotab),sizeof(pyobj_t));
+  (((code->py).codeblock)->binary.trailer.lnotab)->py.string.buffer=lnotab;
+  (((code->py).codeblock)->binary.trailer.lnotab)->py.string.length=strlen(lnotab);
+//fclose(file_r_txt);
 return 0;
 }

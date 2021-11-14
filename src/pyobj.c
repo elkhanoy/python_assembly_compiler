@@ -147,6 +147,7 @@ pyobj_t pyobj_new_pycst(char *str){
 
 	if(strcmp(str,"Fulse")==0){
 		obj_pycst->type=_FALSE_;
+    printf("cocoo\n");
 	}
   if(strcmp(str,"None")==0){
 		obj_pycst->type=_NONE_;
@@ -175,6 +176,8 @@ pyobj_t pyobj_new_list(list_t list_obj_pyth){
 	obj_list->type=_LIST_;
 	return obj_list;
 }
+
+
 
 
 pyobj_t pyobj_interned(list_t list_obj_pyth){
@@ -226,7 +229,7 @@ pyobj_t pyobj_names(list_t list_obj_pyth){
 
 
 //remplissage du codeblock
-codeblock fill_codeblock(pyobj_t interned,pyobj_t consts,pyobj_t names,int version_pyvm,uint32_t flags,pyobj_t filename,pyobj_t name,uint32_t stack_size,uint32_t arg_count){
+codeblock fill_codeblock(pyobj_t interned,pyobj_t consts,pyobj_t names,int version_pyvm,uint32_t flags,pyobj_t filename,pyobj_t name,uint32_t stack_size,uint32_t arg_count, pyobj_t bytecode,pyobj_t lnotab){
 	codeblock py_code= calloc(1,sizeof(codeblock));
 
 
@@ -245,11 +248,12 @@ codeblock fill_codeblock(pyobj_t interned,pyobj_t consts,pyobj_t names,int versi
 	py_code->binary.content.interned = interned;
 	py_code->binary.content.consts = consts;
 	py_code->binary.content.names = names;
+  py_code->binary.content.bytecode=bytecode;
 
 	py_code->binary.trailer.filename =filename ;
 	py_code->binary.trailer.name = name;
 	py_code->binary.trailer.firstlineno = 1;
-
+  py_code->binary.trailer.lnotab=lnotab;
 
 	return py_code;
 }
@@ -257,6 +261,10 @@ codeblock fill_codeblock(pyobj_t interned,pyobj_t consts,pyobj_t names,int versi
 
 
 codeblock construction_codeblock(list_t *liste_lexems){
+  pyobj_t bytecode;
+  bytecode=pyobj_new_string("bytecode");
+  pyobj_t lnotab;
+  lnotab=pyobj_new_string("lnotab");
   //remplissage En-tête
   while(!lexem_type(list_first(*liste_lexems),"number::integer")){
 		*liste_lexems=list_del_first(*liste_lexems,lexem_delete);
@@ -275,6 +283,8 @@ codeblock construction_codeblock(list_t *liste_lexems){
 	}
   pyobj_t filename;
   filename=pyobj_new_string(((lexem_t)list_first(*liste_lexems))->value);
+
+  *liste_lexems=list_del_first(*liste_lexems,lexem_delete);
 
   while(!lexem_type(list_first(*liste_lexems),"name")){
 		*liste_lexems=list_del_first(*liste_lexems,lexem_delete);
@@ -305,7 +315,6 @@ codeblock construction_codeblock(list_t *liste_lexems){
 	}
   list_t inter_int=list_interned(liste_lexems);
   pyobj_t interned=pyobj_interned(inter_int);
-
 	//remplissage consts
   list_t inter_consts=list_consts(liste_lexems);
   pyobj_t consts=pyobj_consts(inter_consts);
@@ -316,7 +325,7 @@ codeblock construction_codeblock(list_t *liste_lexems){
   names=(pyobj_t)realloc(pyobj_names(inter_names),sizeof(pyobj_t));
 
   //remplissage du codeblock
-   codeblock py_code=fill_codeblock(interned, consts,names, version_pyvm,flags, filename, name, stack_size, arg_count);
+   codeblock py_code=fill_codeblock(interned, consts,names, version_pyvm,flags, filename, name, stack_size, arg_count,bytecode,lnotab);
 
    return py_code;
 
@@ -340,6 +349,10 @@ int affichage_pyobj(pyobj_t code){
   printf("timestamp %ld\n",((code->py).codeblock)->binary.header.timestamp);
   printf("magic %d\n",((code->py).codeblock)->binary.header.magic);
   printf("firstlineno %d\n", (((code->py).codeblock)->binary.trailer.firstlineno));
+  printf("le bytecode :%s\n",(((code->py).codeblock)->binary.content.bytecode)->py.string.buffer);
+  printf("de langeur %d\n",(((code->py).codeblock)->binary.content.bytecode)->py.string.length);
+  printf("Le lnotab :%s\n",(((code->py).codeblock)->binary.trailer.lnotab)->py.string.buffer);
+  printf("de langeur %d\n",(((code->py).codeblock)->binary.trailer.lnotab)->py.string.length);
   int in;
   in=(((code->py).codeblock)->binary.content.interned)->py.list.size;
   printf("interned contient %d elements\n", in);
