@@ -350,16 +350,16 @@ int affichage_pyobj(pyobj_t code){
   printf("magic %d\n",((code->py).codeblock)->binary.header.magic);
   printf("firstlineno %d\n", (((code->py).codeblock)->binary.trailer.firstlineno));
   printf("le bytecode :%s\n",(((code->py).codeblock)->binary.content.bytecode)->py.string.buffer);
-  printf("de langeur %d\n",(((code->py).codeblock)->binary.content.bytecode)->py.string.length);
+  printf("de longueur %d\n",(((code->py).codeblock)->binary.content.bytecode)->py.string.length);
   printf("Le lnotab :%s\n",(((code->py).codeblock)->binary.trailer.lnotab)->py.string.buffer);
-  printf("de langeur %d\n",(((code->py).codeblock)->binary.trailer.lnotab)->py.string.length);
+  printf("de longueur %d\n",(((code->py).codeblock)->binary.trailer.lnotab)->py.string.length);
   int in;
   in=(((code->py).codeblock)->binary.content.interned)->py.list.size;
   printf("interned contient %d elements\n", in);
   int i;
   for (i=0;i<in;i++){
     printf("%s\n",((((code->py).codeblock)->binary.content.interned)->py.list.value[i])->py.string.buffer );
-    printf("de langeur %d\n",((((code->py).codeblock)->binary.content.interned)->py.list.value[i])->py.string.length );
+    printf("de longueur %d\n",((((code->py).codeblock)->binary.content.interned)->py.list.value[i])->py.string.length );
   }
 
   int co;
@@ -368,7 +368,7 @@ int affichage_pyobj(pyobj_t code){
   for (i=0;i<co;i++){
     if(((((code->py).codeblock)->binary.content.consts)->py.list.value[i])->type==_STRING_){
     printf("%s\n",((((code->py).codeblock)->binary.content.consts)->py.list.value[i])->py.string.buffer );
-    printf("de langeur %d\n",((((code->py).codeblock)->binary.content.consts)->py.list.value[i])->py.string.length );
+    printf("de longueur %d\n",((((code->py).codeblock)->binary.content.consts)->py.list.value[i])->py.string.length );
     }
 
     if(((((code->py).codeblock)->binary.content.consts)->py.list.value[i])->type==_INTEGER_){
@@ -398,7 +398,7 @@ int affichage_pyobj(pyobj_t code){
   printf("names contient %d elements\n", na);
   for (i=0;i<na;i++){
     printf("%s\n",((((code->py).codeblock)->binary.content.names)->py.list.value[i])->py.string.buffer );
-    printf("de langeur %d\n",((((code->py).codeblock)->binary.content.names)->py.list.value[i])->py.string.length );
+    printf("de longueur %d\n",((((code->py).codeblock)->binary.content.names)->py.list.value[i])->py.string.length );
   }
   return 0;
 }

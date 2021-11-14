@@ -1,0 +1,198 @@
+
+.set version_pyvm	 62211
+.set flags		 0x00000040
+.set filename		 "source_diff.py"
+.set name		 "<module>"
+.set stack_size		 3
+.set arg_count		 0
+
+.interned
+	"date"
+	"timedelta"
+	"SATURDAY"
+	"SUNDAY"
+	"/"
+	"map"
+	"int"
+	"split"
+	"my_date"
+	"d"
+	"m"
+	"y"
+	"parse"
+	"abs"
+	"days"
+	"date_1"
+	"date_2"
+	"days_diff"
+	"range"
+	"weekday"
+	"n"
+	"somme"
+	"info"
+	"work_days"
+	"datetime"
+	"calendar"
+	"DATE_1"
+	"DATE_2"
+	"n_days"
+	"<module>"
+
+.consts
+	-1
+	( "date" "timedelta" )
+	( "SATURDAY" "SUNDAY" )
+	None
+	"/"
+
+.names
+	"map"
+	"int"
+	"split"
+	"date"
+
+.varnames
+	"my_date"
+	"d"
+	"m"
+	"y"
+
+.text
+.line 5
+	LOAD_GLOBAL           0
+	LOAD_GLOBAL           1
+	LOAD_FAST             0	# "my_date"
+	LOAD_ATTR             2
+	LOAD_CONST            1	# "/"
+	CALL_FUNCTION         1
+	CALL_FUNCTION         2
+	UNPACK_SEQUENCE       3
+	STORE_FAST            1	# "d"
+	STORE_FAST            2	# "m"
+	STORE_FAST            3	# "y"
+.line 6
+	LOAD_GLOBAL           3
+	LOAD_FAST             3	# "y"
+	LOAD_FAST             2	# "m"
+	LOAD_FAST             1	# "d"
+	CALL_FUNCTION         3
+	RETURN_VALUE
+.code_end
+.code_start 8
+.set version_pyvm	 62211
+.set flags		 0x00000043
+.set filename		 "source_diff.py"
+.set name		 "days_diff"
+.set stack_size		 4
+.set arg_count		 2
+
+.consts
+	"date of type 15/05/1972"
+
+.names
+	"abs"
+	"parse"
+	"days"
+
+.varnames
+	"date_1"
+	"date_2"
+
+.text
+.line 10
+	LOAD_GLOBAL           0
+	LOAD_GLOBAL           1
+	LOAD_FAST             0	# "date_1"
+	CALL_FUNCTION         1
+	LOAD_GLOBAL           1
+	LOAD_FAST             1	# "date_2"
+	CALL_FUNCTION         1
+	BINARY_SUBTRACT
+	LOAD_ATTR             2
+	CALL_FUNCTION         1
+	RETURN_VALUE
+.code_end
+.code_start 12
+.set version_pyvm	 62211
+.set flags		 0x00000043
+.set filename		 "source_diff.py"
+.set name		 "work_days"
+.set stack_size		 5
+.set arg_count		 2
+
+.consts
+	"\n    numbers of days of work\n    n -> result of function days_diff\n    "
+	0
+	"days"
+	1
+
+.names
+	"parse"
+	"range"
+	"timedelta"
+	"weekday"
+	"SATURDAY"
+	"SUNDAY"
+
+.varnames
+	"date_1"
+	"n"
+	"somme"
+	"info"
+	"days"
+
+.text
+.line 17
+	LOAD_CONST            1	# 0
+	STORE_FAST            2	# "somme"
+.line 18
+	LOAD_GLOBAL           0
+	LOAD_FAST             0	# "date_1"
+	CALL_FUNCTION         1
+	STORE_FAST            3	# "info"
+.line 19
+	SETUP_LOOP            label_3
+	LOAD_GLOBAL           1
+	LOAD_FAST             1	# "n"
+	CALL_FUNCTION         1
+	GET_ITER
+label_0:
+	FOR_ITER              label_2
+	STORE_FAST            1	# "n"
+.line 20
+	LOAD_FAST             3	# "info"
+	LOAD_GLOBAL           2
+	LOAD_CONST            2	# "days"
+	LOAD_FAST             1	# "n"
+	CALL_FUNCTION         256
+	BINARY_ADD
+	STORE_FAST            4	# "days"
+.line 21
+	LOAD_FAST             4	# "days"
+	LOAD_ATTR             3
+	CALL_FUNCTION         0
+	LOAD_GLOBAL           4
+	COMPARE_OP            2	# "=="
+	POP_JUMP_IF_TRUE      label_1
+	LOAD_FAST             4	# "days"
+	LOAD_ATTR             3
+	CALL_FUNCTION         0
+	LOAD_GLOBAL           5
+	COMPARE_OP            2	# "=="
+	POP_JUMP_IF_FALSE     label_0
+.line 22
+label_1:
+	LOAD_FAST             2	# "somme"
+	LOAD_CONST            3	# 1
+	INPLACE_ADD
+	STORE_FAST            2	# "somme"
+	JUMP_ABSOLUTE         label_0
+	JUMP_ABSOLUTE         label_0
+label_2:
+	POP_BLOCK
+.line 23
+label_3:
+	LOAD_FAST             1	# "n"
+	LOAD_FAST             2	# "somme"
+	BINARY_SUBTRACT
+	RETURN_VALUE

@@ -25,3 +25,4 @@ int parse_label(list_t*lexems );
 int parse_source_lineno(list_t*lexems );
 int parse_insn(list_t*lexems );
 int parse_eol(list_t*lexems );
+int parse_eol2(list_t*lexems );

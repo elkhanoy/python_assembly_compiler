@@ -3,8 +3,8 @@
 //〈pys〉: :=〈eol〉〈prologue〉〈code〉
 int parse_pys(list_t * lexems )
 {
-  printf("Parsing pys expression \n");
-  if(-1==parse_eol(lexems ))
+  //printf("Parsing pys expression \n");
+  if(-1==parse_eol2(lexems ))
   {
     return -1;
   }
@@ -24,17 +24,17 @@ int parse_pys(list_t * lexems )
 //〈prologue〉: :=〈set-directives〉 〈interned-strings〉 〈constants〉 〈names〉〈varnames〉〈freevars〉〈cellvars〉
 int parse_prologue(list_t * lexems )
 {
-  printf("Parsing prologue expression \n");
+  //printf("Parsing prologue expression \n");
   if(-1==parse_set_directives(lexems ))
   {
     return -1;
   }
-  lexem_advance(lexems);
+  //lexem_advance(lexems);
   if(-1==parse_interned_strings(lexems ))
   {
     return -1;
   }
-  lexem_advance(lexems);
+  //lexem_advance(lexems);
   if(-1==parse_constants(lexems ))
   {
     return -1;
@@ -43,26 +43,17 @@ int parse_prologue(list_t * lexems )
   {
     return -1;
   }
-  if(-1==parse_constants(lexems ))
-  {
-    return -1;
-  }
-  lexem_advance(lexems);
-  if(-1==parse_names(lexems ))
-  {
-    return -1;
-  }
-  lexem_advance(lexems);
+  //lexem_advance(lexems);
   if(-1==parse_varnames(lexems ))
   {
     return -1;
   }
-  lexem_advance(lexems);
+  //lexem_advance(lexems);
   if(-1==parse_freevars(lexems ))
   {
     return -1;
   }
-  lexem_advance(lexems);
+  //lexem_advance(lexems);
   if(-1==parse_cellvars(lexems ))
   {
     return -1;
@@ -93,10 +84,11 @@ int parse_set_directives(list_t * lexems )
     return -1;
   }
   //lexem_advance(lexems);
-  if(0==parse_set_source_size(lexems ))
+  /*if(0==parse_set_source_size(lexems ))
   {
-    //lexem_advance(lexems);
+    lexem_advance(lexems);
   }
+  */
   if(-1==parse_set_stack_size(lexems ))
   {
     return -1;
@@ -106,23 +98,25 @@ int parse_set_directives(list_t * lexems )
   {
     return -1;
   }
+  /*
   if(0==parse_set_kwonly_arg_count(lexems ))
   {
     return 0;
   }
+  */
   return 0;
 }
 //〈set-version-pyvm〉: :=  {‘dir::set’}{‘blank’}{‘version_pyvm’}{‘blank’}{‘integer::dec’}〈eol〉
 int parse_set_version_pyvm(list_t * lexems )
 {
-  printf("Parsing set-version-pyvm \n");
+  //printf("Parsing set-version-pyvm \n");
   if(0==next_lexem_type_is(lexems, "dir::set"))
   {
     lexem_advance(lexems);
   }
   else
   {
-    printf("oups\n");
+    //printf("oups\n");
     return -1;
   }
 
@@ -225,7 +219,7 @@ int parse_set_name(list_t * lexems )
   {
     return -1;
   }
-  if(0==next_lexem_type_is(lexems, "name"))
+  if(0==next_lexem_value_is(lexems, "name"))
   {
     lexem_advance(lexems);
   }
@@ -233,7 +227,7 @@ int parse_set_name(list_t * lexems )
   {
     return -1;
   }
-  if(0==next_lexem_type_is(lexems, "string"))
+  if(0==next_lexem_type_is(lexems, "name"))
   {
     lexem_advance(lexems);
   }
@@ -316,6 +310,7 @@ int parse_set_stack_size(list_t * lexems )
 //〈set-arg-count〉: :=  {‘dir::set’}{‘blank’}{‘arg_count’}{‘blank’}{‘integer::dec’}〈eol〉
 int parse_set_arg_count(list_t*lexems )
 {
+  list_t initial_lex=*lexems;
   if(0==next_lexem_type_is(lexems, "dir::set"))
   {
     lexem_advance(lexems);
@@ -330,7 +325,8 @@ int parse_set_arg_count(list_t*lexems )
   }
   else
   {
-    return -1;
+    *lexems=initial_lex;
+    return 0;
   }
   if(0==next_lexem_type_is(lexems, "number::integer"))
   {
@@ -439,6 +435,7 @@ int parse_set(list_t * lexems ) {
 //〈interned-strings〉: :=  {‘dir::interned’}〈eol〉( {‘string’}〈eol〉)*
 int parse_interned_strings(list_t*lexems )
 {
+  //printf("parse interned strings");
   if(0==next_lexem_type_is(lexems, "dir::interned"))
   {
     lexem_advance(lexems);
@@ -451,8 +448,8 @@ int parse_interned_strings(list_t*lexems )
   {
     return -1;
   }
-  lexem_advance(lexems);
-  while(0==next_lexem_type_is(lexems,"string"))
+  //lexem_advance(lexems);
+  while(0==next_lexem_type_is(lexems,"string") || 0==next_lexem_type_is(lexems,"name"))
   {
     lexem_advance(lexems);
     if(-1==parse_eol(lexems ))
@@ -465,7 +462,7 @@ int parse_interned_strings(list_t*lexems )
 //〈constants〉: :=  {‘dir::consts’}〈eol〉(〈constant〉〈eol〉)*
 int parse_constants(list_t*lexems )
 {
-  printf("Parsing Constants\n");
+  //printf("Parsing Constants\n");
   if(0==next_lexem_type_is(lexems, "dir::consts"))
   {
     lexem_advance(lexems);
@@ -478,8 +475,8 @@ int parse_constants(list_t*lexems )
   {
     return -1;
   }
-  lexem_advance(lexems);
-  while(parse_constant(lexems )==0)
+  //lexem_advance(lexems);
+  while(0==parse_constant(lexems) )
   {
     lexem_advance(lexems);
     if(-1==parse_eol(lexems ))
@@ -492,12 +489,12 @@ int parse_constants(list_t*lexems )
 //〈constant〉: :=  {‘integer’} | {‘float’} | {‘string’} | {‘pycst’} |〈list〉|〈tuple〉
 int parse_constant(list_t*lexems )
 {
-  printf("Parsing Constant\n");
-  if(next_lexem_type_is(lexems, "number::integer")||next_lexem_type_is(lexems,"number::float"))
+  //printf("Parsing Constant\n");
+  if(next_lexem_type_is(lexems, "number::integer")==0 || next_lexem_type_is(lexems,"number::float")==0)
   {
     return 0;
   }
-  if(next_lexem_type_is(lexems, "string")||next_lexem_type_is(lexems,"pycst"))
+  if(next_lexem_type_is(lexems, "string")==0 || 0==next_lexem_type_is(lexems,"pycst::None") || 0==next_lexem_type_is(lexems,"pycst::True") || 0==next_lexem_type_is(lexems,"pycst::False"))
   {
     return 0;
   }
@@ -514,7 +511,7 @@ int parse_constant(list_t*lexems )
 //〈list〉: :=  {‘brack::left’}〈constant〉* {‘brack::right’}
 int parse_list(list_t*lexems )
 {
-  printf("Parsing List\n");
+  //printf("Parsing List\n");
   if(0==next_lexem_type_is(lexems, "brack::left"))
   {
     lexem_advance(lexems);
@@ -536,7 +533,7 @@ int parse_list(list_t*lexems )
 //〈tuple〉: :=  {‘paren::left’}〈constant〉* {‘paren::right’}
 int parse_tuple(list_t*lexems )
 {
-  printf("Parsing tuple\n");
+  //printf("Parsing tuple\n");
   if(next_lexem_type_is(lexems,"paren::left")==0)
   {
     lexem_advance(lexems);
@@ -558,7 +555,7 @@ int parse_tuple(list_t*lexems )
 //〈names〉: :=  {‘dir::names’}〈eol〉( {‘string’}〈eol〉)*
 int parse_names(list_t*lexems )
 {
-  printf("Parsing names\n");
+  //printf("Parsing names\n");
   if(next_lexem_type_is(lexems,"dir::names")==0)
   {
     lexem_advance(lexems);
@@ -571,7 +568,7 @@ int parse_names(list_t*lexems )
   {
     return -1;
   }
-  lexem_advance(lexems);
+  //lexem_advance(lexems);
   while(next_lexem_type_is(lexems,"string")==0)
   {
     lexem_advance(lexems);
@@ -585,20 +582,20 @@ int parse_names(list_t*lexems )
 //〈varnames〉: :=  {‘dir::varnames’}〈eol〉( {‘string’}〈eol〉)*
 int parse_varnames(list_t*lexems )
 {
-  printf("Parsing varnames\n");
+  //printf("Parsing varnames\n");
   if(next_lexem_type_is(lexems,"dir::varnames")==0)
   {
     lexem_advance(lexems);
   }
   else
   {
-    return -1;
+    return 0;
   }
   if(-1==parse_eol(lexems ))
   {
     return -1;
   }
-  lexem_advance(lexems);
+  //lexem_advance(lexems);
   while(next_lexem_type_is(lexems,"string")==0)
   {
     lexem_advance(lexems);
@@ -612,14 +609,14 @@ int parse_varnames(list_t*lexems )
 //〈freevars〉: :=  {‘dir::freevars’}〈eol〉( {‘string’}〈eol〉)*
 int parse_freevars(list_t*lexems )
 {
-  printf("Parsing freevars\n");
+  //printf("Parsing freevars\n");
   if(next_lexem_type_is(lexems,"dir::freevars")==0)
   {
     lexem_advance(lexems);
   }
   else
   {
-    return -1;
+    return 0;
   }
   if(-1==parse_eol(lexems ))
   {
@@ -639,14 +636,14 @@ int parse_freevars(list_t*lexems )
 //〈cellvars〉: :=  {‘dir::cellvars’}〈eol〉( {‘string’}〈eol〉)*
 int parse_cellvars(list_t*lexems )
 {
-  printf("Parsing cellvars\n");
+  //printf("Parsing cellvars\n");
   if(next_lexem_type_is(lexems,"dir::cellvars")==0)
   {
     lexem_advance(lexems);
   }
   else
   {
-    return -1;
+    return 0;
   }
   if(-1==parse_eol(lexems ))
   {
@@ -666,7 +663,7 @@ int parse_cellvars(list_t*lexems )
 //〈code〉: :=  {‘dir::text’}〈eol〉(〈assembly-line〉〈eol〉)*
 int parse_code(list_t*lexems )
 {
-  printf("Parsing code\n");
+  //printf("Parsing code\n");
   if(next_lexem_type_is(lexems,"dir::text")==0)
   {
     lexem_advance(lexems);
@@ -679,7 +676,7 @@ int parse_code(list_t*lexems )
   {
     return -1;
   }
-  lexem_advance(lexems);
+  //lexem_advance(lexems);
   while(parse_assembly_line(lexems )==0)
   {
     lexem_advance(lexems);
@@ -693,7 +690,7 @@ int parse_code(list_t*lexems )
 //〈assembly-line〉: :=〈insn〉|〈source-lineno〉|〈label〉
 int parse_assembly_line(list_t*lexems )
 {
-  printf("Parsing assembly line\n");
+  //printf("Parsing assembly line\n");
   if(parse_insn(lexems )==0)
   {
     return 0;
@@ -711,13 +708,8 @@ int parse_assembly_line(list_t*lexems )
 //〈label〉: :=  {‘symbol’} {‘blank’} {‘colon’}
 int parse_label(list_t*lexems )
 {
-  printf("Parsing Label\n");
+  //printf("Parsing Label\n");
   if(-1==next_lexem_type_is(lexems,"identifier"))
-  {
-    return -1;
-  }
-  lexem_advance(lexems);
-  if(-1==next_lexem_type_is(lexems,"blank"))
   {
     return -1;
   }
@@ -731,7 +723,7 @@ int parse_label(list_t*lexems )
 //〈source-lineno〉: :=  {‘dir::line’} {‘blank’} {‘integer::dec’}
 int parse_source_lineno(list_t*lexems )
 {
-  printf("Parsing Lineno\n");
+  //printf("Parsing Lineno\n");
   if(-1==next_lexem_type_is(lexems,"dir::line"))
   {
     return -1;
@@ -746,13 +738,16 @@ int parse_source_lineno(list_t*lexems )
 //〈insn〉: :=  {‘insn::0’}|    {‘insn::1’} ( {‘integer::dec’} | {‘symbol’} )
 int parse_insn(list_t*lexems )
 {
-  printf("Parsing insn \n");
-  if(-1==next_lexem_type_is(lexems,"insn::"))
+  //printf("Parsing insn \n");
+  if(-1==next_lexem_type_is(lexems,"insn::1") || -1==next_lexem_type_is(lexems,"insn::0"))
   {
     return -1;
   }
+  if(0==next_lexem_type_is(lexems,"insn::0")){
+    return 0;
+  }
   lexem_advance(lexems);
-  if((-1==next_lexem_type_is(lexems,"integer::dec"))||(-1==next_lexem_type_is(lexems,"symbol")))
+  if((-1==next_lexem_type_is(lexems,"integer::dec"))||(-1==next_lexem_type_is(lexems,"identifier")))
   {
     return -1;
   }
@@ -761,7 +756,7 @@ int parse_insn(list_t*lexems )
 //〈eol〉: :=  ([{‘blank’}] [{‘comment’}] {‘newline’})* [{‘blank’}]
 int parse_eol(list_t*lexems )
 {
-  printf("Parsing eol\n");
+  //printf("Parsing eol\n");
   if(-1==next_lexem_type_is(lexems,"newline"))
   {
     return -1;
@@ -770,4 +765,22 @@ int parse_eol(list_t*lexems )
       lexem_advance(lexems);
   }
   return 0;
+}
+
+int parse_eol2(list_t*lexems){
+  while(!strcmp((((struct lexem*)((*lexems)->content))->type),"blank") || !strcmp((((struct lexem*)((*lexems)->content))->type),"comment")){
+    *lexems=(*lexems)->next;
+  }
+  if(!strcmp(( (struct lexem*)((*lexems)->content) )->type, "newline"))
+  {
+    while (0==next_lexem_type_is( lexems, "newline" ) ) {
+        lexem_advance(lexems);
+    }
+    return 0;
+  }
+  else {
+    return -1;
+  }
+
+
 }

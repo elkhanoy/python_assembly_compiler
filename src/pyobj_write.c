@@ -163,7 +163,7 @@ int k;
   }
 
   //tuple noms de variables
-  fwrite("28",sizeof("28"),1,fp);
+/*  fwrite("28",sizeof("28"),1,fp);
 
   char hex_varnames_size[60];
   sprintf(hex_varnames_size,"%x",(((((obj->py).codeblock)->binary).content.varnames)->py).list.size);
@@ -245,7 +245,7 @@ int k;
       fwrite(&(((((((obj->py).codeblock)->binary).content.cellvars)->py.list.value)[i])->py.string.buffer)[j],sizeof((((((((obj->py).codeblock)->binary).content.cellvars)->py.list.value)[i])->py.string.buffer)[j]),1,fp);
     }
   }
-
+  */
   //////////////////////////////////////////////////////////////////////////
   /// Fin
 
@@ -298,6 +298,5 @@ int k;
     fwrite(&(((((obj->py).codeblock)->binary).trailer.lnotab)->py).string.buffer[i],sizeof((((((obj->py).codeblock)->binary).trailer.lnotab)->py).string.buffer[i]),1,fp);
   }
 
-  fclose(fp);
   return 0;
 }
