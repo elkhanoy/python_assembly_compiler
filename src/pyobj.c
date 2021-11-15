@@ -108,8 +108,8 @@ list_t list_names(list_t *lexem_list){
 pyobj_t pyobj_new_string(char *str){
 
 //Allocation dynamique
-	pyobj_t obj_string = calloc(1,sizeof(pyobj_t));
-	obj_string->py.string.buffer = calloc(strlen(str),sizeof(char));
+	pyobj_t obj_string = calloc(1,sizeof(*obj_string));
+	obj_string->py.string.buffer = calloc(strlen(str) + 1,sizeof(char));
 
 //Ajout de la chaîne de caractères
 	strcpy(obj_string->py.string.buffer , str);
@@ -122,21 +122,21 @@ pyobj_t pyobj_new_string(char *str){
 // À partir d'une chaine de caractères, créer, allouer de la mémoire et retourner un type pyobj_t contenant cette chaine de caractères
 
 pyobj_t pyobj_new_int(char *str){
-	pyobj_t obj_int=calloc(1,sizeof(pyobj_t));
+	pyobj_t obj_int=calloc(1,sizeof(struct pyobj));
 	sscanf(str, "%d", &obj_int->py.number.integer);
 	obj_int->type= _INTEGER_;
 	return obj_int;
 }
 
 pyobj_t pyobj_new_float(char *str){
-	pyobj_t obj_float=calloc(1,sizeof(pyobj_t));
+	pyobj_t obj_float=calloc(1,sizeof(struct pyobj));
 	sscanf(str, "%lf", &obj_float->py.number.real);
 	obj_float->type=_FLOAT_;
 	return obj_float;
 }
 
 pyobj_t pyobj_new_pycst(char *str){
-	pyobj_t obj_pycst=calloc(1,sizeof(pyobj_t));
+	pyobj_t obj_pycst=calloc(1,sizeof(struct pyobj));
 
 	if(strcmp(str,"null")==0){
 		obj_pycst->type=_NULL_;
@@ -164,7 +164,7 @@ pyobj_t pyobj_new_pycst(char *str){
 */
 
 pyobj_t pyobj_new_list(list_t list_obj_pyth){
-	pyobj_t obj_list = calloc(1,sizeof(pyobj_t));
+	pyobj_t obj_list = calloc(1,sizeof(struct pyobj));
 	obj_list->py.list.size = list_length(list_obj_pyth);
 	obj_list->py.list.value = calloc(obj_list->py.list.size,sizeof(obj_list->py.list.value));
 	int k = 0;
@@ -183,9 +183,9 @@ pyobj_t pyobj_new_list(list_t list_obj_pyth){
 pyobj_t pyobj_interned(list_t list_obj_pyth){
 
 //Allocation dynamique
-	pyobj_t pyobj_interned = calloc(1,sizeof(pyobj_t));
+	pyobj_t pyobj_interned = calloc(1,sizeof(struct pyobj));
 	pyobj_interned->py.list.size = list_length(list_obj_pyth);
-	pyobj_interned->py.list.value = calloc(pyobj_interned->py.list.size,sizeof(pyobj_t));
+	pyobj_interned->py.list.value = calloc(pyobj_interned->py.list.size,sizeof(struct pyobj));
 
 //Ajout dans value de interned le value de l'objet python présent dans la liste
 	pyobj_interned->py.list.value = pyobj_new_list(list_obj_pyth)->py.list.value;
@@ -199,9 +199,9 @@ pyobj_t pyobj_interned(list_t list_obj_pyth){
 
 pyobj_t pyobj_consts(list_t list_obj_pyth){
 
-		pyobj_t pyobj_consts = calloc(1,sizeof(pyobj_t));
+		pyobj_t pyobj_consts = calloc(1,sizeof(struct pyobj));
 		pyobj_consts->py.list.size = list_length(list_obj_pyth);
-		pyobj_consts->py.list.value = calloc(pyobj_consts->py.list.size,sizeof(pyobj_t));
+		pyobj_consts->py.list.value = calloc(pyobj_consts->py.list.size,sizeof(struct pyobj));
 
 		pyobj_consts->py.list.value = pyobj_new_list(list_obj_pyth)->py.list.value;
 
@@ -214,9 +214,9 @@ pyobj_t pyobj_consts(list_t list_obj_pyth){
 
 pyobj_t pyobj_names(list_t list_obj_pyth){
 
-	pyobj_t pyobj_names = calloc(1,sizeof(pyobj_t));
+	pyobj_t pyobj_names = calloc(1,sizeof(struct pyobj));
 	pyobj_names->py.list.size = list_length(list_obj_pyth);
-	pyobj_names->py.list.value = calloc(pyobj_names->py.list.size,sizeof(pyobj_t));
+	pyobj_names->py.list.value = calloc(pyobj_names->py.list.size,sizeof(struct pyobj));
 
 	pyobj_names->py.list.value = pyobj_new_list(list_obj_pyth)->py.list.value;
 
@@ -321,8 +321,8 @@ codeblock construction_codeblock(list_t *liste_lexems){
 
 	//remplissage names
   list_t inter_names=list_names(liste_lexems);
-	pyobj_t names=calloc(1,sizeof(pyobj_t));
-  names=(pyobj_t)realloc(pyobj_names(inter_names),sizeof(pyobj_t));
+	pyobj_t names=calloc(1,sizeof(struct pyobj));
+  names=(pyobj_t)realloc(pyobj_names(inter_names),sizeof(struct pyobj));
 
   //remplissage du codeblock
    codeblock py_code=fill_codeblock(interned, consts,names, version_pyvm,flags, filename, name, stack_size, arg_count,bytecode,lnotab);
@@ -332,7 +332,7 @@ codeblock construction_codeblock(list_t *liste_lexems){
 }
 
 pyobj_t construction_pyobj(list_t *liste_lexems){
-  pyobj_t pyobj = calloc(1,sizeof(pyobj_t));
+  pyobj_t pyobj = calloc(1,sizeof(struct pyobj));
   codeblock py_code;
   py_code=construction_codeblock(liste_lexems);
   pyobj->py.codeblock=py_code;

@@ -11,7 +11,7 @@ int pyasm( list_t list_lexems,pyobj_t code )
   //////////////////////////////////////////////
   // Fichier avec les Mnémoniques et Opcodes
   //printf("%s\n",((((code->py).codeblock)->binary.content.interned)->py.list.value[0])->py.string.buffer );
-  //((((code->py).codeblock)->binary.content.interned)->py.list.value[0])=(pyobj_t)realloc(((((code->py).codeblock)->binary.content.interned)->py.list.value[0]),sizeof(pyobj_t));
+  //((((code->py).codeblock)->binary.content.interned)->py.list.value[0])=(pyobj_t)realloc(((((code->py).codeblock)->binary.content.interned)->py.list.value[0]),sizeof(struct pyobj));
 //((((code->py).codeblock)->binary.content.interned)->py.list.value[0])->py.string.buffer="TABON";
   //printf("%s\n",((((code->py).codeblock)->binary.content.interned)->py.list.value[0])->py.string.buffer );
   //printf("YEEES\n" );
@@ -143,7 +143,7 @@ int pyasm( list_t list_lexems,pyobj_t code )
 
 
 
-  (((code->py).codeblock)->binary.content.bytecode)=(pyobj_t)realloc((((code->py).codeblock)->binary.content.bytecode),sizeof(pyobj_t));
+  (((code->py).codeblock)->binary.content.bytecode)=(pyobj_t)realloc((((code->py).codeblock)->binary.content.bytecode),sizeof(struct pyobj));
   (((code->py).codeblock)->binary.content.bytecode)->py.string.buffer=bytecode;
   (((code->py).codeblock)->binary.content.bytecode)->py.string.length=strlen(bytecode);
   //////////////////////////////////////////////
@@ -180,7 +180,7 @@ int pyasm( list_t list_lexems,pyobj_t code )
   //char* p_lnotab=NULL;
   //p_lnotab=lnotab;
 
-  (((code->py).codeblock)->binary.trailer.lnotab)=(pyobj_t)realloc((((code->py).codeblock)->binary.trailer.lnotab),sizeof(pyobj_t));
+  (((code->py).codeblock)->binary.trailer.lnotab)=(pyobj_t)realloc((((code->py).codeblock)->binary.trailer.lnotab),sizeof(struct pyobj));
   (((code->py).codeblock)->binary.trailer.lnotab)->py.string.buffer=lnotab;
   (((code->py).codeblock)->binary.trailer.lnotab)->py.string.length=strlen(lnotab);
 //fclose(file_r_txt);
