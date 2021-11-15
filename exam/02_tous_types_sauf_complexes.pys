@@ -1,0 +1,50 @@
+
+
+# Start pyc-objdump output
+
+.set version_pyvm	 62211
+.set flags		 0x00000040
+.set filename		 "tous_types_sauf_complexe.py"
+.set name		 "<module>"
+.set stack_size		 3
+.set arg_count		 0
+
+.interned
+	"abcdef"
+	"<module>"
+
+.consts
+	1
+	1.2
+	"abcdef"
+	-0.012
+	2
+	3
+	None
+	( 1 2 3 )
+
+.text
+.line 1
+	LOAD_CONST            0	# 1
+	PRINT_ITEM
+	PRINT_NEWLINE
+.line 2
+	LOAD_CONST            1	# 1.2
+	PRINT_ITEM
+	PRINT_NEWLINE
+.line 3
+	LOAD_CONST            2	# "abcdef"
+	PRINT_ITEM
+	PRINT_NEWLINE
+.line 4
+	LOAD_CONST            3	# -0.012
+	PRINT_ITEM
+	PRINT_NEWLINE
+.line 5
+	LOAD_CONST            7	# ( 1 2 3 )
+	PRINT_ITEM
+	PRINT_NEWLINE
+	LOAD_CONST            6	# None
+	RETURN_VALUE
+
+# Disassembled Mon Nov  1 10:17:04 2021

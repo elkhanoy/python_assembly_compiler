@@ -1,0 +1,28 @@
+# Start pyc-objdump output
+
+.set version_pyvm	 62211
+.set flags		 0x00000040
+.set filename		 "test.py"
+.set name		 "<module>"
+.set stack_size		 2
+.set arg_count		 0
+
+.interned
+	"nothing"
+	"a"
+	"<module>"
+
+.consts
+	13
+	12
+	"nothing"
+	None
+
+.names
+	"a"
+
+.text
+.line 3
+	INVALID_INSN            0	# 13
+
+# Disassembled Tue Sep  7 02:46:51 2021
