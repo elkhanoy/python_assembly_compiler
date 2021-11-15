@@ -264,9 +264,16 @@ queue_t re_read(char* regexp, queue_t regexp_q) //Fonction traduisant une expres
           subregexp->group[(int)*pregexp]=1;
           pregexp=pregexp+1;
         }
+        if(*(pregexp)=='\0'){
+          free(subregexp);
+          printf("\nregexp non conforme\n");
+          list_delete(regexp_q,char_group_delete);
+          return NULL;
+        }
       }
       set_occurence(pregexp,subregexp);
       regexp_q=enqueue(regexp_q,subregexp);
+
       pregexp=pregexp+1;
     }
     else if((*pregexp=='+') || (*pregexp=='?') || (*pregexp=='*')) // Dans le cas où ce sont des opérateurs.

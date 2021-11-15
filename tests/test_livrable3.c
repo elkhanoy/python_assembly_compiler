@@ -26,7 +26,7 @@ int main(int argc,char*argv[]) //Les noms des fichiers source et configuration s
   else{
     queue_lexemes_identifies=queue_to_list(queue_lexemes_identifies);
     list_delete(queue_lexemes_identifies,lexem_delete);
-    return 0;
+    return 1;
   }
   // list_t *lexems=calloc(1,sizeof(*lexems));
   // *lexems=queue_lexemes_identifies;

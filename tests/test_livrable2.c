@@ -20,9 +20,9 @@ int main(int argc,char*argv[]) //Les noms des fichiers source et configuration s
     pyasm(queue_lexemes_identifies,code);
     affichage_pyobj( code);
     //list_delete(queue_lexemes_identifies,lexem_delete);
-    return 1;
+    return 0;
   }
   queue_lexemes_identifies=queue_to_list(queue_lexemes_identifies);
   list_delete(queue_lexemes_identifies,lexem_delete);
-  return 0;
+  return 1;
 }

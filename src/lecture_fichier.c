@@ -57,7 +57,11 @@ queue_t lecture_fichier_conf(queue_t lexemes_q, char * config)
           }
           buffer[strcspn(buffer, "\n")] = 0;
           strcpy(lexeme_config->regexp_str,(buffer+i));
-          lexeme_config->queue_regexp=re_read(lexeme_config->regexp_str,lexeme_config->queue_regexp); // On "transforme" l'expression reg. (qui est en type char*) en type char group.
+          if(0==(lexeme_config->queue_regexp=re_read(lexeme_config->regexp_str,lexeme_config->queue_regexp))){
+            free(lexeme_config);
+            list_delete(lexemes_q,lexeme_conf_delete);
+            return lexemes_q;
+          } // On "transforme" l'expression reg. (qui est en type char*) en type char group.
           //printf("\n %s",lexeme_config->regexp_str);
           //printf("\n %p \t",lexeme_config->queue_regexp);
           lexeme_config->queue_regexp=queue_to_list(lexeme_config->queue_regexp);

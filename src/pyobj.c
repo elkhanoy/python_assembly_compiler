@@ -230,7 +230,7 @@ pyobj_t pyobj_names(list_t list_obj_pyth){
 
 //remplissage du codeblock
 codeblock fill_codeblock(pyobj_t interned,pyobj_t consts,pyobj_t names,int version_pyvm,uint32_t flags,pyobj_t filename,pyobj_t name,uint32_t stack_size,uint32_t arg_count, pyobj_t bytecode,pyobj_t lnotab){
-	codeblock py_code= calloc(1,sizeof(codeblock));
+	codeblock py_code= calloc(1,sizeof(*py_code));
 
 
 	// //En-tête de l'objet python

@@ -7,13 +7,18 @@
       *end=NULL;
       char * ligne_source;
       char * ligne_source_ori;
-      ligne_source=calloc(256,sizeof(*ligne_source));
+      ligne_source=calloc(20000,sizeof(*ligne_source));
       ligne_source_ori=ligne_source;
       queue_t queue_lexemes=NULL; //Queue de lexemes créée par la lecture du fichier de configuration
       char * lexem_value;
     // 2 - Création de la liste des lexemes
 
       queue_lexemes=lecture_fichier_conf(queue_lexemes, config_name); //Appel de la fonction re_read dans la fonction lecture_fichier_conf
+      if(NULL==queue_lexemes){
+        free(end);
+        free(ligne_source);
+        return queue_lexemes;
+      }
       list_t list_lexemes=NULL;
       lexem_t lexem_a_ajouter=NULL;
       list_lexemes=queue_to_list(queue_lexemes); // On converti la queue en liste.
@@ -43,7 +48,7 @@
       while(!feof(source_f)){
         ligne++; // On incrémente le compteur ligne au fur et à mesure qu'on lit une nouvelle ligne.
         colonne=0; // On remet le compteur colonne à zéro.
-        fgets(ligne_source,200,source_f); // On lit une ligne de source_f et on la stock dans la variable ligne_source
+        fgets(ligne_source,20000,source_f); // On lit une ligne de source_f et on la stock dans la variable ligne_source
           while(*ligne_source!='\0'){ // Tant qu'on est pas a la fin de la ligne...
             //On test ensuite si on est pas arrivé à la fin des lexemes ou si on a trouvé un lexeme correspondant.
             /*

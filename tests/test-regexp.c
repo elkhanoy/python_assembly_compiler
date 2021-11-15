@@ -17,6 +17,10 @@ int main(int argc,char*argv[]) //La source et la regexp en chaine de caractères
     char int_char[2];
     strcpy(regexp,argv[1]); //Copie du nom du fichier source pris en paramètre lors de la compilation, dans le tableau
     regexp_queue=re_read(regexp,regexp_queue);
+    if(NULL==regexp_queue){
+      free(rxp_stock);
+      return 1;
+    }
     regexp_queue=queue_to_list(regexp_queue);
     debut_rgq=regexp_queue;
     while(regexp_queue){
@@ -62,6 +66,10 @@ int main(int argc,char*argv[]) //La source et la regexp en chaine de caractères
     queue_t regexp_queue=NULL;
     queue_t debut_rgq=NULL;
     regexp_queue=re_read(regexp,regexp_queue);
+    if(NULL==regexp_queue){
+      free(end);
+      return 1;
+    }
     regexp_queue=queue_to_list(regexp_queue);
     debut_rgq=regexp_queue;
     if(re_match(regexp_queue,source,end)){

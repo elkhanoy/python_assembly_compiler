@@ -182,7 +182,7 @@ int pyasm( list_t list_lexems,pyobj_t code )
 
   (((code->py).codeblock)->binary.trailer.lnotab)=(pyobj_t)realloc((((code->py).codeblock)->binary.trailer.lnotab),sizeof(struct pyobj));
   (((code->py).codeblock)->binary.trailer.lnotab)->py.string.buffer=lnotab;
-  (((code->py).codeblock)->binary.trailer.lnotab)->py.string.length=strlen(lnotab);
+  (((code->py).codeblock)->binary.trailer.lnotab)->py.string.length=nb_lines;
 //fclose(file_r_txt);
 return 0;
 }
