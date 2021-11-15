@@ -440,7 +440,7 @@ int parse_interned_strings(list_t*lexems )
   }
   else
   {
-    return -1;
+    return 0;
   }
   if(-1==parse_eol(lexems ))
   {
