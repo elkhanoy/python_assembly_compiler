@@ -1,5 +1,8 @@
-# README Projet informatique SEI SICOM 2021
+# README Python Assembly Compiler project
 
-Afin de compiler le code, il suffit de lancer la commande "make" dans le terminal dans ce repértoire.
+This project, realized in our school Phelma - Grenoble Institute of Technology, has for aim to build a Python assembly language compiler.
+It has been realized on C programming language and  realized with 2 colleagues.
 
-Afin d'exécuter le code il faut taper: ./tests/prog_main.exe tests/assembleur.conf tests/source.txt
+To compile you just need to run the makefile with "make" command on terminal. This project was done on Linux CentOS distribution.
+
+Test files are in the test folder
