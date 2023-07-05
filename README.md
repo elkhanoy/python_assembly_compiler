@@ -1,8 +1,7 @@
 # README Python Assembly Compiler project
 
-This project, realized in our school Phelma - Grenoble Institute of Technology, has for aim to build a Python assembly language compiler.
-It has been realized on C programming language and  realized with 2 colleagues.
+Academic project, aimed at building a Python assembly language compiler, was undertaken using the C programming language. The project was realized in collaboration with two colleagues.
 
-To compile you just need to run the makefile with "make" command on terminal. This project was done on Linux CentOS distribution.
+To compile the project, simply run the makefile using the "make" command in the terminal. This project was developed on the Linux CentOS distribution.
 
-Test files are in the test folder
+The test files can be found in the test folder.
